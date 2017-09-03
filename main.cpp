@@ -3,6 +3,33 @@
 
 #include "Commands.hpp"
 
+//! Entrada main do programa.
+/*!
+  O procedimento main representa um programa que simplesmente recebe argumentos
+  e chama as funções apropriadas para lidar com eles.
+  
+  Sintaxe do uso:
+  
+  ```
+  $ <nome-do-executavel> update <id : inteiro>
+  $ <nome-do-executavel> findrec <id : inteiro>
+  $ <nome-do-executavel> seek1 <id : inteiro>
+  $ <nome-do-executavel> seek2 <titulo : string>
+  ```
+  
+  Detalhe importante sobre o comando `seek2` e seu argumento `titulo`: `titulo`
+  não é uma string entre aspas (`"`). Se um título possuir espaços, espaços
+  devem ser fornecidos com a contrabarra.
+  
+  Exemplo:
+  
+  ```
+  $ bd seek2 Título\ com\ espaços
+  ```
+  
+  \param argc Quantidade de argumentos.
+  \param argv Valores em string dos argumentos.
+ */
 int main(int argc, char **argv) {
 	if (argc == 3) {
 		char *command = argv[1];
