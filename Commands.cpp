@@ -93,8 +93,8 @@ struct HashfileHeader {
 
 	Os símbolos são: ;(ponto e vírgula), `\n`(contra-barra n), \r(contra-barra r), `NULL`, ""(aspas).
 
-	No caso das aspas é necessário ser verificado se ela realmente se encontra em um local inválido, ou se ela é o final de uma coluna. Para isso fazemos uma etapa de verificação
-	a mais nas aspas, nessa etapa verificamos se as aspas são seguidas de `\r`, `;`, `\n`, EOF. Se ela for seguida por algum desses significa q essas aspas estão demarcando o final
+	No caso das aspas é necessário ser verificado se elas realmente se encontram em um local inválido, ou se elas são o final de uma coluna. Para isso fazemos uma etapa de verificação
+	a mais nas aspas, nessa etapa verificamos se as aspas são seguidas de `\r`, `;`, `\n`, EOF. Se ela for seguida por algum desses significa que essas aspas estão demarcando o final
 	de uma coluna.
 
 	\param  *field Utilizado como return para essa função.
