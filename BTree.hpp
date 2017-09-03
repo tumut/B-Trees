@@ -6,6 +6,36 @@
 #include <cstdio>
 #include <memory>
 
+//! Classe de árvore B.
+/*!
+  Classe de árvore B multi-uso usada para guardar índices e títulos no trabalho.
+  
+  O parâmetro de template TKey determina o tipo de dado que será guardado nos nós
+  da árvore. TKey deve ser um tipo POD (Plain Old Data type) para poder ser
+  sequenciado no arquivo quando o nó for escrito.
+  
+  O parâmetro de template M determina a ordem da árvore. Em condições normais,
+  um nó pode ter no máximo 2M dados e 2M+1 apontadores de nó. Em estado de
+  overflow, ele pode temporariamente ter 2M+1 dados e 2M+2 apontadores de nó.
+  
+  Antes de usar uma BTree deve sempre se chamar o método load (em caso de apenas
+  leitura) ou create (em caso de escrita de um novo arquivo).
+  
+  No fim da inserção, o método finishInsertions() deve ser chamado para a
+  quantidade de blocos do arquivo ser atualizada no cabeçalho.
+  
+  Exemplo de uso:
+  \code
+  BTree<int, 2> arvore;
+  arvore.create("nomedoarquivo.bin");
+  arvore.insert(1);
+  arvore.finishInsertions();
+  
+  arvore.load("nomedoarquivo.bin");
+  auto valor = arvore.seek(1);
+  if (valor) f(*valor); // Fazer algo com o valor, se encontrado.
+  \endcode
+ */
 template<class TKey, std::size_t M>
 class BTree {
 public:
