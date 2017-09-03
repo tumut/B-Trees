@@ -5,7 +5,6 @@
 
 #include <cstdio>
 #include <memory>
-#include <iostream>
 
 template<class TKey, std::size_t M>
 class BTree {
