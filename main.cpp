@@ -11,7 +11,7 @@
   Sintaxe do uso:
   
   ```
-  $ <nome-do-executavel> update <id : inteiro>
+  $ <nome-do-executavel> upload <id : inteiro>
   $ <nome-do-executavel> findrec <id : inteiro>
   $ <nome-do-executavel> seek1 <id : inteiro>
   $ <nome-do-executavel> seek2 <titulo : string>
@@ -35,8 +35,8 @@ int main(int argc, char **argv) {
 		char *command = argv[1];
 		char *arg = argv[2];
 		
-		if (strcmp(command, "update") == 0) {
-			update(arg);
+		if (strcmp(command, "upload") == 0) {
+			upload(arg);
 		}
 		else if (strcmp(command, "findrec") == 0) {
 			long id = atol(arg);

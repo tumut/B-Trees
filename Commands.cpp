@@ -172,6 +172,11 @@ static void readField(char *field, std::FILE *file, int fieldSize) {
 	Recebendo o arquivo pelo parâmetro std::FILE *file, essa função percorre um artigo do arquivo por completo dividindo esse artigo em seus campos de título, ano, autor,
 	citações, atualização e snippet. Cada um desses campos é separado ou por meio da utilização da função readField(), ou utilizando-se fscanf().
 
+	\param e O artigo sendo lido do arquivo.
+	\param *file O arquivo sendo lido.
+
+	\returns Se um artigo foi lido com sucesso ou não, dará falso ao chegar no final do arquivo pois não haverão mais artigos para ler.
+
 	\author Oscar Othon
 */
 static bool readEntry(Entry& e, std::FILE *file) {
@@ -193,10 +198,8 @@ static bool readEntry(Entry& e, std::FILE *file) {
 	return true;
 }
 
-//! Impressão de cada campo do artigo.
-/*!
-	Essa função tem o objetivo de imprimir cada seção de um artigo baseado no artig
-*/
+//! Impressão de cada campo do artigo atual do arquivo.
+/*!	\author Oscar Othon */
 void printEntry(const Entry& e) {
 	std::cout << "id        : " << e.id << '\n';
 	std::cout << "title     : " << e.title << '\n';
@@ -209,7 +212,11 @@ void printEntry(const Entry& e) {
 
 // ---
 
-void update(const char* filePath) {
+//! Função de atualização e debugging.
+/*!
+
+*/
+void upload(const char* filePath) {
 	// Entry that will be used to fill up spaces between id's
 	static auto phantomEntry = []{
 			Block<Entry> pe;
