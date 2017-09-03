@@ -1,6 +1,7 @@
 #ifndef _BLOCK_HPP_INCLUDED_
 #define _BLOCK_HPP_INCLUDED_
 
+///Definição do tamanho do Bloco
 #define BLOCK_SIZE 4096
 
 template <class T>
