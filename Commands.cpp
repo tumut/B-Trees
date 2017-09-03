@@ -119,12 +119,22 @@ static void readField(char *field, std::FILE *file, int fieldSize) {
 			previous = current;
 			current = fgetc(file);
 			
-			///Se as aspas forem seguidas desses elementos a seguir, então é porque é o final de um campo.
 			if (previous == '"') {
-				if (current == ';' || current == '\n' || current == EOF || (current == '\r' && std::fgetc(file))) {
+				bool fieldEnded = false;
+				
+				// Se as aspas forem seguidas desses elementos a seguir, então é porque é o final de um campo.
+				switch (current) {
+				case '\r':
+					std::fgetc(file); // \n
+				case ';':
+				case '\n':
+				case EOF:
 					--index;
+					fieldEnded = true;
 					break;
 				}
+				
+				if (fieldEnded) break;
 			}
 			
 			if (current >= 0)
