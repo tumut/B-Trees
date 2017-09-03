@@ -1,6 +1,3 @@
-///
-/// Headers
-///
 #include "Commands.hpp"
 
 #include "Block.hpp"
