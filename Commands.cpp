@@ -1,3 +1,6 @@
+///
+/// Headers
+///
 #include "Commands.hpp"
 
 #include "Block.hpp"
@@ -86,7 +89,16 @@ struct HashfileHeader {
 
 // --- //
 
-///Função para a leitura do arquivo.
+//! O leitor do arquivo.
+/*!
+	Essa função é chamada para a leitura do arquivo. Nela são tratadas todas as possíveis exceções que podem ocorrer na leitura, essas exceções sao a presença no local
+	incorreto de diversos símbolos descritos a seguir. 
+
+	Os símbolos são: ;(ponto e vírgula), \n(contra-barra n), \r(contra-barra r), NULL, ""(aspas).
+
+	No caso das aspas é necessário ser verificado se ela realmente se encontra em um local inválido, ou se ela é o final de uma coluna. Para isso fazemos uma etapa de verificação
+	a mais nas aspas.
+*/
 static void readField(char *field, std::FILE *file, int fieldSize) {
 	static char buffer[1024 * 2];///< Tamanho do buffer
 	
@@ -113,7 +125,6 @@ static void readField(char *field, std::FILE *file, int fieldSize) {
 		if (std::fgetc(file) == '\r') std::fgetc(file); // newline, be it LF or CRLF
 		break;
 
-	///Verifica se uma aspas encontrada em um local incorreto é realmente inválida, ou se é o final de uma coluna.	
 	case '"':
 		while (true) {
 			previous = current;
