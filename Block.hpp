@@ -25,8 +25,8 @@
  */
 template <class T>
 union Block {
-	char padding[BLOCK_SIZE]; //<! Vetor de caracteres usado para garantir que a instância tenha no mínimo BLOCK_SIZE bytes.
-	T var; //<! Membro usado para acesso ao valor empacotado no bloco.
+	char padding[BLOCK_SIZE]; //!< Vetor de caracteres usado para garantir que a instância tenha no mínimo BLOCK_SIZE bytes.
+	T var; //!< Membro usado para acesso ao valor empacotado no bloco.
 };
 
 #endif // _BLOCK_HPP_INCLUDED_
