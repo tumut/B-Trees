@@ -52,7 +52,8 @@ public:
 	
 	//! Método de inicialização da árvore, para escrita.
 	/*!
-	  Deve sempre ser chamado antes de começar a inserção na árvore.
+	  Deve sempre ser chamado antes de começar a inserção na árvore, mas também
+	  permite a leitura.
 	  
 	  Se já houver um arquivo em filepath, ele será sobreescrito.
 	  
@@ -65,7 +66,19 @@ public:
 	bool create(const char* filepath);
 	
 	//! Método de inicialização da árvore, para leitura.
+	/*!
+	  Deve sempre ser chamado antes de começar a leitura da árvore. Inserções
+	  não serão possíveis.
+	  
+	  O arquivo deve existir previamente, de preferência criado por outra
+	  execução da BTree após uma chamada de create().
+	  
+	  \param filepath Caminho pro arquivo onde se encontram os dados da árvore.
+	  
+	  \return Se foi possível abrir o arquivo em filepath.
+	 */
 	bool load(const char* filepath);
+	
 	void insert(const TKey& key);
 	std::unique_ptr<TKey> seek(const TKey& key);
 	
