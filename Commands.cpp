@@ -86,11 +86,12 @@ struct HashfileHeader {
 
 // --- //
 
+///Função para a leitura do arquivo.
 static void readField(char *field, std::FILE *file, int fieldSize) {
-	static char buffer[1024 * 2];
+	static char buffer[1024 * 2];///< Tamanho do buffer
 	
-	char previous = ';';
-	char current = std::fgetc(file);
+	char previous = ';';///< Marcador do artigo precedente ao atual.
+	char current = std::fgetc(file);///< Artigo atual
 	int index = 0;
 	
 	switch (current) {
