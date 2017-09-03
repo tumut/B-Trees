@@ -48,6 +48,51 @@ BTree<TKey, M>::~BTree() {
 }
 
 template<class TKey, std::size_t M>
+bool BTree<TKey, M>::create(const char* filepath) {
+	if (m_file) std::fclose(m_file);
+	
+	if (m_file = std::fopen(filepath, "wb+")) {
+		resetStatistics();
+		
+		Block<FileHeader> header;
+		writeHeader(header);
+		++m_stats.blocksCreated;
+		
+		m_root.var.initialize(true); // Root begins as a leaf
+		writeToDisk(m_root);
+		
+		header.var.rootAddress = m_root.var.offset;
+		header.var.blockCount = m_stats.blocksCreated;
+		writeHeader(header);
+		
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+template<class TKey, std::size_t M>
+bool BTree<TKey, M>::load(const char* filepath) {
+	if (m_file) std::fclose(m_file);
+	
+	if (m_file = std::fopen(filepath, "rb")) {
+		Block<FileHeader> header = readHeader();
+		m_root = readFromDisk(header.var.rootAddress);
+		++m_stats.blocksRead;
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+template <class TKey, std::size_t M>
+std::unique_ptr<TKey> BTree<TKey, M>::seek(const TKey& key) {
+	return m_root.var.seek(key, *this);
+}
+
+template<class TKey, std::size_t M>
 typename BTree<TKey, M>::Statistics BTree<TKey, M>::getStatistics(bool includeFileBlockCount) const {
 	auto stats = m_stats;
 	stats.blocksInDisk = readHeader().var.blockCount;
@@ -106,46 +151,6 @@ void BTree<TKey, M>::writeHeader(const Block<FileHeader>& header) {
 }
 
 template<class TKey, std::size_t M>
-bool BTree<TKey, M>::create(const char* filepath) {
-	if (m_file) std::fclose(m_file);
-	
-	if (m_file = std::fopen(filepath, "wb+")) {
-		resetStatistics();
-		
-		Block<FileHeader> header;
-		writeHeader(header);
-		++m_stats.blocksCreated;
-		
-		m_root.var.initialize(true); // Root begins as a leaf
-		writeToDisk(m_root);
-		
-		header.var.rootAddress = m_root.var.offset;
-		header.var.blockCount = m_stats.blocksCreated;
-		writeHeader(header);
-		
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-template<class TKey, std::size_t M>
-bool BTree<TKey, M>::load(const char* filepath) {
-	if (m_file) std::fclose(m_file);
-	
-	if (m_file = std::fopen(filepath, "rb")) {
-		Block<FileHeader> header = readHeader();
-		m_root = readFromDisk(header.var.rootAddress);
-		++m_stats.blocksRead;
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-template<class TKey, std::size_t M>
 void BTree<TKey, M>::insert(const TKey& key) {
 	if (auto overflow = insert(m_root, key)) {
 		Block<BNode> newRoot;
@@ -162,11 +167,6 @@ void BTree<TKey, M>::insert(const TKey& key) {
 		
 		m_root = newRoot;
 	}
-}
-
-template <class TKey, std::size_t M>
-std::unique_ptr<TKey> BTree<TKey, M>::seek(const TKey& key) {
-	return m_root.var.seek(key, *this);
 }
 
 template<class TKey, std::size_t M>
