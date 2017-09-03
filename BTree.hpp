@@ -39,10 +39,32 @@
 template<class TKey, std::size_t M>
 class BTree {
 public:
+	//! Construtor padrão.
+	/*!
+	  Inicializa com valores 0 as estatísticas e nulifica o ponteiro
+	  de arquivo da BTree.
+	 */
 	BTree();
+	
+	//! Destrutor padrão
+	/*! Fecha o arquivo se ele estiver aberto. */
 	~BTree();
 	
+	//! Método de inicialização da árvore, para escrita.
+	/*!
+	  Deve sempre ser chamado antes de começar a inserção na árvore.
+	  
+	  Se já houver um arquivo em filepath, ele será sobreescrito.
+	  
+	  O arquivo novo será criado com um cabeçalho e um nó raiz vazio.
+	  
+	  \param filepath Caminho do arquivo onde os dados da árvore serão escritos.
+	  
+	  \return Se foi possível criar o arquivo em filepath.
+	 */
 	bool create(const char* filepath);
+	
+	//! Método de inicialização da árvore, para leitura.
 	bool load(const char* filepath);
 	void insert(const TKey& key);
 	std::unique_ptr<TKey> seek(const TKey& key);
