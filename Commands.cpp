@@ -100,7 +100,7 @@ struct HashfileHeader {
 	a mais nas aspas.
 
 	Para a leitura delimitamos o começo e o fim de cada artigo, para podermos fazer a separação corretamente. Sendo assim, recebemos como parâmetros char *field que age
-	como o return da função, std::FILE *file que é o arquivo em si, e int fieldSize que é o tamanho de cada campo do arquivo, no caso um artigo.
+	como o return da função, std::FILE *file que é o arquivo em si, e int fieldSize que é o tamanho de cada campo do artigo.
 */
 static void readField(char *field, std::FILE *file, int fieldSize) {
 	static char buffer[1024 * 2];///< Tamanho do buffer
@@ -166,6 +166,11 @@ static void readField(char *field, std::FILE *file, int fieldSize) {
 	std::memcpy(field, buffer, index + 1);
 }
 
+//! Função para a leitura de todos os campos de um artigo no arquivo.
+/*!
+	Recebendo o arquivo pelo parâmetro std::FILE *file, essa função percorre um artigo do arquivo por completo dividindo esse artigo em seus campos de título, ano, autor,
+	citações, atualização e snippet. Cada um desses campos é separado ou por meio da utilização da função readField(), ou utilizando-se fscanf().
+*/
 static bool readEntry(Entry& e, std::FILE *file) {
 	int endChecker = std::fscanf(file, "\"%d\";", &e.id);
 	
