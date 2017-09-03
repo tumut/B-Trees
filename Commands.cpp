@@ -91,19 +91,23 @@ struct HashfileHeader {
 	Essa função é chamada para a leitura do arquivo. Nela são tratadas todas as possíveis exceções que podem ocorrer na leitura, essas exceções sao a presença no local
 	incorreto de diversos símbolos descritos a seguir. 
 
-	Os símbolos são: ;(ponto e vírgula), \n(contra-barra n), \r(contra-barra r), NULL, ""(aspas).
+	Os símbolos são: ;(ponto e vírgula), `\n`(contra-barra n), \r(contra-barra r), `NULL`, ""(aspas).
 
-	No caso das aspas é necessário ser verificado se ela realmente se encontra em um local inválido, ou se ela é o final de uma coluna. Para isso fazemos uma etapa de verificação
-	a mais nas aspas.
+	No caso das aspas é necessário ser verificado se elas realmente se encontram em um local inválido, ou se elas são o final de uma coluna. Para isso fazemos uma etapa de verificação
+	a mais nas aspas, nessa etapa verificamos se as aspas são seguidas de `\r`, `;`, `\n`, EOF. Se ela for seguida por algum desses significa que essas aspas estão demarcando o final
+	de uma coluna.
 
-	Para a leitura delimitamos o começo e o fim de cada artigo, para podermos fazer a separação corretamente. Sendo assim, recebemos como parâmetros char *field que age
-	como o return da função, std::FILE *file que é o arquivo em si, e int fieldSize que é o tamanho de cada campo do artigo.
+	\param  *field Utilizado como return para essa função.
+	\param  *file O arquivo sendo lido.
+	\param  fieldSize O tamanho de cada campo e um artigo dentro do arquivo.
+
+	\author Oscar Othon
 */
 static void readField(char *field, std::FILE *file, int fieldSize) {
-	static char buffer[1024 * 2];///< Tamanho do buffer
+	static char buffer[1024 * 2];
 	
-	char previous = ';';///< Marcador do artigo precedente ao atual.
-	char current = std::fgetc(file);///< Artigo atual
+	char previous = ';';
+	char current = std::fgetc(file);
 	int index = 0;
 
 	switch (current) {
@@ -167,6 +171,8 @@ static void readField(char *field, std::FILE *file, int fieldSize) {
 /*!
 	Recebendo o arquivo pelo parâmetro std::FILE *file, essa função percorre um artigo do arquivo por completo dividindo esse artigo em seus campos de título, ano, autor,
 	citações, atualização e snippet. Cada um desses campos é separado ou por meio da utilização da função readField(), ou utilizando-se fscanf().
+
+	\author Oscar Othon
 */
 static bool readEntry(Entry& e, std::FILE *file) {
 	int endChecker = std::fscanf(file, "\"%d\";", &e.id);
@@ -187,6 +193,10 @@ static bool readEntry(Entry& e, std::FILE *file) {
 	return true;
 }
 
+//! Impressão de cada campo do artigo.
+/*!
+	Essa função tem o objetivo de imprimir cada seção de um artigo baseado no artig
+*/
 void printEntry(const Entry& e) {
 	std::cout << "id        : " << e.id << '\n';
 	std::cout << "title     : " << e.title << '\n';
