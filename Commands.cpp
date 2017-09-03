@@ -98,6 +98,9 @@ struct HashfileHeader {
 
 	No caso das aspas é necessário ser verificado se ela realmente se encontra em um local inválido, ou se ela é o final de uma coluna. Para isso fazemos uma etapa de verificação
 	a mais nas aspas.
+
+	Para a leitura delimitamos o começo e o fim de cada artigo, para podermos fazer a separação corretamente. Sendo assim, recebemos como parâmetros char *field que age
+	como o return da função, std::FILE *file que é o arquivo em si, e int fieldSize que é o tamanho de cada campo do artigo.
 */
 static void readField(char *field, std::FILE *file, int fieldSize) {
 	static char buffer[1024 * 2];///< Tamanho do buffer
@@ -105,8 +108,7 @@ static void readField(char *field, std::FILE *file, int fieldSize) {
 	char previous = ';';///< Marcador do artigo precedente ao atual.
 	char current = std::fgetc(file);///< Artigo atual
 	int index = 0;
-	
-	/// Switch para tratamento de exceções no arquivo.
+
 	switch (current) {
 	case ';':
 		break;
@@ -164,6 +166,11 @@ static void readField(char *field, std::FILE *file, int fieldSize) {
 	std::memcpy(field, buffer, index + 1);
 }
 
+//! Função para a leitura de todos os campos de um artigo no arquivo.
+/*!
+	Recebendo o arquivo pelo parâmetro std::FILE *file, essa função percorre um artigo do arquivo por completo dividindo esse artigo em seus campos de título, ano, autor,
+	citações, atualização e snippet. Cada um desses campos é separado ou por meio da utilização da função readField(), ou utilizando-se fscanf().
+*/
 static bool readEntry(Entry& e, std::FILE *file) {
 	int endChecker = std::fscanf(file, "\"%d\";", &e.id);
 	
@@ -443,3 +450,6 @@ void seek2(const char* title) {
 	
 	std::fclose(hashfile);
 }
+
+
+/** @file */
