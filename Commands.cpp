@@ -94,6 +94,7 @@ static void readField(char *field, std::FILE *file, int fieldSize) {
 	char current = std::fgetc(file);///< Artigo atual
 	int index = 0;
 	
+	/// Switch para tratamento de exceções no arquivo.
 	switch (current) {
 	case ';':
 		break;
@@ -111,12 +112,14 @@ static void readField(char *field, std::FILE *file, int fieldSize) {
 		std::fgetc(file); // 'L'
 		if (std::fgetc(file) == '\r') std::fgetc(file); // newline, be it LF or CRLF
 		break;
-		
+
+	///Verifica se uma aspas encontrada em um local incorreto é realmente inválida, ou se é o final de uma coluna.	
 	case '"':
 		while (true) {
 			previous = current;
 			current = fgetc(file);
 			
+			///Se as aspas forem seguidas desses elementos a seguir, então é porque é o final de um campo.
 			if (previous == '"') {
 				if (current == ';' || current == '\n' || current == EOF || (current == '\r' && std::fgetc(file))) {
 					--index;
