@@ -43,6 +43,8 @@ public:
 	/*!
 	  Inicializa com valores 0 as estatísticas e nulifica o ponteiro
 	  de arquivo da BTree.
+	  
+	  \author Timóteo Fonseca
 	 */
 	BTree();
 	
@@ -62,6 +64,8 @@ public:
 	  \param filepath Caminho do arquivo onde os dados da árvore serão escritos.
 	  
 	  \return Se foi possível criar o arquivo em filepath.
+	  
+	  \author Timóteo Fonseca
 	 */
 	bool create(const char* filepath);
 	
@@ -76,22 +80,58 @@ public:
 	  \param filepath Caminho pro arquivo onde se encontram os dados da árvore.
 	  
 	  \return Se foi possível abrir o arquivo em filepath.
+	  
+	  \author Timóteo Fonseca
 	 */
 	bool load(const char* filepath);
 	
+	//! Insere um dado dentro da árvore.
+	/*!
+	  \param key O dado a ser inserido.
+	  
+	  \author Timóteo Fonseca
+	 */
 	void insert(const TKey& key);
+	
+	//! Busca um dado que seja equivalente ao dado fornecido.
+	/*!
+	  Não há garantias que o dado realmente será buscado. Caso não seja
+	  encontrado, a função retorna um ponteiro nulo.
+	  
+	  \param key O dado que se está buscando.
+	  
+	  \return Ponteiro com o dado ou nulo.
+	  
+	  \author Timóteo Fonseca
+	 */
 	std::unique_ptr<TKey> seek(const TKey& key);
 	
+	//! Estrutura usada pela árvore para guardar métricas de sua execução.
+	/*! \author Timóteo Fonseca */
 	struct Statistics {
-		unsigned int blocksRead;
-		unsigned int blocksCreated;
-		unsigned int blocksInDisk;
+		unsigned int blocksRead; //!< Quantidade de blocos lidos.
+		unsigned int blocksCreated; //!< Quantidade de blocos criados.
+		unsigned int blocksInDisk; //!< Quantidade de blocos que já foram inseridos em disco.
 	};
 	
+	//! Retorna as estatísticas da árvore até então.
+	/*!
+	  \return Estatísticas.
+	  \author Timóteo Fonseca
+	 */
 	Statistics getStatistics(bool includeFileBlockCount = false) const;
+	
+	//! Atribui valor 0 a todos os campos das estatísticas atuais.
+	/*! \author Timóteo Fonseca */
 	void resetStatistics();
 	
-	// Updates the header with its total block count
+	//! Atualiza o cabeçalho com o total de blocos no arquivo.
+	/*!
+	  Muito importante de se usar no final da utilização de uma árvore após
+	  ela ser inicializada com create().
+	  
+	  \author Timóteo Fonseca
+	 */
 	void finishInsertions();
 	
 private:
