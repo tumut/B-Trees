@@ -2,47 +2,62 @@
 #define _COMMANDS_HPP_INCLUDED_
 
 
-//! 
+//! Recebe um arquivo CSV e cria uma base de dados baseado nele.
 /*!
-
+	Faz a carga inicial da massa de testes para seu banco de dados e cria um arquivo de dados organizado por hashing, um arquivo de índice primário
+	usando B-Tree e outro arquivo de índice de índice secundário usando B-Tree.
+	
+	A função upload faz várias verificações antes de começar a leitura do arquivo. Os detalhes são exibidos em tela. Ela precisa verificar se
+	é possível criar cada um dos arquivos necessários no local do executável, e apenas caso tudo esteja correto ela procede à leitura dos registros.
+	
+	No fim de uma execução bem sucedida o programa terá três arquivos gerados, todos com extensão `.bin`. Um deles será o arquivo de hashing, o
+	outro o arquivo de índices primários, e por último o de índices secundários.
+	
+	É esperado que essa função seja chamada antes de todas as demais.
+	
+	Apenas arquivos em formato CSV serão aceitos.
+	
+	\param filePath Caminho pro arquivo CSV a ser lido.
+	
 	\author Oscar Othon
 */
 void upload(const char* filePath);
 
 
-//! Função que lê um registro e mostra se ele foi ou não encontrado.
+//! Busca no arquivo de hashing um registro a partir de seu ID.
 /*!
-	Essa função age de maneira diferente da findEntryAndPrint(), pois ela tem que abrir o arquivo e calcular o offset. Porém , essa função consegue
-	encontrar um regisstro em somente uma leitura de bloco. O arquivo é tratado como se fosse um vetor, e a busca e feita de maneira que é possível 
-	se encontrar um registro em um tempo O(1).
+	O arquivo de hashing usa o hashing perfeito, então a função apenas calcula o offset do arquivo baseado em seu ID e faz a leitura do bloco em que
+	ele se encontra.
+	
+	Caso não haja nenhum registro válido na posição encontrada através do ID, a função informará.
 
-	\param id O ID onde se é buscado o registro.
+	\param id O ID do registro a ser buscado.
 
 	\author Oscar Othon
 */
 void findrec(long id);
 
-//! Devolve o registro com ID igual ao informado.
+//! Busca um registro a partir de seu ID usando o arquivo de índices primário.
 /*!
-	O seek1() utiliza uma árvore-B para buscar pelo índice, evitando casos em que o arquivo de hashing tem buckets com muitos elementos já que nesses casos 
-	a função teria que fazer uma busca linear pelo bucket, o que não seria viável.
+	O seek1 usa o arquivo de índices primário, organizado em índices de uma árvore-B, para encontrar o registro buscado.
+	
+	Caso ele não seja encontrado, a função informa.
+	
+	A função costuma sempre precisar ler mais blocos do que a função findrec, porque o arquivo de hashing perfeito tem
+	acesso em O(1).
 
-	A função mostra caso não se consiga achar um arquivo de hashing para a consulta, ou um arquivo de índice primário, ou o próprio registro de acordo om o ID
-	informado. Ele se utiliza do findEntryAndPrint() para encontrar um registro no arquivo de hashing.
-
-	\param id O ID onde se é buscado o registro.
+	\param id O ID do registro a ser buscado.
 
 	\author Oscar Othon
 */
 void seek1(long id);
 
-//! Função que lê um registro a partir de um título informado.
+//! Busca um registro a partir de seu título usando o arquivo de índices secundário.
 /*!
 	Já que o título não é uma chave, e sim um campo qualquer, não existe ordenação entre eles no arquivo de hashing. Então é necessário utilizarmos uma árvore-B
-    para poder fazermos dessa busca algo mais plausível em questão de tempo. Já que sem a árvore teríamos que fazer uma busca linear.
+    para poder fazermos dessa busca algo mais plausível em questão de tempo. Sem a árvore teríamos que fazer uma busca linear pelo arquivo de hashing.
 
-    A função mostra caso não se consiga achar um arquivo de hashing para a consulta, ou um arquivo de índice secundário, ou o próprio registro de acordo om o ID
-	informado. Ele se utiliza do findEntryAndPrint() para encontrar um registro no arquivo de hashing.
+    Caso o registro não possa ser encontrado, a função informará nos resultados.
 	
 	\param title Título pelo qual o registro será buscado.
 

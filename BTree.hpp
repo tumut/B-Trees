@@ -203,6 +203,9 @@ private:
 		void initialize(bool isLeaf = true, int keysCount = 0);
 		
 		//! Verifica se o nó está em sua capacidade máxima (acima de 2M dados).
+		/*!
+		  \author Timóteo Fonseca
+		 */
 		bool isFull() const;
 		
 		//! Busca um dado que seja equivalente ao dado fornecido.

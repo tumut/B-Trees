@@ -11,11 +11,17 @@
   Sintaxe do uso:
   
   ```
-  $ <nome-do-executavel> upload <id : inteiro>
+  $ <nome-do-executavel> upload <caminho-do-arquivo : string>
   $ <nome-do-executavel> findrec <id : inteiro>
   $ <nome-do-executavel> seek1 <id : inteiro>
   $ <nome-do-executavel> seek2 <titulo : string>
   ```
+  
+  Detalhe importante sobre o comando `upload` e seu argumento `caminho-do-arquivo`:
+  o caminho do arquivo a subir precisa estar no formato CSV com as colunas
+  pré-definidas de cada registro (seguindo o formato da estrutura Entry, salvo
+  o campo `valid` dela). Qualquer outro formato resultará em comportamento
+  indefinido do programa.
   
   Detalhe importante sobre o comando `seek2` e seu argumento `titulo`: `titulo`
   não é uma string entre aspas (`"`). Se um título possuir espaços, espaços
@@ -29,6 +35,8 @@
   
   \param argc Quantidade de argumentos.
   \param argv Valores em string dos argumentos.
+  
+  \author Timóteo Fonseca
  */
 int main(int argc, char **argv) {
 	if (argc == 3) {

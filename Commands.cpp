@@ -10,96 +10,100 @@
 
 // --- //
 
-//#define DEBUG
-
-#ifdef DEBUG
-#define FILEPATH "/home/mutoh/Desktop/"
-#else
+//! Caminho do local onde os arquivos do banco de dados serão criados.
+/*!
+  Este é um define auxiliar que é usado apenas na definição de outros defines.
+  
+  Por padrão, os arquivos serã criados na mesma pasta que o executável.
+ */
 #define FILEPATH "./"
-#endif
 
+//! Nome do arquivo que guardará os índices do arquivo de índice primário.
 #define ID_TREE_FILENAME "bd-idtree.bin"
+//! Caminho completo pro arquivo que guardará os índices do arquivo de índice primário.
 #define ID_TREE_FILEPATH FILEPATH ID_TREE_FILENAME
 
+//! Nome do arquivo que guardará os índices do arquivo de índice secundário.
 #define TITLE_TREE_FILENAME "bd-titletree.bin"
+//! Caminho completo pro arquivo que guardará os índices do arquivo de índice secundário.
 #define TITLE_TREE_FILEPATH FILEPATH TITLE_TREE_FILENAME
 
+//! Nome do arquivo de hashing que guardará os registros.
 #define HASHFILE_FILENAME "bd-hashfile.bin"
+//! Caminho completo pro arquivo de hashing.
 #define HASHFILE_FILEPATH FILEPATH HASHFILE_FILENAME
 
 // --- //
 
-static std::ostream& printOffsetId(long offset, std::ostream& o) {
-	static std::FILE* file = std::fopen(HASHFILE_FILEPATH, "rb");
-	std::fseek(file, offset, SEEK_SET);
-	Block<Entry> e;
-	std::fread(reinterpret_cast<char*>(&e), sizeof(e), 1, file);
-	return o << offset << "->" << e.var.id;
-}
-
+//! Struct auxiliar para guardar os índices primários.
 struct IdPointer {
-	int id;
-	long offset;
+	int id; //!< Id do registro.
+	long offset; //!< Offset do registro no arquivo de hashing.
 	
+	//! Comparador de < para o struct auxiliar, assim poderá ser usado na BTree.
 	bool operator< (const IdPointer& that) const {
 		return id < that.id;
 	}
 };
 
-std::ostream& operator<< (std::ostream& o, const IdPointer& ip) {
-	o << ip.id << "||";
-	return printOffsetId(ip.offset, o);
-}
-
+//! Struct auxiliar para guardar os índices secundários.
 struct TitlePointer {
-	char title[TITLE_CHAR_MAX];
-	long offset;
+	char title[TITLE_CHAR_MAX]; //!< String com o título do registro.
+	long offset; //!< Offset do registro no arquivo de hashing.
 	
+	//! Comparador de < para o struct auxiliar, assim poderá ser usado na BTree.
 	bool operator< (const TitlePointer& that) const {
 		return strcmp(title, that.title) < 0;
 	}
 };
 
-std::ostream& operator<< (std::ostream& o, const TitlePointer& tp) {
-	o << tp.title << "||";
-	return printOffsetId(tp.offset, o);
-}
-
-/* Bunch of calculations to show how the formula for BTREE_ORDER was found: */
-// BLOCK_SIZE = sizeof(long) + sizeof(bool) + sizeof(int) + (2 * M + 1) * sizeof(T) + (2 * M + 2) * sizeof(long)
-// BLOCK_SIZE - sizeof(long) + sizeof(bool) + sizeof(int) = (2 * M) * (sizeof(T) + sizeof(long)) + sizeof(T) + 2 * sizeof(long)
-// BLOCK_SIZE - 3 * sizeof(long) - sizeof(bool) + sizeof(int) - sizeof(T) = (2 * M) * (sizeof(T) + sizeof(long))
-// (BLOCK_SIZE - 3 * sizeof(long) - sizeof(bool) + sizeof(int) - sizeof(T)) / (2 * (sizeof(T) + sizeof(long))) = M
+//! Macro para definição da ordem máxima do nó de um BTree, baseado no tipo de dados que ele guardará.
+/*!
+  O cálculo é feito a partir do tamanho de BLOCK_SIZE e determina a ordem
+  máxima que o nó pode ter sem ultrapassar o tamanho do bloco, considerando
+  que ele estará guardando dados de um tipo cujo tamanho em bytes é T_SIZE.
+  
+  A fórmula do macro foi obtido a partir desta fórmula inicial:
+  
+  `BLOCK_SIZE = sizeof(long) + sizeof(bool) + sizeof(int) + (2 * M + 1) * sizeof(T) + (2 * M + 2) * sizeof(long)`
+  
+  Ele é baseado nos campos padrões da estrutura BNode, interna à classe BTree.
+ */
 #define BTREE_ORDER(T_SIZE) ((BLOCK_SIZE - 3 * sizeof(long) - sizeof(bool) + sizeof(int) - (T_SIZE)) / (2 * ((T_SIZE) + sizeof(long))))
 
+//! Macro com a ordem máxima que um nó de id's pode ter sem ultrapassar o tamanho do bloco.
 #define ID_ORDER BTREE_ORDER(sizeof(int))
+//! Macro com a ordem máxima que um nó de títulos pode ter sem ultrapassar o tamanho do bloco.
 #define TITLE_ORDER BTREE_ORDER(sizeof(char) * TITLE_CHAR_MAX)
 
+//! Typedef de uma árvore B para índices.
 typedef BTree<IdPointer, ID_ORDER> IdBTree;
+//! Typedef de uma árvore B para títulos.
 typedef BTree<TitlePointer, TITLE_ORDER> TitleBTree;
 
 // --- //
 
+//! Struct do cabeçalho do arquivo de hashing.
 struct HashfileHeader {
 	int blockCount;
 };
 
 // --- //
 
-//! O leitor do arquivo.
+//! Lê a coluna de um registro a partir do arquivo CSV.
 /*!
 	Essa função é chamada para a leitura do arquivo. Nela são tratadas todas as possíveis exceções que podem ocorrer na leitura, essas exceções sao a presença no local
 	incorreto de diversos símbolos descritos a seguir. 
 
-	Os símbolos são: ;(ponto e vírgula), `\n`(contra-barra n), \r(contra-barra r), `NULL`, ""(aspas).
+	Os símbolos são: ; (ponto e vírgula), `\n`(contra-barra n), \r(contra-barra r), "(aspas), `NULL`.
 
 	No caso das aspas é necessário ser verificado se elas realmente se encontram em um local inválido, ou se elas são o final de uma coluna. Para isso fazemos uma etapa de verificação
 	a mais nas aspas, nessa etapa verificamos se as aspas são seguidas de `\r`, `;`, `\n`, EOF. Se ela for seguida por algum desses significa que essas aspas estão demarcando o final
 	de uma coluna.
 
-	\param  *field Utilizado como return para essa função.
-	\param  *file O arquivo sendo lido.
-	\param  fieldSize O tamanho de cada campo e um artigo dentro do arquivo.
+	\param field Ponteiro para o vetor de caracteres onde a coluna lida será guardada.
+	\param file O arquivo sendo lido.
+	\param fieldSize O tamanho máximo, em caracteres, que a string do campo pode ter.
 
 	\author Oscar Othon
 */
@@ -111,23 +115,28 @@ static void readField(char *field, std::FILE *file, int fieldSize) {
 	int index = 0;
 
 	switch (current) {
+	// Caso em que o campo não tem caracteres: ;;
 	case ';':
 		break;
-		
+	
+	// Caso em que o último campo não tem caracteres, então sobra apenas uma quebra de linha (estilo LF).
 	case '\n':
 		break;
-		
+	
+	// Caso em que o último campo não tem caracteres, mas sobra uma quebra de linha estilo CRLF.
 	case '\r':
 		std::fgetc(file); // '\n'
 		break;
-		
+	
+	// Caso em que ao invés de um campo há apenas NULL.
 	case 'N':
 		std::fgetc(file); // 'U'
 		std::fgetc(file); // 'L'
 		std::fgetc(file); // 'L'
-		if (std::fgetc(file) == '\r') std::fgetc(file); // newline, be it LF or CRLF
+		if (std::fgetc(file) == '\r') std::fgetc(file); // Pula a quebra de linha, seja ela LF or CRLF
 		break;
-
+	
+	// Caso em que há uma string na coluna.
 	case '"':
 		while (true) {
 			previous = current;
@@ -167,15 +176,15 @@ static void readField(char *field, std::FILE *file, int fieldSize) {
 	std::memcpy(field, buffer, index + 1);
 }
 
-//! Função para a leitura de todos os campos de um artigo no arquivo.
+//! Lê por inteiro, campo a campo, um registro do arquivo CSV.
 /*!
-	Recebendo o arquivo pelo parâmetro std::FILE *file, essa função percorre um artigo do arquivo por completo dividindo esse artigo em seus campos de título, ano, autor,
+	Recebendo o arquivo pelo parâmetro std::FILE *file, essa função percorre por completa uma linha de instância de registro no arquivo, dividindo esse artigo em seus campos de título, ano, autor,
 	citações, atualização e snippet. Cada um desses campos é separado ou por meio da utilização da função readField(), ou utilizando-se fscanf().
 
-	\param e Um registro do arquivo.
-	\param *file O arquivo sendo lido.
+	\param e O registro do registro a ter seus campos lidos.
+	\param file O arquivo sendo lido.
 
-	\returns Se um artigo foi lido com sucesso ou não, dará falso ao chegar no final do arquivo pois não haverão mais artigos para ler.
+	\returns Se o registro foi lido com sucesso ou não, dará falso ao chegar no final do arquivo pois não haverão mais registros para ler.
 
 	\author Oscar Othon
 */
@@ -198,14 +207,13 @@ static bool readEntry(Entry& e, std::FILE *file) {
 	return true;
 }
 
-//! Impressão de cada campo do artigo atual do arquivo.
+//! Imprime um registro campo por campo.
 /*!	
-
-	\param e Um registro do arquivo.
+	\param e O registro a ser impresso.
 
 	\author Oscar Othon
  */
-void printEntry(const Entry& e) {
+static void printEntry(const Entry& e) {
 	std::cout << "id        : " << e.id << '\n';
 	std::cout << "title     : " << e.title << '\n';
 	std::cout << "year      : " << e.year << '\n';
@@ -218,7 +226,7 @@ void printEntry(const Entry& e) {
 // ---
 
 void upload(const char* filePath) {
-	// Entry that will be used to fill up spaces between id's
+	// Registro "fantasma" que será usado para preencher os espaços entre os id's
 	static auto phantomEntry = []{
 			Block<Entry> pe;
 			pe.var.valid = false;
@@ -346,7 +354,7 @@ void upload(const char* filePath) {
 
 	\author Oscar Othon
 */
-void foundEntryMessage(const Entry& e, std::size_t blocksRead, std::size_t blockCount) {
+static void foundEntryMessage(const Entry& e, std::size_t blocksRead, std::size_t blockCount) {
 	std::cout << "Registro encontrado:\n\n";
 	printEntry(e);
 	std::cout << blocksRead << " bloco" << (blocksRead > 1? "s foram lidos" : " foi lido") << " pra encontrá-lo.\n";
@@ -365,7 +373,7 @@ void foundEntryMessage(const Entry& e, std::size_t blocksRead, std::size_t block
 
 	\author Oscar Othon
 */
-bool findEntryAndPrint(std::FILE *hashfile, long offset, std::size_t blocksReadSoFar, std::size_t blockCount) {
+static bool findEntryAndPrint(std::FILE *hashfile, long offset, std::size_t blocksReadSoFar, std::size_t blockCount) {
 	std::cout << "Lendo o registro no offset " << offset << '\n';
 	
 	if (!std::fseek(hashfile, offset, SEEK_SET)) {
@@ -486,6 +494,3 @@ void seek2(const char* title) {
 	
 	std::fclose(hashfile);
 }
-
-
-/** @file */
