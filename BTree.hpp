@@ -135,18 +135,39 @@ public:
 	void finishInsertions();
 	
 private:
+	//! Dados do cabeçalho do arquivo.
 	struct FileHeader {
 		long rootAddress;
 		unsigned int blockCount;
 	};
 	
+	//! Nó da árvore B.
 	struct BNode {
-		long offset; // Address on disk
-		bool isLeaf;
-		std::size_t keysCount;
+		//! Endereço no disco.
+		/*!
+		  O ideal é que o nó, antes de ser escrito no registro pela primeira
+		  vez, esteja com o offset de valor -1. Após a primeira escrita, o
+		  offset passa a realmente possuir seu endereço no disco.
+		 */
+		long offset;
+		bool isLeaf; //!< Booleano indicando se o nó é folha (true) ou nó interno (false).
+		std::size_t keysCount; //!< Quantidade de dados dentro do nó, no momento.
 		
-		TKey keys[2 * M + 1]; // +1 extra space for overflow
-		long children[2 * M + 2]; // +1 extra space for overflow
+		//! Os dados do nó.
+		/*!
+		  Na prática, um nó só costuma utilizar as 2M primeiras posições deste
+		  vetor. O espaço adicional de 1 dado é usado temporariamente para
+		  lidar com overflows.
+		 */
+		TKey keys[2 * M + 1];
+		
+		//! Os apontadores de nó.
+		/*!
+		  Na prática, um nó só costuma utilizar as 2M+1 primeiras posições deste
+		  vetor. O espaço adicional de 1 dado é usado temporariamente para
+		  lidar com overflows.
+		 */
+		long children[2 * M + 2];
 		
 		// Sets an invalid value for offset;
 		// Is a method instead of a constructor for BNode to be usable in 
