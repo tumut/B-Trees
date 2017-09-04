@@ -172,7 +172,7 @@ static void readField(char *field, std::FILE *file, int fieldSize) {
 	Recebendo o arquivo pelo parâmetro std::FILE *file, essa função percorre um artigo do arquivo por completo dividindo esse artigo em seus campos de título, ano, autor,
 	citações, atualização e snippet. Cada um desses campos é separado ou por meio da utilização da função readField(), ou utilizando-se fscanf().
 
-	\param e O artigo sendo lido do arquivo.
+	\param e Um registro do arquivo.
 	\param *file O arquivo sendo lido.
 
 	\returns Se um artigo foi lido com sucesso ou não, dará falso ao chegar no final do arquivo pois não haverão mais artigos para ler.
@@ -199,7 +199,12 @@ static bool readEntry(Entry& e, std::FILE *file) {
 }
 
 //! Impressão de cada campo do artigo atual do arquivo.
-/*!	\author Oscar Othon */
+/*!	
+
+	\param e Um registro do arquivo.
+
+	\author Oscar Othon
+ */
 void printEntry(const Entry& e) {
 	std::cout << "id        : " << e.id << '\n';
 	std::cout << "title     : " << e.title << '\n';
@@ -212,10 +217,6 @@ void printEntry(const Entry& e) {
 
 // ---
 
-//! Função de atualização e debugging.
-/*!
-
-*/
 void upload(const char* filePath) {
 	// Entry that will be used to fill up spaces between id's
 	static auto phantomEntry = []{
@@ -336,6 +337,15 @@ void upload(const char* filePath) {
 	std::cout << "Arquivo de índice secundário: " << titleStats.blocksCreated << " blocos." << std::endl;
 }
 
+//! Função que mostra que um registro foi encontrado, quantos blocos foram lidos para encontrá-lo e quantos blocos o arquivo possui no momento.
+/*!
+
+	\param e Um registro do arquivo.
+	\param blocksRead O número de blocos lidos até chegar no registro.
+	\param blockCount A contagem do número total de blocos no arquivo.
+
+	\author Oscar Othon
+*/
 void foundEntryMessage(const Entry& e, std::size_t blocksRead, std::size_t blockCount) {
 	std::cout << "Registro encontrado:\n\n";
 	printEntry(e);
@@ -343,6 +353,18 @@ void foundEntryMessage(const Entry& e, std::size_t blocksRead, std::size_t block
 	std::cout << "O arquivo está no momento com " << blockCount << " blocos totais." << std::endl;
 }
 
+//! Função que acha um registro no arquivo e printa se a busca foi completa ou não, ou se ocorreu algum erro de leitura.
+/*!
+
+	Essa função recebe o arquivo já aberto, se dirige até o offset e, então, lê o registro.
+
+	\param *hashfile Ponteiro do arquivo pro arquivo de hashing.
+	\param	offset O offset do registro no arquivo.
+	\param	blocksReadSoFar Quantos blocos foram lidos até o momento.
+	\param	blockCount A contagem do número total de blocos no arquivo.
+
+	\author Oscar Othon
+*/
 bool findEntryAndPrint(std::FILE *hashfile, long offset, std::size_t blocksReadSoFar, std::size_t blockCount) {
 	std::cout << "Lendo o registro no offset " << offset << '\n';
 	
