@@ -141,6 +141,7 @@ Block<typename BTree<TKey, M>::FileHeader> BTree<TKey, M>::readHeader() const {
 	std::fseek(m_file, 0, SEEK_SET);
 	std::fread(reinterpret_cast<char*>(&header), 1, sizeof(header), m_file);
 	
+	++m_stats.blocksRead;
 	return header;
 }
 
