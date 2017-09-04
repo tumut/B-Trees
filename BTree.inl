@@ -13,7 +13,7 @@ void BTree<TKey, M>::BNode::initialize(bool isLeaf, int keysCount) {
 
 template<class TKey, std::size_t M>
 bool BTree<TKey, M>::BNode::isFull() const {
-	return keysCount == 2 * M;
+	return keysCount >= 2 * M;
 }
 
 template<class TKey, std::size_t M>
