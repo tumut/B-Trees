@@ -116,7 +116,7 @@ public:
 	
 	//! Retorna as estatísticas da árvore até então.
 	/*!
-	  A inclusão, nas estatísticas, da quantidade de blocos no arquivo, é
+	  A inclusão da quantidade de blocos no arquivo, nas estatísticas, é
 	  opcional pois a árvore vai ter que fazer uma leitura do arquivo para
 	  poder obter este dado, o que é uma operação custosa.
 	  
@@ -130,7 +130,9 @@ public:
 	Statistics getStatistics(bool includeFileBlockCount = false) const;
 	
 	//! Atribui valor 0 a todos os campos das estatísticas atuais.
-	/*! \author Timóteo Fonseca */
+	/*!
+	  \author Timóteo Fonseca
+	  */
 	void resetStatistics();
 	
 	//! Atualiza o cabeçalho com o total de blocos no arquivo.
@@ -219,19 +221,93 @@ private:
 	
 	std::FILE *m_file; //!< Ponteiro de arquivo para o arquivo em que se encontram os dados da árvore.
 	Block<BNode> m_root; //!< Nó raiz da árvore.
-	Statistics m_stats; //!< Onde a BTree guarda suas estatísticas de leitura e escrita de blocos.
+	mutable Statistics m_stats; //!< Onde a BTree guarda suas estatísticas de leitura e escrita de blocos.
 	
+	//! Retorna um bloco com o nó lido no offset fornecido.
+	/*!
+	  O resultado da função é indefinido se for fornecido um offset inválido.
+	  Presume-se que apenas offsets válidos, com arquivos válidos, serão
+	  fornecidos para esta função.
+	  
+	  Esta função incrementa o valor de blocos lidos, nas estatísticas.
+	  
+	  \param offset O offset do nó no arquivo.
+	  
+	  \return Um bloco com o nó no offset.
+	  
+	  \author Timóteo Fonseca
+	 */
 	Block<BNode> readFromDisk(long offset);
+	
+	//! Atualiza em disco o nó fornecido.
+	/*!
+	  Caso o nó ainda não tenha sido escrito em disco, ou seja, possua offset
+	  inválido (-1), o nó é concatenado ao fim do arquivo e seu offset atualizado
+	  com sua nova posição.
+	  
+	  Esta função incrementa o valor de blocos criados, nas estatísticas, no
+	  caso descrito anteriormente.
+	  
+	  Caso o nó já tenha sido escrito, ou seja, possua offset válido, o nó
+	  é simplesmente atualizado.
+	  
+	  \param node O nó a ser escrito.
+	  
+	  \author Timóteo Fonseca
+	 */
 	void writeToDisk(Block<BNode>& node); // Updates the node's offset if not yet defined
 	
+	//! Lê em disco o cabeçalho do arquivo da árvore.
+	/*!
+	  Esta função tem retorno indefinido se chamada enquanto a árvore
+	  ainda não estiver sido inicializada e o arquivo não estiver aberto.
+	  Presume-se que ela sempre será chamada em condições satisfatórias.
+	  
+	  Esta função incrementa a quantidade de blocos lidos nas estatísticas.
+	  
+	  \return O bloco com o cabeçalho do arquivo.
+	  
+	  \author Timóteo Fonseca
+	 */
 	Block<FileHeader> readHeader() const;
+	
+	//! Atualiza o cabeçalho do arquivo da arvore.
+	/*!
+	  \param header Bloco com instância de cabeçalho possuindo os novos valores
+	   do cabeçalho do arquivo. 
+	  
+	  \author Timóteo Fonseca
+	 */
 	void writeHeader(const Block<FileHeader>& header);
 	
+	//! Registro auxiliar com o resultado de um overflow de inserção.
 	struct OverflowResult {
-		TKey middle;
-		long rightNode;
+		TKey middle; //!< O dado que, após o split de nós, é o valor do meio e deverá ser inserido no nó pai.
+		long rightNode; //!< Offset de nó que vai precisar estar no apontador à direita de onde `middle` for inserido, no nó pai.
 	};
 	
+	//! Método interno de inserção na árvore.
+	/*!
+	  Caso o nó seja uma folha, ele busca o apontador de nó para o nó em que o
+	  dado deve ser inserido e tenta novamente de forma recursiva. Caso não seja
+	  uma folha, ele faz a inserção normalmente.
+	  
+	  Em caso de overflow, a função irá realizar um split no nó fornecido por
+	  parâmetro e irá retornar dados para o nó pai lidar com o overflow. Ele irá
+	  tentar inserir novamente, dessa vez em si mesmo.
+	  
+	  O valor de rightNodeOffset só será diferente de -1 se a função estiver
+	  lidando com um overflow previamente encontrado. No caso, node será um nó
+	  pai que precisa tentar inserir o dado que restou no último split.
+	  
+	  \param node O nó em que o dado está sendo inserido.
+	  \param key O dado a ser inserido.
+	  \param rightNodeOffset O offset do nó à direita do dado a ser inserido; caso seja -1, ele não existe.
+	  
+	  \return Dados de overflow caso tenha houvido um, ou nulo.
+	  
+	  \author Timóteo Fonseca
+	 */
 	std::unique_ptr<OverflowResult> insert(Block<BNode>& node, TKey key, long rightNodeOffset = -1);
 };
 
