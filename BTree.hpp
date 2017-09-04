@@ -116,7 +116,15 @@ public:
 	
 	//! Retorna as estatísticas da árvore até então.
 	/*!
+	  A inclusão, nas estatísticas, da quantidade de blocos no arquivo, é
+	  opcional pois a árvore vai ter que fazer uma leitura do arquivo para
+	  poder obter este dado, o que é uma operação custosa.
+	  
+	  \param includeFileBlockCount Se deve incluir (true) ou não (false) a
+	   quantidade de blocos do arquivo nas estatísticas.
+	  
 	  \return Estatísticas.
+	  
 	  \author Timóteo Fonseca
 	 */
 	Statistics getStatistics(bool includeFileBlockCount = false) const;
@@ -169,19 +177,49 @@ private:
 		 */
 		long children[2 * M + 2];
 		
-		// Sets an invalid value for offset;
-		// Is a method instead of a constructor for BNode to be usable in 
-		// the Block union (union requires only POD members).
+		//! Inicializa o nó.
+		/*!
+		  O valor do campo offset do nó não é fornecido: ele é sempre
+		  inicializado como -1, para permitir que se saiba se ele já foi
+		  escrito no arquivo ou não.
+		  
+		  Se um nó não for lido através de um readFromDisk da BTree, é
+		  obrigatório que esse método seja chamado, pois ele funciona como um
+		  construtor do BNode.
+		  
+		  A inicialização foi implementada como um método ao invés de um
+		  construtor pois é necessário que o BNode seja uma classe de tipo POD
+		  (Plain Old Data type) para poder ser lido e escrito no arquivo, além
+		  de para também poder ser usado como argumento de template para o
+		  Block<T>.
+		  
+		  \param isLeaf Se o nó vai ser inicializado como folha (true) ou não (false).
+		  \param keysCount Quantidade inicial de dados no nó.
+		  
+		  \autor Timóteo Fonseca
+		 */
 		void initialize(bool isLeaf = true, int keysCount = 0);
 		
+		//! Verifica se o nó está em sua capacidade máxima (acima de 2M dados).
 		bool isFull() const;
 		
+		//! Busca um dado que seja equivalente ao dado fornecido.
+		/*!
+		  Realiza a busca propriamente dita pelo dado, usando a instância de
+		  tree passado por parâmetro para poder realizar leituras no arquivo.
+		  
+		  Retorna um ponteiro nulo se não encontrar o dado.
+		  
+		  \return Ponteiro com o dado ou nulo.
+		  
+		  \author Timóteo Fonseca
+		 */
 		std::unique_ptr<TKey> seek(const TKey& key, BTree& tree) const;
 	};
 	
-	std::FILE *m_file;
-	Block<BNode> m_root;
-	Statistics m_stats;
+	std::FILE *m_file; //!< Ponteiro de arquivo para o arquivo em que se encontram os dados da árvore.
+	Block<BNode> m_root; //!< Nó raiz da árvore.
+	Statistics m_stats; //!< Onde a BTree guarda suas estatísticas de leitura e escrita de blocos.
 	
 	Block<BNode> readFromDisk(long offset);
 	void writeToDisk(Block<BNode>& node); // Updates the node's offset if not yet defined
