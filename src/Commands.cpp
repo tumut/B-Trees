@@ -65,11 +65,11 @@ struct TitlePointer {
   
   A fórmula do macro foi obtido a partir desta fórmula inicial:
   
-  `BLOCK_SIZE = sizeof(long) + sizeof(bool) + sizeof(int) + (2 * M + 1) * sizeof(T) + (2 * M + 2) * sizeof(long)`
+  `BLOCK_SIZE = sizeof(long) + sizeof(bool) + sizeof(std::size_t) + (2 * M + 1) * sizeof(T) + (2 * M + 2) * sizeof(long)`
   
   Ele é baseado nos campos padrões da estrutura BNode, interna à classe BTree.
  */
-#define BTREE_ORDER(T_SIZE) ((BLOCK_SIZE - 3 * sizeof(long) - sizeof(bool) + sizeof(int) - (T_SIZE)) / (2 * ((T_SIZE) + sizeof(long))))
+#define BTREE_ORDER(T_SIZE) ((BLOCK_SIZE - 3 * sizeof(long) - sizeof(bool) + sizeof(std::size_t) - (T_SIZE)) / (2 * ((T_SIZE) + sizeof(long))))
 
 //! Macro com a ordem máxima que um nó de id's pode ter sem ultrapassar o tamanho do bloco.
 #define ID_ORDER BTREE_ORDER(sizeof(int))
