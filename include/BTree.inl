@@ -5,10 +5,10 @@
 // --- //
 
 template<typename T, std::size_t M>
-void BTree<T, M>::BNode::initialize(bool isLeaf, int keysCount) {
+void BTree<T, M>::BNode::initialize(bool isLeaf, int size) {
 	this->offset = -1;
 	this->isLeaf = isLeaf;
-	this->size = keysCount;
+	this->size = size;
 }
 
 template<typename T, std::size_t M>
