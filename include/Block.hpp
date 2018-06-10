@@ -10,6 +10,8 @@
 
 //! Union for reading and writing blocks containing serialized data.
 /*!
+	Wraps a T value within a block-sized memory space.
+	
 	T must be a POD (Plain Old Data type) and will be the type of the
 	serialized data within the block.
 
