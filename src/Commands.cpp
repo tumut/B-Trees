@@ -107,7 +107,7 @@ struct HashfileHeader {
 
 	\author Oscar Othon
 */
-static void readField(char *field, std::FILE *file, int fieldSize) {
+static void readStringField(char *field, std::FILE *file, int fieldSize) {
 	static char buffer[1024 * 2];
 	
 	char previous = ';';
@@ -195,13 +195,13 @@ static bool readEntry(Entry& e, std::FILE *file) {
 		e.valid = false;
 		return false;
 	}
-	
-	readField(e.title, file, TITLE_CHAR_MAX);
+
+	readStringField(e.title, file, TITLE_CHAR_MAX);
 	std::fscanf(file, "\"%d\";", &e.year);
-	readField(e.authors, file, AUTHORS_CHAR_MAX);
+	readStringField(e.authors, file, AUTHORS_CHAR_MAX);
 	std::fscanf(file, "\"%d\";", &e.citations);
-	readField(e.updateTimestamp, file, TIMESTAMP_CHAR_MAX);
-	readField(e.snippet, file, SNIPPET_CHAR_MAX);
+	readStringField(e.updateTimestamp, file, TIMESTAMP_CHAR_MAX);
+	readStringField(e.snippet, file, SNIPPET_CHAR_MAX);
 	
 	e.valid = true;
 	return true;
