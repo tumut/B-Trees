@@ -6,9 +6,10 @@
 #include <cstdio>
 #include <memory>
 
-//! B-tree class.
+//! B-tree class
 /*!
- * Used to store indices for fast retrieval in binary files.
+ * BTree can be used to store T-type values in binary files for fast retrieval
+ * later. T must be a POD (Plain Old Data type) and _less-than_ comparable.
  *
  * Use the method BTree::create before inserting values and, once you've
  * finished inserting, call BTree::finishInsertions.
@@ -30,28 +31,26 @@
  * if (x) f(*x); // Do something to x if found
  * \endcode
  *
- * @tparam T Data type that will be stored. Must be "less-than comparable" and
- * a POD (Plain Old Data type) so that it can be serialized in the written
- * file.
+ * @tparam T Type of the data to be stored
  *
  * @tparam M Tree order. Each node will store up to 2M values and have up to
- * 2M + 1 children.
+ * 2M + 1 children. A node can't be bigger than `BLOCK_SIZE` bytes.
  */
 template<typename T, std::size_t M>
 class BTree {
 public:
-	//! Default constructor.
+	//! Default constructor
 	/*!
 	 * Initializes the statistics with 0 values and makes the file pointer
-	 * point to null.
+	 * point to null
 	 */
 	BTree();
 	
-	//! Default destructor.
-	/*! Closes the file if it's open. */
+	//! Destructor
+	/*! Closes the file if it's open */
 	~BTree();
 	
-	//! Initializes the B-tree for writing.
+	//! Initializes the B-tree for writing
 	/*!
 	 * Opens the file in "wb+" mode. Must be called before inserting values in
 	 * the tree. Also allows reading through BTree::seek.
@@ -61,13 +60,13 @@ public:
 	 * The new file will be created in the provided filepath with a header
 	 * and an empty root node.
 	 *
-	 * @param filepath Path to the file where the tree data will be written.
+	 * @param filepath Path to the file where the tree data will be written
 	 *
-	 * @return True if the file was created successfully.
+	 * @return True if the file was created successfully
 	*/
 	bool create(const char* filepath);
 	
-	//! Initializes the B-tree for reading only.
+	//! Initializes the B-tree for reading only
 	/*!
 	 * Opens the file in "rb" mode. Must be before reading values form a file
 	 * where values have already been inserted. Insertions won't be possible.
@@ -75,15 +74,15 @@ public:
 	 * The file must have been previously created by a BTree which successfully
 	 * called BTree::create and BTree::finishInsertions.
 	 *
-	 * @param filepath Path to the file where tree data can be found.
+	 * @param filepath Path to the file where tree data can be found
 	 *
-	 * @return If it was possible to open the file in filepath.
+	 * @return True if it was possible to open the file in filepath
 	 */
 	bool load(const char* filepath);
 	
-	//! Inserts a value in the tree.
+	//! Inserts a value in the tree
 	/*!
-	 * @param value The value to be inserted.
+	 * @param value Value to insert
 	 */
 	void insert(const T& value);
 	
