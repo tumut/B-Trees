@@ -8,13 +8,12 @@
 
 //! B-tree class.
 /*!
- * Used to store indices in files.
+ * Used to store indices for fast retrieval in binary files.
  *
- * Use the method BTree::create before inserting values. Use BTree::load
- * before reading them.
+ * Use the method BTree::create before inserting values and, once you've
+ * finished inserting, call BTree::finishInsertions.
  *
- * After you've finished writing, don't forget to call BTree::finishInsertions
- * to update header data.
+ * Use BTree::load before reading values.
  *
  * Example usage:
  * \code
