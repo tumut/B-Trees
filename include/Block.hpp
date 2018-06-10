@@ -26,9 +26,9 @@
  *
  * @tparam T Type of the data to be stored within the block
  */
-template <typename T>
+template <typename T, unsigned int BlockSize = BLOCK_SIZE>
 union Block {
-	char padding[BLOCK_SIZE]; //!< Byte array used to guarantee that the instance will have at least `BLOCK_SIZE` bytes
+	char padding[BlockSize]; //!< Byte array used to guarantee that the instance will have at least `BLOCK_SIZE` bytes
 	T var; //!< Member used to access the wrapped value
 };
 
