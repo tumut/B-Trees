@@ -11,9 +11,6 @@
 //! Union for reading and writing blocks containing serialized data.
 /*!
 	Wraps a T value within a block-sized memory space.
-	
-	T must be a POD (Plain Old Data type) and will be the type of the
-	serialized data within the block.
 
 	The condition `sizeof(T) <= BLOCK_SIZE` must be satisfied. Otherwise, the
 	stored value will be bigger than the block size and reading and writing
@@ -23,8 +20,11 @@
 	individually occupy exactly one block in size. The remaining unused bytes
 	will have undefined values in the file.
 
-	After using Block<T> instances to write a file, you should use it again
-	when reading the file.
+	After using Block instances to write a file, use Block again when reading
+	the file.
+
+	@tparam T Type of the data to be stored within the block. Most be a POD
+	(Plain Old Data type).
 */
 template <class T>
 union Block {
