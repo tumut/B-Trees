@@ -31,14 +31,14 @@
  * if (x) f(*x); // Do something to x if found
  * \endcode
  *
- * @tparam TKey Data type that will be stored. TKey must be "less-than
- * comparable" and a POD (Plain Old Data type) so that it can be serialized in
- * the written file.
+ * @tparam T Data type that will be stored. Must be "less-than comparable" and
+ * a POD (Plain Old Data type) so that it can be serialized in the written
+ * file.
  *
  * @tparam M Tree order. Each node will store up to 2M values and have up to
  * 2M + 1 children.
  */
-template<class TKey, std::size_t M>
+template<typename T, std::size_t M>
 class BTree {
 public:
 	//! Default constructor.
@@ -48,7 +48,7 @@ public:
 	 */
 	BTree();
 	
-	//! Destructor.
+	//! Default destructor.
 	/*! Closes the file if it's open. */
 	~BTree();
 	
@@ -82,13 +82,11 @@ public:
 	 */
 	bool load(const char* filepath);
 	
-	//! Insere um dado dentro da árvore.
+	//! Inserts a value in the tree.
 	/*!
-	  \param key O dado a ser inserido.
-	  
-	  \author Timóteo Fonseca
+	 * @param value The value to be inserted.
 	 */
-	void insert(const TKey& key);
+	void insert(const T& value);
 	
 	//! Busca um dado que seja equivalente ao dado fornecido.
 	/*!
@@ -101,7 +99,7 @@ public:
 	  
 	  \author Timóteo Fonseca
 	 */
-	std::unique_ptr<TKey> seek(const TKey& key);
+	std::unique_ptr<T> seek(const T& key);
 	
 	//! Estrutura usada pela árvore para guardar métricas de sua execução.
 	/*! \author Timóteo Fonseca */
@@ -158,7 +156,7 @@ private:
 		 */
 		long offset;
 		bool isLeaf; //!< Booleano indicando se o nó é folha (true) ou nó interno (false).
-		std::size_t keysCount; //!< Quantidade de dados dentro do nó, no momento.
+		std::size_t size; //!< Quantidade de dados dentro do nó, no momento.
 		
 		//! Os dados do nó.
 		/*!
@@ -166,7 +164,7 @@ private:
 		  vetor. O espaço adicional de 1 dado é usado temporariamente para
 		  lidar com overflows.
 		 */
-		TKey keys[2 * M + 1];
+		T values[2 * M + 1];
 		
 		//! Os apontadores de nó.
 		/*!
@@ -216,7 +214,7 @@ private:
 		  
 		  \author Timóteo Fonseca
 		 */
-		std::unique_ptr<TKey> seek(const TKey& key, BTree& tree) const;
+		std::unique_ptr<T> seek(const T& key, BTree& tree) const;
 	};
 	
 	std::FILE *m_file; //!< Ponteiro de arquivo para o arquivo em que se encontram os dados da árvore.
@@ -282,7 +280,7 @@ private:
 	
 	//! Registro auxiliar com o resultado de um overflow de inserção.
 	struct OverflowResult {
-		TKey middle; //!< O dado que, após o split de nós, é o valor do meio e deverá ser inserido no nó pai.
+		T middle; //!< O dado que, após o split de nós, é o valor do meio e deverá ser inserido no nó pai.
 		long rightNode; //!< Offset de nó que vai precisar estar no apontador à direita de onde `middle` for inserido, no nó pai.
 	};
 	
@@ -308,7 +306,7 @@ private:
 	  
 	  \author Timóteo Fonseca
 	 */
-	std::unique_ptr<OverflowResult> insert(Block<BNode>& node, TKey key, long rightNodeOffset = -1);
+	std::unique_ptr<OverflowResult> insert(Block<BNode>& node, T key, long rightNodeOffset = -1);
 };
 
 #include "BTree.inl"
