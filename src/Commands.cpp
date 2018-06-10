@@ -242,6 +242,14 @@ void upload(const char* filePath) {
 	std::cout << "Ordem da árvore de títulos: " << TITLE_ORDER << "\n\n";
 	
 	std::cout << "Abrindo os arquivos...\n\n";
+
+	std::FILE *input = std::fopen(filePath, "rb");
+	if (!input) {
+		std::cout << "Não foi possível abrir o arquivo de leitura.\n";
+		std::cout << "Caminho: \"" << filePath << "\"\n";
+		std::cout << "Abortando." << std::endl;
+		return;
+	}
 	
 	IdBTree idTree;
 	if (!idTree.create(ID_TREE_FILEPATH)) {
@@ -262,14 +270,6 @@ void upload(const char* filePath) {
 	}
 	
 	std::cout << "Arquivo para a árvore B de títulos criado em " << TITLE_TREE_FILEPATH << '\n';
-	
-	std::FILE *input = std::fopen(filePath, "rb");
-	if (!input) {
-		std::cout << "Não foi possível abrir o arquivo de leitura.\n";
-		std::cout << "Caminho: \"" << filePath << "\"\n";
-		std::cout << "Abortando." << std::endl;
-		return;
-	}
 	
 	std::FILE *output = std::fopen(HASHFILE_FILEPATH, "wb");
 	if (!output) {
