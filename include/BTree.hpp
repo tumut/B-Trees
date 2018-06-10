@@ -6,35 +6,37 @@
 #include <cstdio>
 #include <memory>
 
-//! Classe de árvore B.
+//! B-tree class.
 /*!
-  Classe de árvore B multi-uso usada para guardar índices e títulos no trabalho.
-  
-  O parâmetro de template TKey determina o tipo de dado que será guardado nos nós
-  da árvore. TKey deve ser um tipo POD (Plain Old Data type) para poder ser
-  sequenciado no arquivo quando o nó for escrito.
-  
-  O parâmetro de template M determina a ordem da árvore. Em condições normais,
-  um nó pode ter no máximo 2M dados e 2M+1 apontadores de nó. Em estado de
-  overflow, ele pode temporariamente ter 2M+1 dados e 2M+2 apontadores de nó.
-  
-  Antes de usar uma BTree deve sempre se chamar o método load (em caso de apenas
-  leitura) ou create (em caso de escrita de um novo arquivo).
-  
-  No fim da inserção, o método finishInsertions() deve ser chamado para a
-  quantidade de blocos do arquivo ser atualizada no cabeçalho.
-  
-  Exemplo de uso:
-  \code
-  BTree<int, 2> arvore;
-  arvore.create("nomedoarquivo.bin");
-  arvore.insert(1);
-  arvore.finishInsertions();
-  
-  arvore.load("nomedoarquivo.bin");
-  auto valor = arvore.seek(1);
-  if (valor) f(*valor); // Fazer algo com o valor, se encontrado.
-  \endcode
+	Used to store indices in files.
+
+	Use the method BTree::create before inserting values. Use BTree::load
+	before reading them.
+
+	After you've finished writing, don't forget to call BTree::finishInsertions
+	to update header data.
+
+	Example usage:
+	\code
+	BTree<int, 2> tree;
+
+	// Insert data
+	tree.create("filename.bin");
+	tree.insert(1);
+	tree.finishInsertions();
+
+	// Read data
+	tree.load("filename.bin");
+	int *x = tree.seek(1);
+	if (x) f(*x); // Do something to x if found
+	\endcode
+
+	@tparam TKey Data type that will be stored. TKey must be "less-than
+	comparable" and a POD (Plain Old Data type) so that it can be serialized in
+	the written file.
+
+	@tparam M Tree order. Each node will store up to 2M values and have up to
+	2M + 1 children. 
  */
 template<class TKey, std::size_t M>
 class BTree {
