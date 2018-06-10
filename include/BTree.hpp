@@ -8,82 +8,77 @@
 
 //! B-tree class.
 /*!
-	Used to store indices in files.
-
-	Use the method BTree::create before inserting values. Use BTree::load
-	before reading them.
-
-	After you've finished writing, don't forget to call BTree::finishInsertions
-	to update header data.
-
-	Example usage:
-	\code
-	BTree<int, 2> tree;
-
-	// Insert data
-	tree.create("filename.bin");
-	tree.insert(1);
-	tree.finishInsertions();
-
-	// Read data
-	tree.load("filename.bin");
-	int *x = tree.seek(1);
-	if (x) f(*x); // Do something to x if found
-	\endcode
-
-	@tparam TKey Data type that will be stored. TKey must be "less-than
-	comparable" and a POD (Plain Old Data type) so that it can be serialized in
-	the written file.
-
-	@tparam M Tree order. Each node will store up to 2M values and have up to
-	2M + 1 children. 
+ * Used to store indices in files.
+ *
+ * Use the method BTree::create before inserting values. Use BTree::load
+ * before reading them.
+ *
+ * After you've finished writing, don't forget to call BTree::finishInsertions
+ * to update header data.
+ *
+ * Example usage:
+ * \code
+ * BTree<int, 2> tree;
+ *
+ * // Insert data
+ * tree.create("filename.bin");
+ * tree.insert(1);
+ * tree.finishInsertions();
+ *
+ * // Read data
+ * tree.load("filename.bin");
+ * int *x = tree.seek(1);
+ * if (x) f(*x); // Do something to x if found
+ * \endcode
+ *
+ * @tparam TKey Data type that will be stored. TKey must be "less-than
+ * comparable" and a POD (Plain Old Data type) so that it can be serialized in
+ * the written file.
+ *
+ * @tparam M Tree order. Each node will store up to 2M values and have up to
+ * 2M + 1 children.
  */
 template<class TKey, std::size_t M>
 class BTree {
 public:
-	//! Construtor padrão.
+	//! Default constructor.
 	/*!
-	  Inicializa com valores 0 as estatísticas e nulifica o ponteiro
-	  de arquivo da BTree.
-	  
-	  \author Timóteo Fonseca
+	 * Initializes the statistics with 0 values and makes the file pointer
+	 * point to null.
 	 */
 	BTree();
 	
-	//! Destrutor padrão
-	/*! Fecha o arquivo se ele estiver aberto. */
+	//! Destructor.
+	/*! Closes the file if it's open. */
 	~BTree();
 	
-	//! Método de inicialização da árvore, para escrita.
+	//! Initializes the B-tree for writing.
 	/*!
-	  Deve sempre ser chamado antes de começar a inserção na árvore, mas também
-	  permite a leitura.
-	  
-	  Se já houver um arquivo em filepath, ele será sobreescrito.
-	  
-	  O arquivo novo será criado com um cabeçalho e um nó raiz vazio.
-	  
-	  \param filepath Caminho do arquivo onde os dados da árvore serão escritos.
-	  
-	  \return Se foi possível criar o arquivo em filepath.
-	  
-	  \author Timóteo Fonseca
-	 */
+	 * Opens the file in "wb+" mode. Must be called before inserting values in
+	 * the tree. Also allows reading through BTree::seek.
+	 *
+	 * If there's already a file in the filepath, it'll be overwritten.
+	 *
+	 * The new file will be created in the provided filepath with a header
+	 * and an empty root node.
+	 *
+	 * @param filepath Path to the file where the tree data will be written.
+	 *
+	 * @return True if the file was created successfully.
+	*/
 	bool create(const char* filepath);
 	
-	//! Método de inicialização da árvore, para leitura.
+	//! Initializes the B-tree for reading only.
 	/*!
-	  Deve sempre ser chamado antes de começar a leitura da árvore. Inserções
-	  não serão possíveis.
-	  
-	  O arquivo deve existir previamente, de preferência criado por outra
-	  execução da BTree após uma chamada de create().
-	  
-	  \param filepath Caminho pro arquivo onde se encontram os dados da árvore.
-	  
-	  \return Se foi possível abrir o arquivo em filepath.
-	  
-	  \author Timóteo Fonseca
+	 * Opens the file in "rb" mode. Must be before reading values form a file
+	 * where values have already been inserted. Insertions won't be possible.
+	 *
+	 * The file must have been previously created by a BTree which successfully
+	 * called BTree::create and BTree::finishInsertions.
+	 *
+	 * @param filepath Path to the file where tree data can be found.
+	 *
+	 * @return If it was possible to open the file in filepath.
 	 */
 	bool load(const char* filepath);
 	
@@ -260,7 +255,7 @@ private:
 	  
 	  \author Timóteo Fonseca
 	 */
-	void writeToDisk(Block<BNode>& node); // Updates the node's offset if not yet defined
+	void writeToDisk(Block<BNode>& node);
 	
 	//! Lê em disco o cabeçalho do arquivo da árvore.
 	/*!
