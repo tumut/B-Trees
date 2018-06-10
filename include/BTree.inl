@@ -93,10 +93,11 @@ std::unique_ptr<T> BTree<T, M>::seek(const T& key) {
 }
 
 template<typename T, std::size_t M>
-typename BTree<T, M>::Statistics BTree<T, M>::getStatistics(bool includeFileBlockCount) const {
-	auto stats = m_stats;
-	stats.blocksInDisk = readHeader().var.blockCount;
-	return stats;
+const typename BTree<T, M>::Statistics& BTree<T, M>::getStatistics(bool includeFileBlockCount) const {
+	if (includeFileBlockCount)
+		m_stats.blocksInDisk = readHeader().var.blockCount;
+
+	return m_stats;
 }
 
 template<typename T, std::size_t M>
