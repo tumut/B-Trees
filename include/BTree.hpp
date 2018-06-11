@@ -151,7 +151,7 @@ public:
 	void finishInsertions();
 	
 private:
-	//! File header data
+	//! File header data for BTree indexes
 	struct FileHeader {
 		long rootAddress;
 		unsigned int blockCount;
@@ -274,7 +274,7 @@ private:
 	 */
 	void writeHeader(const FileHeaderBlock& header);
 	
-	//! Auxiliary struct with results from an insertion overflow
+	//! Provides information to deal with an insertion overflow
 	struct OverflowResult {
 		T middle; //!< The value that, after splitting nodes, shall be used as the middle value and must be inserted in the parent node
 		long rightNode; //!< Offset of the node that'll have to be the pointer to the right of the OverflowResult::middle value
