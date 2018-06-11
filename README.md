@@ -1,5 +1,3 @@
-# 🅱️ Trees
-
 B-tree implementation in C++ to index documents based on numerical id's (main index) and title strings (secondary index) in a sample application. Created as a college assignment.
 
 [Check our pre-generated source documentation!](https://tumut.github.io/BTrees/)
