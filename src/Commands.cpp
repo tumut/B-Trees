@@ -372,7 +372,7 @@ static bool findEntryAndPrint(std::FILE *hashfile, long offset, std::size_t bloc
 	std::cout << "Reading entry in offset " << offset << '\n';
 	
 	if (!std::fseek(hashfile, offset, SEEK_SET)) {
-		Block<Entry> e;
+		EntryBlock e;
 		
 		if (std::fread(reinterpret_cast<char*>(&e), sizeof(e), 1, hashfile) && e.var.valid) {
 			++blocksReadSoFar; // +1 because the entry block has been read
