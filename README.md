@@ -8,7 +8,7 @@ B-tree implementation in C++ to index documents based on numerical id's (main in
 
 ### Program
 
-After cloning the repository, you can explore and build the it with the [CLion IDE](https://www.jetbrains.com/clion/).
+After cloning the repository, you can explore and build it with the [CLion IDE](https://www.jetbrains.com/clion/).
 
 Alternatively, use the following commands at the repository's root folder:
 
