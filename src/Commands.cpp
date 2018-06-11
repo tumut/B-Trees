@@ -30,7 +30,7 @@
 #define HASHFILE_BLOCK_SIZE BLOCK_SIZE
 
 //! Show how many entries have already been read and indexed every once in a while
-#define PATIENCE_STEP 1000
+#define PATIENCE_STEP 10000
 
 // --- //
 
