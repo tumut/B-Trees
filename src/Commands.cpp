@@ -1,92 +1,95 @@
 #include "Commands.hpp"
 
-#include "Block.hpp"
-#include "BTree.hpp"
-#include "Entry.hpp"
-
 #include <cstdio>
 #include <cstring>
 #include <iostream>
 
+#include "Block.hpp"
+#include "IdealBTree.hpp"
+#include "Entry.hpp"
+
 // --- //
 
-//! Caminho do local onde os arquivos do banco de dados serão criados.
-/*!
-  Este é um define auxiliar que é usado apenas na definição de outros defines.
-  
-  Por padrão, os arquivos serã criados na mesma pasta que o executável.
- */
-#define FILEPATH "./"
+//! File path to the folder where database files will be created
+#define ROOT "./"
 
-//! Nome do arquivo que guardará os índices do arquivo de índice primário.
+//! Primary index data filename
 #define ID_TREE_FILENAME "bd-idtree.bin"
-//! Caminho completo pro arquivo que guardará os índices do arquivo de índice primário.
-#define ID_TREE_FILEPATH FILEPATH ID_TREE_FILENAME
+//! Full filepath to the primary index file
+#define ID_TREE_FILEPATH ROOT ID_TREE_FILENAME
 
-//! Nome do arquivo que guardará os índices do arquivo de índice secundário.
+//! Secondary index data filename
 #define TITLE_TREE_FILENAME "bd-titletree.bin"
-//! Caminho completo pro arquivo que guardará os índices do arquivo de índice secundário.
-#define TITLE_TREE_FILEPATH FILEPATH TITLE_TREE_FILENAME
+//! Full filepath to the secondary index file
+#define TITLE_TREE_FILEPATH ROOT TITLE_TREE_FILENAME
 
-//! Nome do arquivo de hashing que guardará os registros.
+//! Hashing file filename
 #define HASHFILE_FILENAME "bd-hashfile.bin"
-//! Caminho completo pro arquivo de hashing.
-#define HASHFILE_FILEPATH FILEPATH HASHFILE_FILENAME
+//! Full filepath to the hashing file
+#define HASHFILE_FILEPATH ROOT HASHFILE_FILENAME
+
+//! Block size in bytes to be used in the hashing file
+#define HASHFILE_BLOCK_SIZE BLOCK_SIZE
 
 // --- //
 
-//! Struct auxiliar para guardar os índices primários.
-struct IdPointer {
-	int id; //!< Id do registro.
-	long offset; //!< Offset do registro no arquivo de hashing.
+//! Helper struct to store primary indexes
+struct IdIndex {
+	int id; //!< Entry id
+	long offset; //!< Entry offset in the hashfile
 	
-	//! Comparador de < para o struct auxiliar, assim poderá ser usado na BTree.
-	bool operator< (const IdPointer& that) const {
+	//! Less-than comparator so that IdIndex can be used in BTree
+	bool operator< (const IdIndex& that) const {
 		return id < that.id;
 	}
 };
 
-//! Struct auxiliar para guardar os índices secundários.
-struct TitlePointer {
-	char title[TITLE_CHAR_MAX]; //!< String com o título do registro.
-	long offset; //!< Offset do registro no arquivo de hashing.
-	
-	//! Comparador de < para o struct auxiliar, assim poderá ser usado na BTree.
-	bool operator< (const TitlePointer& that) const {
-		return strcmp(title, that.title) < 0;
+//! Less-than comparator between IdIndex::id and int
+bool operator< (const IdIndex& index, int i) {
+	return index.id < i;
+}
+
+//! Less-than comparator between int and IdIndex::id
+bool operator< (int i, const IdIndex& index) {
+	return i < index.id;
+}
+
+//! Helper struct to store secondary indexes
+struct TitleIndex {
+	char title[TITLE_CHAR_MAX]; //!< Entry title
+	long offset; //!< Entry offset in the hashfile
+
+	//! Less-than comparator so that TitleIndex can be used in BTree
+	bool operator< (const TitleIndex& that) const {
+		return std::strcmp(title, that.title) < 0;
 	}
 };
 
-//! Macro para definição da ordem máxima do nó de um BTree, baseado no tipo de dados que ele guardará.
-/*!
-  O cálculo é feito a partir do tamanho de BLOCK_SIZE e determina a ordem
-  máxima que o nó pode ter sem ultrapassar o tamanho do bloco, considerando
-  que ele estará guardando dados de um tipo cujo tamanho em bytes é T_SIZE.
-  
-  A fórmula do macro foi obtido a partir desta fórmula inicial:
-  
-  `BLOCK_SIZE = sizeof(long) + sizeof(bool) + sizeof(std::size_t) + (2 * M + 1) * sizeof(T) + (2 * M + 2) * sizeof(long)`
-  
-  Ele é baseado nos campos padrões da estrutura BNode, interna à classe BTree.
- */
-#define BTREE_ORDER(T_SIZE) ((BLOCK_SIZE - 3 * sizeof(long) - sizeof(bool) + sizeof(std::size_t) - (T_SIZE)) / (2 * ((T_SIZE) + sizeof(long))))
+//! Less-than comparator between TitleIndex::title and string
+bool operator< (const TitleIndex& index, const char* title) {
+	return std::strcmp(index.title, title) < 0;
+}
 
-//! Macro com a ordem máxima que um nó de id's pode ter sem ultrapassar o tamanho do bloco.
-#define ID_ORDER BTREE_ORDER(sizeof(int))
-//! Macro com a ordem máxima que um nó de títulos pode ter sem ultrapassar o tamanho do bloco.
-#define TITLE_ORDER BTREE_ORDER(sizeof(char) * TITLE_CHAR_MAX)
+//! Less-than comparator between string and TitleIndex::title
+bool operator< (const char* title, const TitleIndex& index) {
+	return std::strcmp(title, index.title) < 0;
+}
 
-//! Typedef de uma árvore B para índices.
-typedef BTree<IdPointer, ID_ORDER> IdBTree;
-//! Typedef de uma árvore B para títulos.
-typedef BTree<TitlePointer, TITLE_ORDER> TitleBTree;
+//! Primary index B-tree
+typedef IdealBTree<IdIndex> IdBTree;
+
+//! Secondary index B-tree
+typedef IdealBTree<TitleIndex> TitleBTree;
 
 // --- //
 
-//! Struct do cabeçalho do arquivo de hashing.
+//! Header data for the hashfile
 struct HashfileHeader {
 	int blockCount;
 };
+
+//! HashfileHeader block
+typedef Block<HashfileHeader, HASHFILE_BLOCK_SIZE> HashfileHeaderBlock;
 
 // --- //
 
@@ -308,12 +311,12 @@ void upload(const char* filePath) {
 		std::fwrite(reinterpret_cast<const char*>(&e), sizeof(e), 1, output);
 		++header.var.blockCount;
 		
-		IdPointer idPointer;
+		IdIndex idPointer;
 		idPointer.id = e.var.id;
 		idPointer.offset = offset;
 		idTree.insert(idPointer);
 		
-		TitlePointer titlePointer;
+		TitleIndex titlePointer;
 		std::memcpy(titlePointer.title, e.var.title, TITLE_CHAR_MAX);
 		titlePointer.offset = offset;
 		titleTree.insert(titlePointer);
@@ -435,7 +438,7 @@ void seek1(long id) {
 		return;
 	}
 	
-	IdPointer ip;
+	IdIndex ip;
 	ip.id = id;
 	ip.offset = -1;
 	
@@ -472,7 +475,7 @@ void seek2(const char* title) {
 		return;
 	}
 	
-	TitlePointer tp;
+	TitleIndex tp;
 	std::strcpy(tp.title, title);
 	tp.offset = -1;
 	
