@@ -2,11 +2,26 @@
 
 B-tree implementation in C++ to index documents based on numerical id's (main index) and title strings (secondary index) in a sample application. Created as a college assignment.
 
+[Check our pre-generated source documentation!](https://tumut.github.io/BTrees/)
+
 ## Building
 
-The project can be opened in `CLion` or compiled with `CMake`.
+### Program
 
-The documentation was generated with `doxygen` and the repository's `Doxyfile`. Run `doxygen` from the repository's root folder or check [the pre-generated documentation](https://tumut.github.io/BTrees/).
+After cloning the repository, you can explore and build the it with the [CLion IDE](https://www.jetbrains.com/clion/).
+
+Alternatively, use the following commands at the repository's root folder:
+
+```
+mkdir build
+cd build
+cmake ..
+make
+```
+
+### Documentation
+
+If you want to generate the documentation yourself, use `doxygen` at the repository's root folder.
 
 ## Input
 
@@ -32,7 +47,7 @@ Fields can be left blank.
 
 ## Usage
 
-Use either of the following commands with the executable:
+Usage of the program is based on following commands:
 
 * `$ <exec-name> upload <input>`
 	
@@ -53,3 +68,5 @@ Use either of the following commands with the executable:
 * `$ <exec-name> seek2 <title>`
 
 	Find an entry by its title `title`, by seeking its hashfile location in the secondary index. The title must be an exact match.
+
+You must `upload` first before using the other commands, in order to create the database.
