@@ -9,7 +9,7 @@
 //! B-tree class
 /*!
  * BTree can be used to store T-type values in binary files for fast retrieval
- * later. T must be a POD (Plain Old Data type) and _less-than_ comparable.
+ * later.
  *
  * Use the method BTree::create before inserting values and, once you've
  * finished inserting, call BTree::finishInsertions to update the file header.
@@ -27,11 +27,12 @@
  *
  * // Read data
  * tree.load("filename.bin");
- * int *x = tree.seek(1);
+ * auto x = tree.seek(1);
  * if (x) f(*x); // If found, do something to x
  * \endcode
  *
- * @tparam T Type of the data to be stored
+ * @tparam T Type of the data to be stored. Must be a POD (Plain Old Data type)
+ * and _less-than_ comparable.
  *
  * @tparam M Tree order. Each node will store up to 2M values and have up to
  * 2M + 1 children. A node can't be bigger than `BLOCK_SIZE` bytes.
