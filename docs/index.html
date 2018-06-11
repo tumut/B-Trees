@@ -115,7 +115,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>Usage of the program is based on following commands:</p>
 <ul>
 <li><p class="startli"><code>$ &lt;exec-name&gt; upload &lt;input&gt;</code></p>
-<p class="startli">Upload a CSV file <code>input</code> with entries into the database.</p>
+<p class="startli">Upload a CSV file <code>input</code> with entries into the database. This is the first command you should use.</p>
 <p class="startli">Will generate three files: one for the primary index (<code>db-idindex.bin</code>), another for the secondary index (<code>db-titleindex.bin</code>), and finally one where the entries themselves will be stored (<code>db-hashfile.bin</code>).</p>
 <p class="startli">The files will be overwritten if they already exist.</p>
 </li>
@@ -126,10 +126,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p class="startli">Find an entry by its numeric index <code>id</code>, by seeking its hashfile location in the primary index.</p>
 </li>
 <li><p class="startli"><code>$ &lt;exec-name&gt; seek2 &lt;title&gt;</code></p>
-<p class="startli">Find an entry by its title <code>title</code>, by seeking its hashfile location in the secondary index. The title must be an exact match.</p>
+<p class="startli">Find an entry by its title <code>title</code>, by seeking its hashfile location in the secondary index. The title must be an exact match. </p>
 </li>
 </ul>
-<p>You must <code>upload</code> first before using the other commands, in order to create the database. </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
