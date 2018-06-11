@@ -26,7 +26,7 @@ The program was built to accept a `;`-separated CSV file with quote-enclosed val
 
 Example line:
 
-`"1";"Title";"2017";"Alice,Bob,Carl";"42";"2017-01-30 23:59:59";"Snippet"`
+`"1";"Title";"2017";"Alice|Bob|Carl";"42";"2017-01-30 23:59:59";"Snippet"`
 
 Fields can be left blank.
 
