@@ -37,7 +37,7 @@
  * @tparam M Tree order. Each node will store up to 2M values and have up to
  * 2M + 1 children. A node can't be bigger than `BLOCK_SIZE` bytes.
  *
- * @tparam BlockSize Block size to use, in bytes
+ * @tparam BlockSize %Block size to use, in bytes
  */
 template<typename T, std::size_t M, unsigned int BlockSize = BLOCK_SIZE>
 class BTree {
@@ -48,7 +48,7 @@ public:
 	//! Tree order
 	static constexpr auto Order = M;
 
-	//! Block size in bytes
+	//! %Block size in bytes
 	static constexpr auto BlockSizeInUse = BlockSize;
 
 	//! Default constructor
@@ -235,7 +235,7 @@ private:
 	 *
 	 * @param offset Node's offset in the file
 	 *
-	 * @return Block with the node found in the provided offset
+	 * @return %Block with the node found in the provided offset
 	 */
 	BNodeBlock readFromDisk(long offset);
 	
@@ -259,13 +259,13 @@ private:
 	 *
 	 * Increments Statistics::blocksRead.
 	 *
-	 * @return Block with the file header
+	 * @return %Block with the file header
 	 */
 	FileHeaderBlock readHeader() const;
 	
 	//! Updates the file header in disk
 	/*!
-	 * @param header Block with file header to write
+	 * @param header %Block with file header to write
 	 */
 	void writeHeader(const FileHeaderBlock& header);
 	

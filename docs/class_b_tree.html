@@ -169,7 +169,7 @@ Static Public Attributes</h2></td></tr>
 <tr class="memdesc:a21640c1085ee30ac291740ef13d66bd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tree order.  <a href="#a21640c1085ee30ac291740ef13d66bd4">More...</a><br /></td></tr>
 <tr class="separator:a21640c1085ee30ac291740ef13d66bd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae474f8f8398cf009b528db3b2dec236"><td class="memItemLeft" align="right" valign="top">static constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#aae474f8f8398cf009b528db3b2dec236">BlockSizeInUse</a> = BlockSize</td></tr>
-<tr class="memdesc:aae474f8f8398cf009b528db3b2dec236"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="union_block.html" title="Union for reading and writing blocks containing serialized data. ">Block</a> size in bytes.  <a href="#aae474f8f8398cf009b528db3b2dec236">More...</a><br /></td></tr>
+<tr class="memdesc:aae474f8f8398cf009b528db3b2dec236"><td class="mdescLeft">&#160;</td><td class="mdescRight">Block size in bytes  <a href="#aae474f8f8398cf009b528db3b2dec236">More...</a><br /></td></tr>
 <tr class="separator:aae474f8f8398cf009b528db3b2dec236"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
@@ -184,7 +184,7 @@ Private Types</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
 <tr class="memitem:adbf28ad7c2633b4a1d6570d8ef7ab212"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_b_tree.html#a9af2ca14c936735538b632075173cbd2">BNodeBlock</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#adbf28ad7c2633b4a1d6570d8ef7ab212">readFromDisk</a> (long offset)</td></tr>
-<tr class="memdesc:adbf28ad7c2633b4a1d6570d8ef7ab212"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retorna um bloco com o nó lido no offset fornecido.  <a href="#adbf28ad7c2633b4a1d6570d8ef7ab212">More...</a><br /></td></tr>
+<tr class="memdesc:adbf28ad7c2633b4a1d6570d8ef7ab212"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a node in the block at the provided offset.  <a href="#adbf28ad7c2633b4a1d6570d8ef7ab212">More...</a><br /></td></tr>
 <tr class="separator:adbf28ad7c2633b4a1d6570d8ef7ab212"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a39540a7e17906e44d3eda3346818aabf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#a39540a7e17906e44d3eda3346818aabf">writeToDisk</a> (<a class="el" href="class_b_tree.html#a9af2ca14c936735538b632075173cbd2">BNodeBlock</a> &amp;node)</td></tr>
 <tr class="memdesc:a39540a7e17906e44d3eda3346818aabf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes the node to disk.  <a href="#a39540a7e17906e44d3eda3346818aabf">More...</a><br /></td></tr>
@@ -223,7 +223,7 @@ class BTree&lt; T, M, BlockSize &gt;</h3>
   <table class="tparams">
     <tr><td class="paramname">T</td><td>Type of the data to be stored. Must be a POD (Plain Old Data type) and <em>less-than</em> comparable.</td></tr>
     <tr><td class="paramname">M</td><td>Tree order. Each node will store up to 2M values and have up to 2M + 1 children. A node can't be bigger than <code>BLOCK_SIZE</code> bytes.</td></tr>
-    <tr><td class="paramname">BlockSize</td><td><a class="el" href="union_block.html" title="Union for reading and writing blocks containing serialized data. ">Block</a> size to use, in bytes </td></tr>
+    <tr><td class="paramname">BlockSize</td><td>Block size to use, in bytes </td></tr>
   </table>
   </dd>
 </dl>
@@ -548,7 +548,7 @@ template&lt;typename T , std::size_t M, unsigned int BlockSize&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Retorna um bloco com o nó lido no offset fornecido. </p>
+<p>Read a node in the block at the provided offset. </p>
 <p>Assumes that the provided offset will always be valid. If an invalid offset is provided, the result is undefined.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -556,7 +556,7 @@ template&lt;typename T , std::size_t M, unsigned int BlockSize&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="union_block.html" title="Union for reading and writing blocks containing serialized data. ">Block</a> with the node found in the provided offset </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Block with the node found in the provided offset </dd></dl>
 
 </div>
 </div>
@@ -586,7 +586,7 @@ template&lt;typename T , std::size_t M, unsigned int BlockSize&gt; </div>
 <p>Reads the file header. </p>
 <p>This method assumes that <a class="el" href="class_b_tree.html" title="B-tree class. ">BTree</a> has already been initialized and the file is open. Otherwise, behavior is undefined.</p>
 <p>Increments <a class="el" href="struct_b_tree_1_1_statistics.html#aae4cf5a07e867124f3ba5e5b11afd576" title="Quantity of blocks read since the tree was initialized. ">Statistics::blocksRead</a>.</p>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="union_block.html" title="Union for reading and writing blocks containing serialized data. ">Block</a> with the file header </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Block with the file header </dd></dl>
 
 </div>
 </div>
@@ -674,7 +674,7 @@ template&lt;typename T , std::size_t M, unsigned int BlockSize&gt; </div>
 <p>Updates the file header in disk. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">header</td><td><a class="el" href="union_block.html" title="Union for reading and writing blocks containing serialized data. ">Block</a> with file header to write </td></tr>
+    <tr><td class="paramname">header</td><td>Block with file header to write </td></tr>
   </table>
   </dd>
 </dl>
@@ -738,7 +738,7 @@ template&lt;typename T, std::size_t M, unsigned int BlockSize = BLOCK_SIZE&gt; <
 </table>
 </div><div class="memdoc">
 
-<p><a class="el" href="union_block.html" title="Union for reading and writing blocks containing serialized data. ">Block</a> size in bytes. </p>
+<p>Block size in bytes </p>
 
 </div>
 </div>

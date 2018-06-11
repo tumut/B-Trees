@@ -126,7 +126,7 @@ Public Attributes</h2></td></tr>
 <tr class="memdesc:a969c8d44f40fae248bd80060293f2eb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Node values.  <a href="#a969c8d44f40fae248bd80060293f2eb6">More...</a><br /></td></tr>
 <tr class="separator:a969c8d44f40fae248bd80060293f2eb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a46c583bf14e3bdee6951a24bbfc54f3e"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_b_node.html#a46c583bf14e3bdee6951a24bbfc54f3e">children</a> [2 *M+2]</td></tr>
-<tr class="memdesc:a46c583bf14e3bdee6951a24bbfc54f3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Os apontadores de nó.  <a href="#a46c583bf14e3bdee6951a24bbfc54f3e">More...</a><br /></td></tr>
+<tr class="memdesc:a46c583bf14e3bdee6951a24bbfc54f3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Node pointers.  <a href="#a46c583bf14e3bdee6951a24bbfc54f3e">More...</a><br /></td></tr>
 <tr class="separator:a46c583bf14e3bdee6951a24bbfc54f3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -163,7 +163,7 @@ template&lt;typename T , std::size_t M, unsigned int BlockSize&gt; </div>
 
 <p>Initializes the node. </p>
 <p>The value of <a class="el" href="struct_b_tree_1_1_b_node.html#af864d07c047391653ed752084e8f07ff" title="Disk address. ">BNode::offset</a> is initialized as -1 so that we can know whether the node has already been written to the file or not.</p>
-<p>This method must always be called upon declaring a <a class="el" href="struct_b_tree_1_1_b_node.html" title="B-tree node. ">BNode</a> unless the node will be read through <a class="el" href="class_b_tree.html#adbf28ad7c2633b4a1d6570d8ef7ab212" title="Retorna um bloco com o nó lido no offset fornecido. ">BTree::readFromDisk</a>.</p>
+<p>This method must always be called upon declaring a <a class="el" href="struct_b_tree_1_1_b_node.html" title="B-tree node. ">BNode</a> unless the node will be read through <a class="el" href="class_b_tree.html#adbf28ad7c2633b4a1d6570d8ef7ab212" title="Read a node in the block at the provided offset. ">BTree::readFromDisk</a>.</p>
 <p><a class="el" href="struct_b_tree_1_1_b_node.html" title="B-tree node. ">BNode</a>'s initialization was implemented as a method rather than a constructor because <a class="el" href="struct_b_tree_1_1_b_node.html" title="B-tree node. ">BNode</a> must be a POD in order to be read and written in the file.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -254,7 +254,7 @@ template&lt;typename T, std::size_t M, unsigned int BlockSize = BLOCK_SIZE&gt; <
       </table>
 </div><div class="memdoc">
 
-<p>Os apontadores de nó. </p>
+<p>Node pointers. </p>
 <p>Most of the time, the node will only use the first <code>2M+1</code> positions of this array. The additional space for 1 value is used temporarily to deal with overflows during <a class="el" href="class_b_tree.html#a13493d45b50fa350deb1c308890a75a9" title="Inserts a value in the tree. ">BTree::insert</a>. </p>
 
 </div>

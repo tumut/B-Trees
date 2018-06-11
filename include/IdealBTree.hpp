@@ -34,7 +34,7 @@ constexpr auto maxBTreeOrder() {
 //! BTree with ideal pre-calculated M order and BlockSize based on `sizeof(T)`
 /*!
  * @tparam T Type to be stored
- * @tparam BlockSize Size in bytes
+ * @tparam BlockSize %Block size in bytes
  */
 template <typename T, unsigned int BlockSize = BLOCK_SIZE>
 using IdealBTree = BTree<T, maxBTreeOrder<T, BlockSize>(), BlockSize>;

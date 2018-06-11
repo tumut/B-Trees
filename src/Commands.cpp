@@ -26,7 +26,7 @@
 //! Full filepath to the hashing file
 #define HASHFILE_FILEPATH ROOT HASHFILE_FILENAME
 
-//! Block size in bytes to be used in the hashing file
+//! %Block size in bytes to be used in the hashing file
 #define HASHFILE_BLOCK_SIZE BLOCK_SIZE
 
 //! Show how many entries have already been read and indexed every once in a while
