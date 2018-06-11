@@ -50,10 +50,10 @@ Fields can be left blank.
 Usage of the program is based on following commands:
 
 * `$ <exec-name> upload <input>`
-	
-	Upload a CSV file `input` with entries into the database.
 
-	Will generate three files: one for the primary index (`db-idindex.bin`), another for the secondary index (`db-titleindex.bin`), and finally one where the entries themselves will be stored (`db-hashfile.bin`). 
+	Upload a CSV file `input` with entries into the database. This is the first command you should use.
+
+	Will generate three files: one for the primary index (`db-idindex.bin`), another for the secondary index (`db-titleindex.bin`), and finally one where the entries themselves will be stored (`db-hashfile.bin`).
 
 	The files will be overwritten if they already exist.
 
@@ -68,5 +68,3 @@ Usage of the program is based on following commands:
 * `$ <exec-name> seek2 <title>`
 
 	Find an entry by its title `title`, by seeking its hashfile location in the secondary index. The title must be an exact match.
-
-You must `upload` first before using the other commands, in order to create the database.
