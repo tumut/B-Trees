@@ -1,7 +1,7 @@
 #ifndef _BLOCK_HPP_INCLUDED_
 #define _BLOCK_HPP_INCLUDED_
 
-//! Block size in bytes
+//! Default block size in bytes
 /*!
  * The size was defined as 4096 bytes based on sector storage size of the local
  * machine, obtained through an `fdisk -l` command
