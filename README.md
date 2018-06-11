@@ -1,20 +1,18 @@
 # 🅱️ Trees
 
-B-Tree implementation in C++ to index documents based on numerical id's (main index) and title strings (secondary index). Created as a college assignment.
-
-[Click here for the source documentation!](https://tumut.github.io/BTrees/)
+B-tree implementation in C++ to index documents based on numerical id's (main index) and title strings (secondary index) in a sample application. Created as a college assignment.
 
 ## Building
 
-The project was developed in `CLion` and can be built from there. This means you can also use `CMake` for it if you want.
+The project can be opened in `CLion` or compiled with `CMake`.
 
-You can generate the documentation yourself with `doxygen` and the repository's `Doxyfile`.
+The documentation was generated with `doxygen` and the repository's `Doxyfile`. Run `doxygen` from the repository's root folder or check [the pre-generated documentation](https://tumut.github.io/BTrees/).
 
 ## Input
 
 The database that was used for testing and development can be downloaded [here](https://drive.google.com/file/d/0B5H52GfdcU-WLVJHOWR3UzB0YzQ/view).
 
-The program was built to accept a `;`-separated CSV file. Each line should represent an entry (in this case, an article), with columns reflecting the following fields (type _Alpha N_ meaning "a string with at most N alphanumeric characters"):
+The program was built to accept a `;`-separated CSV file with quote-enclosed values. Each line should have the following fields (type _Alpha N_ meaning "a string with at most N alphanumeric characters"):
 
 | Field | Type | Description |
 | --- | --- | --- |
@@ -25,6 +23,12 @@ The program was built to accept a `;`-separated CSV file. Each line should repre
 | Citations | Integer | Times the article has been cited |
 | Update | Date time | Time of the last time the article was updated (`YYYY-MM-DD HH:mm:SS`) |
 | Snippet | Alpha 1024 | Text summary of the article's contents |
+
+Example line:
+
+`"1";"Title";"2017";"Alice,Bob,Carl";"42";"2017-01-30 23:59:59";"Snippet"`
+
+Fields can be left blank.
 
 ## Usage
 
