@@ -1,142 +1,141 @@
 #include "Commands.hpp"
 
-#include "Block.hpp"
-#include "BTree.hpp"
-#include "Entry.hpp"
-
-#include <cstdio>
 #include <cstring>
 #include <iostream>
 
+#include "IdealBTree.hpp"
+#include "Entry.hpp"
+
 // --- //
 
-//! Caminho do local onde os arquivos do banco de dados serão criados.
-/*!
-  Este é um define auxiliar que é usado apenas na definição de outros defines.
-  
-  Por padrão, os arquivos serã criados na mesma pasta que o executável.
- */
-#define FILEPATH "./"
+//! File path to the folder where database files will be created
+#define ROOT "./"
 
-//! Nome do arquivo que guardará os índices do arquivo de índice primário.
+//! Primary index data filename
 #define ID_TREE_FILENAME "bd-idtree.bin"
-//! Caminho completo pro arquivo que guardará os índices do arquivo de índice primário.
-#define ID_TREE_FILEPATH FILEPATH ID_TREE_FILENAME
+//! Full filepath to the primary index file
+#define ID_TREE_FILEPATH ROOT ID_TREE_FILENAME
 
-//! Nome do arquivo que guardará os índices do arquivo de índice secundário.
+//! Secondary index data filename
 #define TITLE_TREE_FILENAME "bd-titletree.bin"
-//! Caminho completo pro arquivo que guardará os índices do arquivo de índice secundário.
-#define TITLE_TREE_FILEPATH FILEPATH TITLE_TREE_FILENAME
+//! Full filepath to the secondary index file
+#define TITLE_TREE_FILEPATH ROOT TITLE_TREE_FILENAME
 
-//! Nome do arquivo de hashing que guardará os registros.
+//! Hashing file filename
 #define HASHFILE_FILENAME "bd-hashfile.bin"
-//! Caminho completo pro arquivo de hashing.
-#define HASHFILE_FILEPATH FILEPATH HASHFILE_FILENAME
+//! Full filepath to the hashing file
+#define HASHFILE_FILEPATH ROOT HASHFILE_FILENAME
+
+//! Block size in bytes to be used in the hashing file
+#define HASHFILE_BLOCK_SIZE BLOCK_SIZE
+
+//! Show how many entries have already been read and indexed every once in a while
+#define PATIENCE_STEP 10000
 
 // --- //
 
-//! Struct auxiliar para guardar os índices primários.
-struct IdPointer {
-	int id; //!< Id do registro.
-	long offset; //!< Offset do registro no arquivo de hashing.
+//! Helper struct to store primary indexes
+struct IdIndex {
+	int id; //!< Entry id
+	long offset; //!< Entry offset in the hashfile
 	
-	//! Comparador de < para o struct auxiliar, assim poderá ser usado na BTree.
-	bool operator< (const IdPointer& that) const {
+	//! Less-than comparator so that IdIndex can be used in BTree
+	bool operator< (const IdIndex& that) const {
 		return id < that.id;
 	}
 };
 
-//! Struct auxiliar para guardar os índices secundários.
-struct TitlePointer {
-	char title[TITLE_CHAR_MAX]; //!< String com o título do registro.
-	long offset; //!< Offset do registro no arquivo de hashing.
-	
-	//! Comparador de < para o struct auxiliar, assim poderá ser usado na BTree.
-	bool operator< (const TitlePointer& that) const {
-		return strcmp(title, that.title) < 0;
+//! Less-than comparator between IdIndex::id and int
+bool operator< (const IdIndex& index, int i) {
+	return index.id < i;
+}
+
+//! Less-than comparator between int and IdIndex::id
+bool operator< (int i, const IdIndex& index) {
+	return i < index.id;
+}
+
+//! Helper struct to store secondary indexes
+struct TitleIndex {
+	char title[TITLE_CHAR_MAX]; //!< Entry title
+	long offset; //!< Entry offset in the hashfile
+
+	//! Less-than comparator so that TitleIndex can be used in BTree
+	bool operator< (const TitleIndex& that) const {
+		return std::strcmp(title, that.title) < 0;
 	}
 };
 
-//! Macro para definição da ordem máxima do nó de um BTree, baseado no tipo de dados que ele guardará.
-/*!
-  O cálculo é feito a partir do tamanho de BLOCK_SIZE e determina a ordem
-  máxima que o nó pode ter sem ultrapassar o tamanho do bloco, considerando
-  que ele estará guardando dados de um tipo cujo tamanho em bytes é T_SIZE.
-  
-  A fórmula do macro foi obtido a partir desta fórmula inicial:
-  
-  `BLOCK_SIZE = sizeof(long) + sizeof(bool) + sizeof(std::size_t) + (2 * M + 1) * sizeof(T) + (2 * M + 2) * sizeof(long)`
-  
-  Ele é baseado nos campos padrões da estrutura BNode, interna à classe BTree.
- */
-#define BTREE_ORDER(T_SIZE) ((BLOCK_SIZE - 3 * sizeof(long) - sizeof(bool) + sizeof(std::size_t) - (T_SIZE)) / (2 * ((T_SIZE) + sizeof(long))))
+//! Less-than comparator between TitleIndex::title and string
+bool operator< (const TitleIndex& index, const char* title) {
+	return std::strcmp(index.title, title) < 0;
+}
 
-//! Macro com a ordem máxima que um nó de id's pode ter sem ultrapassar o tamanho do bloco.
-#define ID_ORDER BTREE_ORDER(sizeof(int))
-//! Macro com a ordem máxima que um nó de títulos pode ter sem ultrapassar o tamanho do bloco.
-#define TITLE_ORDER BTREE_ORDER(sizeof(char) * TITLE_CHAR_MAX)
+//! Less-than comparator between string and TitleIndex::title
+bool operator< (const char* title, const TitleIndex& index) {
+	return std::strcmp(title, index.title) < 0;
+}
 
-//! Typedef de uma árvore B para índices.
-typedef BTree<IdPointer, ID_ORDER> IdBTree;
-//! Typedef de uma árvore B para títulos.
-typedef BTree<TitlePointer, TITLE_ORDER> TitleBTree;
+//! Primary index B-tree
+typedef IdealBTree<IdIndex> IdBTree;
+
+//! Secondary index B-tree
+typedef IdealBTree<TitleIndex> TitleBTree;
 
 // --- //
 
-//! Struct do cabeçalho do arquivo de hashing.
+//! Header data for the hashfile
 struct HashfileHeader {
 	int blockCount;
 };
 
+//! HashfileHeader block
+typedef Block<HashfileHeader, HASHFILE_BLOCK_SIZE> HashfileHeaderBlock;
+
+//! Entry block
+typedef Block<Entry, HASHFILE_BLOCK_SIZE> EntryBlock;
+
 // --- //
 
-//! Lê a coluna de um registro a partir do arquivo CSV.
+//! Reads a string field from a line in the CSV file
 /*!
-	Essa função é chamada para a leitura do arquivo. Nela são tratadas todas as possíveis exceções que podem ocorrer na leitura, essas exceções sao a presença no local
-	incorreto de diversos símbolos descritos a seguir. 
-
-	Os símbolos são: ; (ponto e vírgula), `\n`(contra-barra n), \r(contra-barra r), "(aspas), `NULL`.
-
-	No caso das aspas é necessário ser verificado se elas realmente se encontram em um local inválido, ou se elas são o final de uma coluna. Para isso fazemos uma etapa de verificação
-	a mais nas aspas, nessa etapa verificamos se as aspas são seguidas de `\r`, `;`, `\n`, EOF. Se ela for seguida por algum desses significa que essas aspas estão demarcando o final
-	de uma coluna.
-
-	\param field Ponteiro para o vetor de caracteres onde a coluna lida será guardada.
-	\param file O arquivo sendo lido.
-	\param fieldSize O tamanho máximo, em caracteres, que a string do campo pode ter.
-
-	\author Oscar Othon
-*/
+ * Will read the quotes-enclosed value from a column in the `;`-delimited CSV
+ * file and put it into a char* buffer.
+ *
+ * Allows the column to be left blank or as `NULL` (no quotes).
+ *
+ * @param field Buffer to store the read string (must be at least as big as `fieldSize`)
+ * @param file File where the contents will be read
+ * @param fieldSize Maximum field size in characters
+ */
 static void readStringField(char *field, std::FILE *file, int fieldSize) {
-	static char buffer[1024 * 2];
-	
 	char previous = ';';
 	char current = std::fgetc(file);
 	int index = 0;
 
 	switch (current) {
-	// Caso em que o campo não tem caracteres: ;;
+	// Case in which the field has no characters: ;;
 	case ';':
 		break;
 	
-	// Caso em que o último campo não tem caracteres, então sobra apenas uma quebra de linha (estilo LF).
+	// Case in which the last field has no characters, so there's only an LF line break
 	case '\n':
 		break;
 	
-	// Caso em que o último campo não tem caracteres, mas sobra uma quebra de linha estilo CRLF.
+	// Case in which the last field has no characters, but there's still a CRLF line break
 	case '\r':
 		std::fgetc(file); // '\n'
 		break;
 	
-	// Caso em que ao invés de um campo há apenas NULL.
+	// Case in which instead of a field there's only NULL
 	case 'N':
 		std::fgetc(file); // 'U'
 		std::fgetc(file); // 'L'
 		std::fgetc(file); // 'L'
-		if (std::fgetc(file) == '\r') std::fgetc(file); // Pula a quebra de linha, seja ela LF or CRLF
+		if (std::fgetc(file) == '\r') std::fgetc(file); // Skips the line break, be it LF or CRLF
 		break;
 	
-	// Caso em que há uma string na coluna.
+	// Case in which there's a string in the field
 	case '"':
 		while (true) {
 			previous = current;
@@ -145,10 +144,10 @@ static void readStringField(char *field, std::FILE *file, int fieldSize) {
 			if (previous == '"') {
 				bool fieldEnded = false;
 				
-				// Se as aspas forem seguidas desses elementos a seguir, então é porque é o final de um campo.
+				// If the quotes are followed by either of these elements, then we've reached the end of the field
 				switch (current) {
 				case '\r':
-					std::fgetc(file); // \n
+					std::fgetc(file); // '\n'
 				case ';':
 				case '\n':
 				case EOF:
@@ -160,8 +159,16 @@ static void readStringField(char *field, std::FILE *file, int fieldSize) {
 				if (fieldEnded) break;
 			}
 			
-			if (current >= 0)
-				buffer[index++] = current;
+			if (current >= 0) {
+				// Only insert the character in the buffer if there's still
+				// space left (taking into account the '\0' end character).
+				// We'll keep reading the file until the end of the column.
+				if (index < fieldSize - 1) {
+					field[index] = current;
+				}
+
+				++index;
+			}
 		}
 		
 		break;
@@ -171,23 +178,16 @@ static void readStringField(char *field, std::FILE *file, int fieldSize) {
 		index = fieldSize - 1;
 	}
 	
-	buffer[index] = '\0';
-	
-	std::memcpy(field, buffer, index + 1);
+	field[index] = '\0';
 }
 
-//! Lê por inteiro, campo a campo, um registro do arquivo CSV.
+//! Reads a whole line, field by field, from the CSV file
 /*!
-	Recebendo o arquivo pelo parâmetro std::FILE *file, essa função percorre por completa uma linha de instância de registro no arquivo, dividindo esse artigo em seus campos de título, ano, autor,
-	citações, atualização e snippet. Cada um desses campos é separado ou por meio da utilização da função readField(), ou utilizando-se fscanf().
-
-	\param e O registro do registro a ter seus campos lidos.
-	\param file O arquivo sendo lido.
-
-	\returns Se o registro foi lido com sucesso ou não, dará falso ao chegar no final do arquivo pois não haverão mais registros para ler.
-
-	\author Oscar Othon
-*/
+ * @param e Entry to read
+ * @param file File with contents
+ *
+ * @return True if the entry was successfully read, false if we've reached the end of the file
+ */
 static bool readEntry(Entry& e, std::FILE *file) {
 	int endChecker = std::fscanf(file, "\"%d\";", &e.id);
 	
@@ -207,11 +207,9 @@ static bool readEntry(Entry& e, std::FILE *file) {
 	return true;
 }
 
-//! Imprime um registro campo por campo.
-/*!	
-	\param e O registro a ser impresso.
-
-	\author Oscar Othon
+//! Prints an entry field by field
+/*!
+ * @param e Entry to print
  */
 static void printEntry(const Entry& e) {
 	std::cout << "id        : " << e.id << '\n';
@@ -226,9 +224,9 @@ static void printEntry(const Entry& e) {
 // ---
 
 void upload(const char* filePath) {
-	// Registro "fantasma" que será usado para preencher os espaços entre os id's
+	// Phantom entry that'll be used to pad the spaces between id's
 	static auto phantomEntry = []{
-			Block<Entry> pe;
+			EntryBlock pe;
 			pe.var.valid = false;
 			return pe;
 		}();
@@ -237,63 +235,63 @@ void upload(const char* filePath) {
 	std::cout << "[DEBUG]\n";
 	#endif
 	
-	std::cout << "Tamanho do bloco sendo considerado: " << BLOCK_SIZE << " bytes\n";
-	std::cout << "Ordem da árvore de id's: " << ID_ORDER << '\n';
-	std::cout << "Ordem da árvore de títulos: " << TITLE_ORDER << "\n\n";
+	std::cout << "Default block size in use : " << BLOCK_SIZE << " bytes\n";
+	std::cout << "Id B-tree order (M)       : " << IdBTree::Order << '\n';
+	std::cout << "Title B-tree order (M)    : " << TitleBTree::Order << "\n\n";
 	
-	std::cout << "Abrindo os arquivos...\n\n";
+	std::cout << "Opening files...\n\n";
 
 	std::FILE *input = std::fopen(filePath, "rb");
 	if (!input) {
-		std::cout << "Não foi possível abrir o arquivo de leitura.\n";
-		std::cout << "Caminho: \"" << filePath << "\"\n";
-		std::cout << "Abortando." << std::endl;
+		std::cout << "Couldn't open input file.\n";
+		std::cout << "Filepath: \"" << filePath << "\"\n";
+		std::cout << "Aborting." << std::endl;
 		return;
 	}
 	
 	IdBTree idTree;
 	if (!idTree.create(ID_TREE_FILEPATH)) {
-		std::cout << "Falha na criação do arquivo para a árvore B de id's.\n";
-		std::cout << "Caminho: \"" << ID_TREE_FILEPATH << "\"\n";
-		std::cout << "Abortando." << std::endl;
+		std::cout << "Couldn't create the primary index file.\n";
+		std::cout << "Filepath: \"" << ID_TREE_FILEPATH << "\"\n";
+		std::cout << "Aborting." << std::endl;
 		return;
 	}
 	
-	std::cout << "Arquivo para a árvore B de id's criado em " << ID_TREE_FILEPATH << '\n';
+	std::cout << "Primary index file created at \"" << ID_TREE_FILEPATH << "\"\n";
 	
 	TitleBTree titleTree;
 	if (!titleTree.create(TITLE_TREE_FILEPATH)) {
-		std::cout << "Falha na criação do arquivo para a árvore B de títulos.\n";
-		std::cout << "Caminho: \"" << TITLE_TREE_FILEPATH << "\"\n";
-		std::cout << "Abortando." << std::endl;
+		std::cout << "Couldn't create the secondary index file.\n";
+		std::cout << "Filepath: \"" << TITLE_TREE_FILEPATH << "\"\n";
+		std::cout << "Aborting." << std::endl;
 		return;
 	}
 	
-	std::cout << "Arquivo para a árvore B de títulos criado em " << TITLE_TREE_FILEPATH << '\n';
+	std::cout << "Secondary index file created at \"" << TITLE_TREE_FILEPATH << "\"\n";
 	
 	std::FILE *output = std::fopen(HASHFILE_FILEPATH, "wb");
 	if (!output) {
-		std::cout << "Não foi possível criar o arquivo de saída.\n";
-		std::cout << "Caminho: \"" << HASHFILE_FILEPATH << "\"\n";
-		std::cout << "Abortando." << std::endl;
+		std::cout << "Couldn't create the hashing file.\n";
+		std::cout << "Filepath: \"" << HASHFILE_FILEPATH << "\"\n";
+		std::cout << "Aborting." << std::endl;
 		return;
 	}
 	
-	std::cout << "Arquivo de hashing criado em " << HASHFILE_FILEPATH << "\n\n";
+	std::cout << "Hashing file created at \"" << HASHFILE_FILEPATH << "\"\n\n";
 	
-	std::cout << "Iniciando a atualização...\n\n";
+	std::cout << "Begin uploading...\n\n";
 	
-	Block<HashfileHeader> header;
+	HashfileHeaderBlock header;
 	header.var.blockCount = 1;
 	std::fwrite(reinterpret_cast<const char*>(&header), sizeof(header), 1, output);
 	
-	Block<Entry> e;
+	EntryBlock e;
 	int lastId = -1;
 	unsigned int entriesFound = 0;
 	
 	while (readEntry(e.var, input)) {
-		if (++entriesFound % 100000 == 0) {
-			std::cout << entriesFound << " registros já foram lidos, paciência.\n";
+		if (++entriesFound % PATIENCE_STEP == 0) {
+			std::cout << entriesFound << " entries read so far, patience.\n";
 		}
 		
 		int idDifference = e.var.id - lastId - 1;
@@ -308,17 +306,15 @@ void upload(const char* filePath) {
 		std::fwrite(reinterpret_cast<const char*>(&e), sizeof(e), 1, output);
 		++header.var.blockCount;
 		
-		IdPointer idPointer;
+		IdIndex idPointer;
 		idPointer.id = e.var.id;
 		idPointer.offset = offset;
 		idTree.insert(idPointer);
 		
-		TitlePointer titlePointer;
+		TitleIndex titlePointer;
 		std::memcpy(titlePointer.title, e.var.title, TITLE_CHAR_MAX);
 		titlePointer.offset = offset;
 		titleTree.insert(titlePointer);
-		
-		// titleTree.traverse(true);
 		
 		lastId = e.var.id;
 	}
@@ -337,60 +333,59 @@ void upload(const char* filePath) {
 	
 	if (entriesFound >= 1000) std::cout << '\n';
 	
-	std::cout << "Atualização dos arquivos finalizada.\n";
-	std::cout << entriesFound << " registro(s) lido(s) no total.\n\n";
+	std::cout << "Uploading finished.\n";
+	std::cout << entriesFound << " entries read in total.\n\n";
 	
-	std::cout << "Arquivo de hashing:           " << header.var.blockCount << " blocos.\n";
-	std::cout << "Arquivo de índice primário:   " << idStats.blocksCreated << " blocos.\n";
-	std::cout << "Arquivo de índice secundário: " << titleStats.blocksCreated << " blocos." << std::endl;
+	std::cout << "Hashing file:         " << header.var.blockCount << " blocks.\n";
+	std::cout << "Primary index file:   " << idStats.blocksCreated << " blocks.\n";
+	std::cout << "Secondary index file: " << titleStats.blocksCreated << " blocks." << std::endl;
 }
 
-//! Função que mostra que um registro foi encontrado, quantos blocos foram lidos para encontrá-lo e quantos blocos o arquivo possui no momento.
+//! Function that prints a found entry and associated data
 /*!
-
-	\param e Um registro do arquivo.
-	\param blocksRead O número de blocos lidos até chegar no registro.
-	\param blockCount A contagem do número total de blocos no arquivo.
-
-	\author Oscar Othon
-*/
+ * Prints how many blocks were read to find it and how many blocks the file
+ * currently contains as a whole
+ *
+ * @param e Found entry
+ * @param blocksRead Blocks read
+ * @param blockCount Blocks in the file
+ */
 static void foundEntryMessage(const Entry& e, std::size_t blocksRead, std::size_t blockCount) {
-	std::cout << "Registro encontrado:\n\n";
+	std::cout << "Entry found:\n\n";
 	printEntry(e);
-	std::cout << blocksRead << " bloco" << (blocksRead > 1? "s foram lidos" : " foi lido") << " pra encontrá-lo.\n";
-	std::cout << "O arquivo está no momento com " << blockCount << " blocos totais." << std::endl;
+	std::cout << blocksRead << " block" << (blocksRead > 1? "s were" : " was") << " read.\n";
+	std::cout << "The file currently has " << blockCount << " total blocks." << std::endl;
 }
 
-//! Função que acha um registro no arquivo e printa se a busca foi completa ou não, ou se ocorreu algum erro de leitura.
+//! Function that seeks an entry by offset in the hashfile and prints it if successful
 /*!
-
-	Essa função recebe o arquivo já aberto, se dirige até o offset e, então, lê o registro.
-
-	\param *hashfile Ponteiro do arquivo pro arquivo de hashing.
-	\param	offset O offset do registro no arquivo.
-	\param	blocksReadSoFar Quantos blocos foram lidos até o momento.
-	\param	blockCount A contagem do número total de blocos no arquivo.
-
-	\author Oscar Othon
-*/
+ * In case of failure, it'll inform you
+ *
+ * @param hashfile File pointer to the hashfile
+ * @param offset Entry offset
+ * @param blocksReadSoFar Blocks read so far
+ * @param blockCount Blocks in the file
+ *
+ * @return True in case of success, false otherwise
+ */
 static bool findEntryAndPrint(std::FILE *hashfile, long offset, std::size_t blocksReadSoFar, std::size_t blockCount) {
-	std::cout << "Lendo o registro no offset " << offset << '\n';
+	std::cout << "Reading entry in offset " << offset << '\n';
 	
 	if (!std::fseek(hashfile, offset, SEEK_SET)) {
 		Block<Entry> e;
 		
 		if (std::fread(reinterpret_cast<char*>(&e), sizeof(e), 1, hashfile) && e.var.valid) {
-			++blocksReadSoFar; // +1 porque o bloco do registro foi lido.
+			++blocksReadSoFar; // +1 because the entry block has been read
 			
 			foundEntryMessage(e.var, blocksReadSoFar, blockCount);
 			return true;
 		}
 		else {
-			std::cout << "Falha na leitura. ";
+			std::cout << "Read failure. ";
 		}
 	}
 	else {
-		std::cout << "Falha no seek (" << offset << "). ";
+		std::cout << "Seek failure (" << offset << "). ";
 	}
 	
 	return false;
@@ -400,21 +395,21 @@ void findrec(long id) {
 	std::FILE *hashfile = std::fopen(HASHFILE_FILEPATH, "rb");
 	
 	if (!hashfile) {
-		std::cout << "Sem arquivo de hashing para a consulta." << std::endl;
+		std::cout << "No hashfile found. Consider uploading your data first." << std::endl;
 		return;
 	}
 	
 	long offset = BLOCK_SIZE /* header */ + BLOCK_SIZE * id;
 	
-	// A leitura deste bloco de cabeçalho não é contada pois ela não
-	// influencia na busca pelo registro. O cabeçalho é usado apenas
-	// para saber a quantidade de blocos no arquivo.
-	Block<HashfileHeader> header;
+	// The block read for the header doesn't count because it's not used in the
+	// entry search. The header is only used to provide the total blocks in the
+	// file.
+	HashfileHeaderBlock header;
 	std::fseek(hashfile, 0, SEEK_SET);
 	std::fread(reinterpret_cast<char*>(&header), sizeof(header), 1, hashfile);
 	
 	if (!findEntryAndPrint(hashfile, offset, 0, header.var.blockCount)) {
-		std::cout << "O registro com o id " << id << " não foi encontrado." << std::endl;
+		std::cout << "Entry with id " << id << " not found." << std::endl;
 	}
 	
 	std::fclose(hashfile);
@@ -424,34 +419,29 @@ void seek1(long id) {
 	std::FILE *hashfile = std::fopen(HASHFILE_FILEPATH, "rb");
 	
 	if (!hashfile) {
-		std::cout << "Sem arquivo de hashing para a consulta." << std::endl;
+		std::cout << "No hashfile found. Consider uploading your data first." << std::endl;
 		return;
 	}
 	
 	IdBTree tree;
 	
 	if (!tree.load(ID_TREE_FILEPATH)) {
-		std::cout << "Sem arquivo de índice primário para a consulta." << std::endl;
+		std::cout << "No primary index file found." << std::endl;
 		return;
 	}
 	
-	IdPointer ip;
-	ip.id = id;
-	ip.offset = -1;
-	
-	auto found = tree.seek(ip);
+	auto found = tree.seek(id);
 	
 	if (found) {
 		auto stats = tree.getStatistics(true);
 		
 		if (!findEntryAndPrint(hashfile, found->offset, stats.blocksRead, stats.blocksInDisk)) {
-			std::cout << "O registro com o id " << id << " (offset=" << found->offset
-				<< ") não foi encontrado no arquivo de hashing." << std::endl;
+			std::cout << "Entry with id " << id << " (offset=" << found->offset
+				<< ") not found in the hashfile." << std::endl;
 		}
 	}
 	else {
-		std::cout << "O registro com o id " << id
-			<< " não foi encontrado no arquivo de índice primário." << std::endl;
+		std::cout << "Entry with id " << id << " not found in the primary index." << std::endl;
 	}
 	
 	std::fclose(hashfile);
@@ -461,35 +451,30 @@ void seek2(const char* title) {
 	std::FILE *hashfile = std::fopen(HASHFILE_FILEPATH, "rb");
 	
 	if (!hashfile) {
-		std::cout << "Sem arquivo de hashing para a consulta." << std::endl;
+		std::cout << "No hashfile found. Consider uploading your data first." << std::endl;
 		return;
 	}
 	
 	TitleBTree tree;
 	
 	if (!tree.load(TITLE_TREE_FILEPATH)) {
-		std::cout << "Sem arquivo de índice secundário para a consulta." << std::endl;
+		std::cout << "No secondary index file found." << std::endl;
 		return;
 	}
 	
-	TitlePointer tp;
-	std::strcpy(tp.title, title);
-	tp.offset = -1;
-	
-	auto found = tree.seek(tp);
+	auto found = tree.seek(title);
 	
 	if (found) {
 		auto stats = tree.getStatistics(true);
 		
 		if (!findEntryAndPrint(hashfile, found->offset, stats.blocksRead, stats.blocksInDisk)) {
-			std::cout << "O registro com o título \"" << title
+			std::cout << "Entry with title \"" << title
 				<< "\" (offset=" << found->offset
-				<< ") não foi encontrado no arquivo de hashing." << std::endl;
+				<< ") not found in the hashfile." << std::endl;
 		}
 	}
 	else {
-		std::cout << "O registro com o título \"" << title
-			<< "\" não foi encontrado no arquivo de índice secundário." << std::endl;
+		std::cout << "Entry with title \"" << title << "\" not found in the secondary index file." << std::endl;
 	}
 	
 	std::fclose(hashfile);

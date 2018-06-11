@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['idbtree',['IdBTree',['../_commands_8cpp.html#addd9ea82fa14ac70d664c1425a2b9239',1,'Commands.cpp']]]
+  ['bnodeblock',['BNodeBlock',['../class_b_tree.html#a9af2ca14c936735538b632075173cbd2',1,'BTree']]]
 ];

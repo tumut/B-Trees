@@ -25,7 +25,7 @@
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BTrees
    </div>
-   <div id="projectbrief">B-Tree implementation in C++ to index documents based on numerical id&#39;s and title strings.</div>
+   <div id="projectbrief">B-tree implementation in C++ to index documents based on numerical id&#39;s and title strings.</div>
   </td>
  </tr>
  </tbody>
@@ -79,14 +79,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">🅱️ Trees </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>B-Tree implementation in C++ to index documents based on numerical id's (main index) and title strings (secondary index). Created as a college assignment.</p>
-<p><a href="https://tumut.github.io/BTrees/">Click here for the source documentation!</a></p>
+<div class="textblock"><p>B-tree implementation in C++ to index documents based on numerical id's (main index) and title strings (secondary index) in a sample application. Created as a college assignment.</p>
+<p><a href="https://tumut.github.io/BTrees/">Check our pre-generated source documentation!</a></p>
 <h2>Building</h2>
-<p>The project was developed in <code>CLion</code> and can be built from there. This means you can also use <code>CMake</code> for it if you want.</p>
-<p>You can generate the documentation yourself with <code>doxygen</code> and the repository's <code>Doxyfile</code>.</p>
+<h3>Program</h3>
+<p>After cloning the repository, you can explore and build the it with the <a href="https://www.jetbrains.com/clion/">CLion IDE</a>.</p>
+<p>Alternatively, use the following commands at the repository's root folder:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;mkdir build</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;cd build</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;cmake ..</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;make</div></div><!-- fragment --><h3>Documentation</h3>
+<p>If you want to generate the documentation yourself, use <code>doxygen</code> at the repository's root folder.</p>
 <h2>Input</h2>
 <p>The database that was used for testing and development can be downloaded <a href="https://drive.google.com/file/d/0B5H52GfdcU-WLVJHOWR3UzB0YzQ/view">here</a>.</p>
-<p>The program was built to accept a <code>;</code>-separated CSV file. Each line should represent an entry (in this case, an article), with columns reflecting the following fields (type <em>Alpha N</em> meaning "a string with at most N alphanumeric characters"):</p>
+<p>The program was built to accept a <code>;</code>-separated CSV file with quote-enclosed values. Each line should have the following fields (type <em>Alpha N</em> meaning "a string with at most N alphanumeric characters"):</p>
 <table class="doxtable">
 <tr>
 <th>Field </th><th>Type </th><th>Description  </th></tr>
@@ -105,11 +108,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <tr>
 <td>Snippet </td><td>Alpha 1024 </td><td>Text summary of the article's contents </td></tr>
 </table>
+<p>Example line:</p>
+<p><code>"1";"Title";"2017";"Alice|Bob|Carl";"42";"2017-01-30 23:59:59";"Snippet"</code></p>
+<p>Fields can be left blank.</p>
 <h2>Usage</h2>
-<p>Use either of the following commands with the executable:</p>
+<p>Usage of the program is based on following commands:</p>
 <ul>
 <li><p class="startli"><code>$ &lt;exec-name&gt; upload &lt;input&gt;</code></p>
-<p class="startli">Upload a CSV file <code>input</code> with entries into the database.</p>
+<p class="startli">Upload a CSV file <code>input</code> with entries into the database. This is the first command you should use.</p>
 <p class="startli">Will generate three files: one for the primary index (<code>db-idindex.bin</code>), another for the secondary index (<code>db-titleindex.bin</code>), and finally one where the entries themselves will be stored (<code>db-hashfile.bin</code>).</p>
 <p class="startli">The files will be overwritten if they already exist.</p>
 </li>

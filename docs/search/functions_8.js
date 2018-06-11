@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['readfromdisk',['readFromDisk',['../class_b_tree.html#aa4744d293938bd1368e2f1221e85cf03',1,'BTree']]],
-  ['readheader',['readHeader',['../class_b_tree.html#a96a652ee2fe86c5de933590ecc1613c2',1,'BTree']]],
-  ['resetstatistics',['resetStatistics',['../class_b_tree.html#aa8e20ba0b14f93b20302fcb5bd4932dd',1,'BTree']]]
+  ['readfromdisk',['readFromDisk',['../class_b_tree.html#adbf28ad7c2633b4a1d6570d8ef7ab212',1,'BTree']]],
+  ['readheader',['readHeader',['../class_b_tree.html#a83557e0983fe2532cd6c97b2d65afedd',1,'BTree']]],
+  ['resetstatistics',['resetStatistics',['../class_b_tree.html#a799522e099df354e9de84237f5a4ba58',1,'BTree']]]
 ];

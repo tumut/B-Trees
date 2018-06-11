@@ -1,60 +1,60 @@
-#include "Block.hpp"
-
 #include <algorithm>
 
 // --- //
 
-template<class TKey, std::size_t M>
-void BTree<TKey, M>::BNode::initialize(bool isLeaf, int keysCount) {
+template<typename T, std::size_t M, unsigned int BlockSize>
+void BTree<T, M, BlockSize>::BNode::initialize(bool isLeaf, int size) {
 	this->offset = -1;
 	this->isLeaf = isLeaf;
-	this->keysCount = keysCount;
+	this->size = size;
 }
 
-template<class TKey, std::size_t M>
-bool BTree<TKey, M>::BNode::isFull() const {
-	return keysCount >= 2 * M;
+template<typename T, std::size_t M, unsigned int BlockSize>
+bool BTree<T, M, BlockSize>::BNode::isFull() const {
+	return size >= 2 * M;
 }
 
-template<class TKey, std::size_t M>
-std::unique_ptr<TKey> BTree<TKey, M>::BNode::seek(const TKey& key, BTree& tree) const {
-	auto it = std::lower_bound(keys, keys + keysCount, key);
+template<typename T, std::size_t M, unsigned int BlockSize>
+template <typename U>
+std::unique_ptr<T> BTree<T, M, BlockSize>::BNode::seek(const U& key, BTree& tree) const {
+	auto last = values + size;
+	auto it = std::lower_bound(values, last, key);
 	
-	if (it == keys + keysCount || key < *it) {
+	if (it == last || key < *it) {
 		if (isLeaf) {
 			return nullptr;
 		}
 		else {
-			auto node = tree.readFromDisk(children[it - keys]);
+			auto node = tree.readFromDisk(children[it - values]);
 			return node.var.seek(key, tree);
 		}
 	}
 	else {
-		return std::make_unique<TKey>(*it);
+		return std::make_unique<T>(*it);
 	}
 }
 
 // --- //
 
-template<class TKey, std::size_t M>
-BTree<TKey, M>::BTree()
+template<typename T, std::size_t M, unsigned int BlockSize>
+BTree<T, M, BlockSize>::BTree()
 	: m_file(nullptr)
 	, m_stats({ 0, 0, 0 })
 {	}
 
-template<class TKey, std::size_t M>
-BTree<TKey, M>::~BTree() {
+template<typename T, std::size_t M, unsigned int BlockSize>
+BTree<T, M, BlockSize>::~BTree() {
 	if (m_file) std::fclose(m_file);
 }
 
-template<class TKey, std::size_t M>
-bool BTree<TKey, M>::create(const char* filepath) {
+template<typename T, std::size_t M, unsigned int BlockSize>
+bool BTree<T, M, BlockSize>::create(const char* filepath) {
 	if (m_file) std::fclose(m_file);
 	
 	if (m_file = std::fopen(filepath, "wb+")) {
 		resetStatistics();
-		
-		Block<FileHeader> header;
+
+		FileHeaderBlock header;
 		writeHeader(header);
 		++m_stats.blocksCreated;
 		
@@ -72,12 +72,12 @@ bool BTree<TKey, M>::create(const char* filepath) {
 	}
 }
 
-template<class TKey, std::size_t M>
-bool BTree<TKey, M>::load(const char* filepath) {
+template<typename T, std::size_t M, unsigned int BlockSize>
+bool BTree<T, M, BlockSize>::load(const char* filepath) {
 	if (m_file) std::fclose(m_file);
 	
 	if (m_file = std::fopen(filepath, "rb")) {
-		Block<FileHeader> header = readHeader();
+		FileHeaderBlock header = readHeader();
 		m_root = readFromDisk(header.var.rootAddress);
 		++m_stats.blocksRead;
 		return true;
@@ -87,33 +87,35 @@ bool BTree<TKey, M>::load(const char* filepath) {
 	}
 }
 
-template <class TKey, std::size_t M>
-std::unique_ptr<TKey> BTree<TKey, M>::seek(const TKey& key) {
+template <typename T, std::size_t M, unsigned int BlockSize>
+template <typename U>
+std::unique_ptr<T> BTree<T, M, BlockSize>::seek(const U& key) {
 	return m_root.var.seek(key, *this);
 }
 
-template<class TKey, std::size_t M>
-typename BTree<TKey, M>::Statistics BTree<TKey, M>::getStatistics(bool includeFileBlockCount) const {
-	auto stats = m_stats;
-	stats.blocksInDisk = readHeader().var.blockCount;
-	return stats;
+template<typename T, std::size_t M, unsigned int BlockSize>
+const typename BTree<T, M, BlockSize>::Statistics& BTree<T, M, BlockSize>::getStatistics(bool includeFileBlockCount) const {
+	if (includeFileBlockCount)
+		m_stats.blocksInDisk = readHeader().var.blockCount;
+
+	return m_stats;
 }
 
-template<class TKey, std::size_t M>
-void BTree<TKey, M>::resetStatistics() {
+template<typename T, std::size_t M, unsigned int BlockSize>
+void BTree<T, M, BlockSize>::resetStatistics() {
 	m_stats.blocksRead = m_stats.blocksCreated = m_stats.blocksInDisk = 0;
 }
 
-template<class TKey, std::size_t M>
-void BTree<TKey, M>::finishInsertions() {
-	Block<FileHeader> header = readHeader();
+template<typename T, std::size_t M, unsigned int BlockSize>
+void BTree<T, M, BlockSize>::finishInsertions() {
+	FileHeaderBlock header = readHeader();
 	header.var.blockCount = m_stats.blocksCreated;
 	writeHeader(header);
 }
 
-template<class TKey, std::size_t M>
-Block<typename BTree<TKey, M>::BNode> BTree<TKey, M>::readFromDisk(long offset) {
-	Block<BNode> node;
+template<typename T, std::size_t M, unsigned int BlockSize>
+typename BTree<T, M, BlockSize>::BNodeBlock BTree<T, M, BlockSize>::readFromDisk(long offset) {
+	BNodeBlock node;
 	
 	std::fseek(m_file, offset, SEEK_SET);
 	std::fread(reinterpret_cast<char*>(&node), 1, sizeof(node), m_file);
@@ -122,8 +124,8 @@ Block<typename BTree<TKey, M>::BNode> BTree<TKey, M>::readFromDisk(long offset) 
 	return node;
 }
 
-template<class TKey, std::size_t M>
-void BTree<TKey, M>::writeToDisk(Block<BNode>& node) {
+template<typename T, std::size_t M, unsigned int BlockSize>
+void BTree<T, M, BlockSize>::writeToDisk(BNodeBlock& node) {
 	if (node.var.offset == -1) {
 		std::fseek(m_file, 0, SEEK_END);
 		node.var.offset = std::ftell(m_file);
@@ -134,9 +136,9 @@ void BTree<TKey, M>::writeToDisk(Block<BNode>& node) {
 	std::fwrite(reinterpret_cast<const char*>(&node), 1, sizeof(node), m_file);
 }
 
-template<class TKey, std::size_t M>
-Block<typename BTree<TKey, M>::FileHeader> BTree<TKey, M>::readHeader() const {
-	Block<FileHeader> header;
+template<typename T, std::size_t M, unsigned int BlockSize>
+typename BTree<T, M, BlockSize>::FileHeaderBlock BTree<T, M, BlockSize>::readHeader() const {
+	FileHeaderBlock header;
 	
 	std::fseek(m_file, 0, SEEK_SET);
 	std::fread(reinterpret_cast<char*>(&header), 1, sizeof(header), m_file);
@@ -145,18 +147,18 @@ Block<typename BTree<TKey, M>::FileHeader> BTree<TKey, M>::readHeader() const {
 	return header;
 }
 
-template<class TKey, std::size_t M>
-void BTree<TKey, M>::writeHeader(const Block<FileHeader>& header) {
+template<typename T, std::size_t M, unsigned int BlockSize>
+void BTree<T, M, BlockSize>::writeHeader(const FileHeaderBlock& header) {
 	std::fseek(m_file, 0, SEEK_SET);
 	std::fwrite(reinterpret_cast<const char*>(&header), 1, sizeof(FileHeader), m_file);
 }
 
-template<class TKey, std::size_t M>
-void BTree<TKey, M>::insert(const TKey& key) {
-	if (auto overflow = insert(m_root, key)) {
-		Block<BNode> newRoot;
+template<typename T, std::size_t M, unsigned int BlockSize>
+void BTree<T, M, BlockSize>::insert(const T& value) {
+	if (auto overflow = insert(m_root, value)) {
+		BNodeBlock newRoot;
 		newRoot.var.initialize(false, 1);
-		newRoot.var.keys[0] = overflow->middle;
+		newRoot.var.values[0] = overflow->middle;
 		newRoot.var.children[0] = m_root.var.offset;
 		newRoot.var.children[1] = overflow->rightNode;
 		writeToDisk(newRoot);
@@ -170,26 +172,26 @@ void BTree<TKey, M>::insert(const TKey& key) {
 	}
 }
 
-template<class TKey, std::size_t M>
-std::unique_ptr<typename BTree<TKey, M>::OverflowResult> BTree<TKey, M>::insert(Block<BNode>& node, TKey key, long rightNodeOffset) {
-	auto end = node.var.keys + node.var.keysCount;
-	auto iter = std::lower_bound(node.var.keys, end, key);
+template<typename T, std::size_t M, unsigned int BlockSize>
+std::unique_ptr<typename BTree<T, M, BlockSize>::OverflowResult> BTree<T, M, BlockSize>::insert(BNodeBlock& node, T value, long rightNodeOffset) {
+	auto last = node.var.values + node.var.size;
+	auto iter = std::lower_bound(node.var.values, last, value);
 	
-	auto i = iter - node.var.keys;
+	auto i = iter - node.var.values;
 	
 	if (!node.var.isLeaf && rightNodeOffset == -1) {
-		Block<BNode> next = readFromDisk(node.var.children[i]);
+		BNodeBlock next = readFromDisk(node.var.children[i]);
 		
-		if (auto overflow = insert(next, key)) {
+		if (auto overflow = insert(next, value)) {
 			return insert(node, overflow->middle, overflow->rightNode);
 		}
 	}
 	else {
-		for (auto j = node.var.keysCount; i < j; --j) {
-			node.var.keys[j] = node.var.keys[j - 1];
+		for (auto j = node.var.size; i < j; --j) {
+			node.var.values[j] = node.var.values[j - 1];
 		}
 		
-		node.var.keys[i] = key;
+		node.var.values[i] = value;
 		
 		if (!node.var.isLeaf) {
 			for (auto j = 2 * M + 1; i + 1 < j; --j) {
@@ -200,31 +202,31 @@ std::unique_ptr<typename BTree<TKey, M>::OverflowResult> BTree<TKey, M>::insert(
 		}
 		
 		if (node.var.isFull()) {
-			Block<BNode> right;
+			BNodeBlock right;
 			right.var.initialize(node.var.isLeaf, M);
 			
-			for (auto j = M + 1; j <= node.var.keysCount; ++j) {
-				right.var.keys[j - M - 1] = node.var.keys[j];
+			for (auto j = M + 1; j <= node.var.size; ++j) {
+				right.var.values[j - M - 1] = node.var.values[j];
 			}
 			
 			if (!node.var.isLeaf) {
-				for (auto j = M + 1; j <= node.var.keysCount + 1; ++j) {
+				for (auto j = M + 1; j <= node.var.size + 1; ++j) {
 					right.var.children[j - M - 1] = node.var.children[j];
 				}
 			}
 			
-			node.var.keysCount = M;
+			node.var.size = M;
 			
 			writeToDisk(right);
 			writeToDisk(node);
 			
 			auto overflow = std::make_unique<OverflowResult>();
-			overflow->middle = node.var.keys[M];
+			overflow->middle = node.var.values[M];
 			overflow->rightNode = right.var.offset;
 			return overflow;
 		}
 		else {
-			++node.var.keysCount;
+			++node.var.size;
 			writeToDisk(node);
 		}
 	}

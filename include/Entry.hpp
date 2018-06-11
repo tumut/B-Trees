@@ -1,25 +1,31 @@
 #ifndef _ENTRY_HPP_INCLUDED_
 #define _ENTRY_HPP_INCLUDED_
 
-//! Tamanho máximo da cadeia de caracteres do título.
+//! Max title size in characters
 #define TITLE_CHAR_MAX 300
-//! Tamanho máximo da cadeia de caracteres dos nomes de autores.
+
+//! Max author name list size in total characters
 #define AUTHORS_CHAR_MAX 1024
-//! Tamanho máximo da cadeia de caracteres do timestamp.
+
+//! Max timestamp size in characters
 #define TIMESTAMP_CHAR_MAX 20
-//! Tamanho máximo da cadeia de caracteres do resumo.
+
+//! Max snippet size in characters
 #define SNIPPET_CHAR_MAX 1024
 
-//! Registro básico do arquivo.
+//! Article entry
+/*!
+ * Basic file entry
+ */
 struct Entry {
-	bool valid; //!< Se o registro constitui um registro válido no arquivo.
-	int id; //!< Identificador do registro.
-	char title[TITLE_CHAR_MAX]; //!< Título do livro.
-	int year; //!< Ano de publicação do livro.
-	char authors[AUTHORS_CHAR_MAX]; //!< Autores do livro.
-	int citations; //!< Quantidade de citações do livro.
-	char updateTimestamp[TIMESTAMP_CHAR_MAX]; //!< Timestamp de atualização do livro.
-	char snippet[SNIPPET_CHAR_MAX]; //!< Resumo do livro.
+	bool valid; //!< True if the data is legit, false if the entry is being used only for padding within the file
+	int id; //!< Article identifier
+	char title[TITLE_CHAR_MAX]; //!< Article title
+	int year; //!< Publication year of the article
+	char authors[AUTHORS_CHAR_MAX]; //!< Article authors
+	int citations; //!< Times the article has been cited
+	char updateTimestamp[TIMESTAMP_CHAR_MAX]; //!< Last update timestamp
+	char snippet[SNIPPET_CHAR_MAX]; //!< Article snippet
 };
 
 #endif // _ENTRY_HPP_INCLUDED_

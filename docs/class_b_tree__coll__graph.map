@@ -1,5 +1,5 @@
-<map id="BTree&lt; TKey, M &gt;" name="BTree&lt; TKey, M &gt;">
-<area shape="rect" id="node2" href="$union_block.html" title="Block\&lt; BTree::BNode \&gt;" alt="" coords="13,95,176,121"/>
-<area shape="rect" id="node3" href="$struct_b_tree_1_1_b_node.html" title="Nó da árvore B. " alt="" coords="5,5,184,32"/>
-<area shape="rect" id="node4" href="$struct_b_tree_1_1_statistics.html" title="Estrutura usada pela árvore para guardar métricas de sua execução. " alt="" coords="200,95,395,121"/>
+<map id="BTree&lt; T, M, BlockSize &gt;" name="BTree&lt; T, M, BlockSize &gt;">
+<area shape="rect" id="node2" href="$union_block.html" title="Block\&lt; BNode, BlockSize \&gt;" alt="" coords="5,117,192,143"/>
+<area shape="rect" id="node3" href="$struct_b_tree_1_1_b_node.html" title="B&#45;tree node. " alt="" coords="17,5,180,47"/>
+<area shape="rect" id="node4" href="$struct_b_tree_1_1_statistics.html" title="BTree usage analytics. " alt="" coords="216,109,379,151"/>
 </map>

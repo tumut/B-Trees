@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>BTrees: BTree&lt; TKey, M &gt;::BNode Struct Reference</title>
+<title>BTrees: BTree&lt; T, M, BlockSize &gt;::BNode Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -25,7 +25,7 @@
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BTrees
    </div>
-   <div id="projectbrief">B-Tree implementation in C++ to index documents based on numerical id&#39;s and title strings.</div>
+   <div id="projectbrief">B-tree implementation in C++ to index documents based on numerical id&#39;s and title strings.</div>
   </td>
  </tr>
  </tbody>
@@ -91,57 +91,58 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="struct_b_tree_1_1_b_node-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">BTree&lt; TKey, M &gt;::BNode Struct Reference</div>  </div>
+<div class="title">BTree&lt; T, M, BlockSize &gt;::BNode Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Nó da árvore B.  
+<p>B-tree node.  
  <a href="struct_b_tree_1_1_b_node.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a27994df173046454415dccf8274b54e3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_b_node.html#a27994df173046454415dccf8274b54e3">initialize</a> (bool <a class="el" href="struct_b_tree_1_1_b_node.html#ad112117785c2e7b8e5169f31db5dfe59">isLeaf</a>=true, int <a class="el" href="struct_b_tree_1_1_b_node.html#a7da57720fb1c5fd4279a30deb1dc6697">keysCount</a>=0)</td></tr>
-<tr class="memdesc:a27994df173046454415dccf8274b54e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inicializa o nó.  <a href="#a27994df173046454415dccf8274b54e3">More...</a><br /></td></tr>
-<tr class="separator:a27994df173046454415dccf8274b54e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae7c7e81cad32c0843addc3711d70d0f7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_b_node.html#ae7c7e81cad32c0843addc3711d70d0f7">isFull</a> () const </td></tr>
-<tr class="memdesc:ae7c7e81cad32c0843addc3711d70d0f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verifica se o nó está em sua capacidade máxima (acima de 2M dados).  <a href="#ae7c7e81cad32c0843addc3711d70d0f7">More...</a><br /></td></tr>
-<tr class="separator:ae7c7e81cad32c0843addc3711d70d0f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f68bb4c490164e23dcf06e96483d0e1"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; TKey &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_b_node.html#a8f68bb4c490164e23dcf06e96483d0e1">seek</a> (const TKey &amp;key, <a class="el" href="class_b_tree.html">BTree</a> &amp;tree) const </td></tr>
-<tr class="memdesc:a8f68bb4c490164e23dcf06e96483d0e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Busca um dado que seja equivalente ao dado fornecido.  <a href="#a8f68bb4c490164e23dcf06e96483d0e1">More...</a><br /></td></tr>
-<tr class="separator:a8f68bb4c490164e23dcf06e96483d0e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7227e47e36a8edfdab0fbfdf547817ab"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_b_node.html#a7227e47e36a8edfdab0fbfdf547817ab">initialize</a> (bool <a class="el" href="struct_b_tree_1_1_b_node.html#a0b0b9930e9474ce76d7823f4567c1faa">isLeaf</a>=true, int <a class="el" href="struct_b_tree_1_1_b_node.html#ac35203ce468d3fa79809398804a216fc">size</a>=0)</td></tr>
+<tr class="memdesc:a7227e47e36a8edfdab0fbfdf547817ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the node.  <a href="#a7227e47e36a8edfdab0fbfdf547817ab">More...</a><br /></td></tr>
+<tr class="separator:a7227e47e36a8edfdab0fbfdf547817ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16569f4e716b2dedb6799f4c1e767540"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_b_node.html#a16569f4e716b2dedb6799f4c1e767540">isFull</a> () const </td></tr>
+<tr class="memdesc:a16569f4e716b2dedb6799f4c1e767540"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the node has reached its maximum capacity.  <a href="#a16569f4e716b2dedb6799f4c1e767540">More...</a><br /></td></tr>
+<tr class="separator:a16569f4e716b2dedb6799f4c1e767540"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9359c1223ce3d0788ae96adac2ab90f8"><td class="memTemplParams" colspan="2">template&lt;typename U &gt; </td></tr>
+<tr class="memitem:a9359c1223ce3d0788ae96adac2ab90f8"><td class="memTemplItemLeft" align="right" valign="top">std::unique_ptr&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_b_node.html#a9359c1223ce3d0788ae96adac2ab90f8">seek</a> (const U &amp;key, <a class="el" href="class_b_tree.html">BTree</a> &amp;tree) const </td></tr>
+<tr class="memdesc:a9359c1223ce3d0788ae96adac2ab90f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Seeks a value that's equivalent to the one provided.  <a href="#a9359c1223ce3d0788ae96adac2ab90f8">More...</a><br /></td></tr>
+<tr class="separator:a9359c1223ce3d0788ae96adac2ab90f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a8e0f5e06540af73b1a2f271faefe85ab"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_b_node.html#a8e0f5e06540af73b1a2f271faefe85ab">offset</a></td></tr>
-<tr class="memdesc:a8e0f5e06540af73b1a2f271faefe85ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Endereço no disco.  <a href="#a8e0f5e06540af73b1a2f271faefe85ab">More...</a><br /></td></tr>
-<tr class="separator:a8e0f5e06540af73b1a2f271faefe85ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad112117785c2e7b8e5169f31db5dfe59"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_b_node.html#ad112117785c2e7b8e5169f31db5dfe59">isLeaf</a></td></tr>
-<tr class="memdesc:ad112117785c2e7b8e5169f31db5dfe59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Booleano indicando se o nó é folha (true) ou nó interno (false).  <a href="#ad112117785c2e7b8e5169f31db5dfe59">More...</a><br /></td></tr>
-<tr class="separator:ad112117785c2e7b8e5169f31db5dfe59"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7da57720fb1c5fd4279a30deb1dc6697"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_b_node.html#a7da57720fb1c5fd4279a30deb1dc6697">keysCount</a></td></tr>
-<tr class="memdesc:a7da57720fb1c5fd4279a30deb1dc6697"><td class="mdescLeft">&#160;</td><td class="mdescRight">Quantidade de dados dentro do nó, no momento.  <a href="#a7da57720fb1c5fd4279a30deb1dc6697">More...</a><br /></td></tr>
-<tr class="separator:a7da57720fb1c5fd4279a30deb1dc6697"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a07e26ca52d27eb4b41bbca04e0f3b9ec"><td class="memItemLeft" align="right" valign="top">TKey&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_b_node.html#a07e26ca52d27eb4b41bbca04e0f3b9ec">keys</a> [2 *M+1]</td></tr>
-<tr class="memdesc:a07e26ca52d27eb4b41bbca04e0f3b9ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Os dados do nó.  <a href="#a07e26ca52d27eb4b41bbca04e0f3b9ec">More...</a><br /></td></tr>
-<tr class="separator:a07e26ca52d27eb4b41bbca04e0f3b9ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16759b3a85e23fcf83e9a4e2a92c0b93"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_b_node.html#a16759b3a85e23fcf83e9a4e2a92c0b93">children</a> [2 *M+2]</td></tr>
-<tr class="memdesc:a16759b3a85e23fcf83e9a4e2a92c0b93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Os apontadores de nó.  <a href="#a16759b3a85e23fcf83e9a4e2a92c0b93">More...</a><br /></td></tr>
-<tr class="separator:a16759b3a85e23fcf83e9a4e2a92c0b93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af864d07c047391653ed752084e8f07ff"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_b_node.html#af864d07c047391653ed752084e8f07ff">offset</a></td></tr>
+<tr class="memdesc:af864d07c047391653ed752084e8f07ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disk address.  <a href="#af864d07c047391653ed752084e8f07ff">More...</a><br /></td></tr>
+<tr class="separator:af864d07c047391653ed752084e8f07ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b0b9930e9474ce76d7823f4567c1faa"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_b_node.html#a0b0b9930e9474ce76d7823f4567c1faa">isLeaf</a></td></tr>
+<tr class="memdesc:a0b0b9930e9474ce76d7823f4567c1faa"><td class="mdescLeft">&#160;</td><td class="mdescRight">True if the node is a leaf, false if it's an internal node.  <a href="#a0b0b9930e9474ce76d7823f4567c1faa">More...</a><br /></td></tr>
+<tr class="separator:a0b0b9930e9474ce76d7823f4567c1faa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac35203ce468d3fa79809398804a216fc"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_b_node.html#ac35203ce468d3fa79809398804a216fc">size</a></td></tr>
+<tr class="memdesc:ac35203ce468d3fa79809398804a216fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Quantity of values currently stored in the node.  <a href="#ac35203ce468d3fa79809398804a216fc">More...</a><br /></td></tr>
+<tr class="separator:ac35203ce468d3fa79809398804a216fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a969c8d44f40fae248bd80060293f2eb6"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_b_node.html#a969c8d44f40fae248bd80060293f2eb6">values</a> [2 *M+1]</td></tr>
+<tr class="memdesc:a969c8d44f40fae248bd80060293f2eb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Node values.  <a href="#a969c8d44f40fae248bd80060293f2eb6">More...</a><br /></td></tr>
+<tr class="separator:a969c8d44f40fae248bd80060293f2eb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46c583bf14e3bdee6951a24bbfc54f3e"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_b_node.html#a46c583bf14e3bdee6951a24bbfc54f3e">children</a> [2 *M+2]</td></tr>
+<tr class="memdesc:a46c583bf14e3bdee6951a24bbfc54f3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Os apontadores de nó.  <a href="#a46c583bf14e3bdee6951a24bbfc54f3e">More...</a><br /></td></tr>
+<tr class="separator:a46c583bf14e3bdee6951a24bbfc54f3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;class TKey, std::size_t M&gt;<br />
-struct BTree&lt; TKey, M &gt;::BNode</h3>
+<div class="textblock"><h3>template&lt;typename T, std::size_t M, unsigned int BlockSize = BLOCK_SIZE&gt;<br />
+struct BTree&lt; T, M, BlockSize &gt;::BNode</h3>
 
-<p>Nó da árvore B. </p>
+<p>B-tree node. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a27994df173046454415dccf8274b54e3"></a>
+<a class="anchor" id="a7227e47e36a8edfdab0fbfdf547817ab"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class TKey , std::size_t M&gt; </div>
+template&lt;typename T , std::size_t M, unsigned int BlockSize&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="class_b_tree.html">BTree</a>&lt; TKey, M &gt;::BNode::initialize </td>
+          <td class="memname">void <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::BNode::initialize </td>
           <td>(</td>
           <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>isLeaf</em> = <code>true</code>, </td>
@@ -150,7 +151,7 @@ template&lt;class TKey , std::size_t M&gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>keysCount</em> = <code>0</code>&#160;</td>
+          <td class="paramname"><em>size</em> = <code>0</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -160,29 +161,28 @@ template&lt;class TKey , std::size_t M&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Inicializa o nó. </p>
-<p>O valor do campo offset do nó não é fornecido: ele é sempre inicializado como -1, para permitir que se saiba se ele já foi escrito no arquivo ou não.</p>
-<p>Se um nó não for lido através de um readFromDisk da <a class="el" href="class_b_tree.html" title="Classe de árvore B. ">BTree</a>, é obrigatório que esse método seja chamado, pois ele funciona como um construtor do <a class="el" href="struct_b_tree_1_1_b_node.html" title="Nó da árvore B. ">BNode</a>.</p>
-<p>A inicialização foi implementada como um método ao invés de um construtor pois é necessário que o <a class="el" href="struct_b_tree_1_1_b_node.html" title="Nó da árvore B. ">BNode</a> seja uma classe de tipo POD (Plain Old Data type) para poder ser lido e escrito no arquivo, além de para também poder ser usado como argumento de template para o Block&lt;T&gt;.</p>
+<p>Initializes the node. </p>
+<p>The value of <a class="el" href="struct_b_tree_1_1_b_node.html#af864d07c047391653ed752084e8f07ff" title="Disk address. ">BNode::offset</a> is initialized as -1 so that we can know whether the node has already been written to the file or not.</p>
+<p>This method must always be called upon declaring a <a class="el" href="struct_b_tree_1_1_b_node.html" title="B-tree node. ">BNode</a> unless the node will be read through <a class="el" href="class_b_tree.html#adbf28ad7c2633b4a1d6570d8ef7ab212" title="Retorna um bloco com o nó lido no offset fornecido. ">BTree::readFromDisk</a>.</p>
+<p><a class="el" href="struct_b_tree_1_1_b_node.html" title="B-tree node. ">BNode</a>'s initialization was implemented as a method rather than a constructor because <a class="el" href="struct_b_tree_1_1_b_node.html" title="B-tree node. ">BNode</a> must be a POD in order to be read and written in the file.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">isLeaf</td><td>Se o nó vai ser inicializado como folha (true) ou não (false). </td></tr>
-    <tr><td class="paramname">keysCount</td><td>Quantidade inicial de dados no nó.</td></tr>
+    <tr><td class="paramname">isLeaf</td><td>True if the node will be a leaf, false if it will be an internal node </td></tr>
+    <tr><td class="paramname">size</td><td>Initial node size </td></tr>
   </table>
   </dd>
 </dl>
-<p>Timóteo Fonseca </p>
 
 </div>
 </div>
-<a class="anchor" id="ae7c7e81cad32c0843addc3711d70d0f7"></a>
+<a class="anchor" id="a16569f4e716b2dedb6799f4c1e767540"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class TKey , std::size_t M&gt; </div>
+template&lt;typename T , std::size_t M, unsigned int BlockSize&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="class_b_tree.html">BTree</a>&lt; TKey, M &gt;::BNode::isFull </td>
+          <td class="memname">bool <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::BNode::isFull </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -190,21 +190,23 @@ template&lt;class TKey , std::size_t M&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Verifica se o nó está em sua capacidade máxima (acima de 2M dados). </p>
-<dl class="section author"><dt>Author</dt><dd>Timóteo Fonseca </dd></dl>
+<p>Checks if the node has reached its maximum capacity. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if <a class="el" href="struct_b_tree_1_1_b_node.html#ac35203ce468d3fa79809398804a216fc" title="Quantity of values currently stored in the node. ">BNode::size</a> &gt;= 2M, false otherwise </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a8f68bb4c490164e23dcf06e96483d0e1"></a>
+<a class="anchor" id="a9359c1223ce3d0788ae96adac2ab90f8"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class TKey , std::size_t M&gt; </div>
+template&lt;typename T , std::size_t M, unsigned int BlockSize&gt; </div>
+<div class="memtemplate">
+template&lt;typename U &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">std::unique_ptr&lt; TKey &gt; <a class="el" href="class_b_tree.html">BTree</a>&lt; TKey, M &gt;::BNode::seek </td>
+          <td class="memname">std::unique_ptr&lt; T &gt; <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::BNode::seek </td>
           <td>(</td>
-          <td class="paramtype">const TKey &amp;&#160;</td>
+          <td class="paramtype">const U &amp;&#160;</td>
           <td class="paramname"><em>key</em>, </td>
         </tr>
         <tr>
@@ -221,95 +223,106 @@ template&lt;class TKey , std::size_t M&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Busca um dado que seja equivalente ao dado fornecido. </p>
-<p>Realiza a busca propriamente dita pelo dado, usando a instância de tree passado por parâmetro para poder realizar leituras no arquivo.</p>
-<p>Retorna um ponteiro nulo se não encontrar o dado.</p>
-<dl class="section return"><dt>Returns</dt><dd>Ponteiro com o dado ou nulo.</dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Timóteo Fonseca </dd></dl>
+<p>Seeks a value that's equivalent to the one provided. </p>
+<p>Seeks the value throughout the file</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">U</td><td>See <a class="el" href="class_b_tree.html#ab354e77e1cec80cfff9178bd874435f1" title="Seeks a value that&#39;s equivalent to the one provided. ">BTree::seek</a></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>Value to seek </td></tr>
+    <tr><td class="paramname">tree</td><td><a class="el" href="class_b_tree.html" title="B-tree class. ">BTree</a> to access the file and statistics</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer with the value if found, null pointer otherwise </dd></dl>
 
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="a16759b3a85e23fcf83e9a4e2a92c0b93"></a>
+<a class="anchor" id="a46c583bf14e3bdee6951a24bbfc54f3e"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class TKey, std::size_t M&gt; </div>
+template&lt;typename T, std::size_t M, unsigned int BlockSize = BLOCK_SIZE&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">long <a class="el" href="class_b_tree.html">BTree</a>&lt; TKey, M &gt;::BNode::children[2 *M+2]</td>
+          <td class="memname">long <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::BNode::children[2 *M+2]</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Os apontadores de nó. </p>
-<p>Na prática, um nó só costuma utilizar as 2M+1 primeiras posições deste vetor. O espaço adicional de 1 dado é usado temporariamente para lidar com overflows. </p>
+<p>Most of the time, the node will only use the first <code>2M+1</code> positions of this array. The additional space for 1 value is used temporarily to deal with overflows during <a class="el" href="class_b_tree.html#a13493d45b50fa350deb1c308890a75a9" title="Inserts a value in the tree. ">BTree::insert</a>. </p>
 
 </div>
 </div>
-<a class="anchor" id="ad112117785c2e7b8e5169f31db5dfe59"></a>
+<a class="anchor" id="a0b0b9930e9474ce76d7823f4567c1faa"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class TKey, std::size_t M&gt; </div>
+template&lt;typename T, std::size_t M, unsigned int BlockSize = BLOCK_SIZE&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="class_b_tree.html">BTree</a>&lt; TKey, M &gt;::BNode::isLeaf</td>
+          <td class="memname">bool <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::BNode::isLeaf</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Booleano indicando se o nó é folha (true) ou nó interno (false). </p>
+<p>True if the node is a leaf, false if it's an internal node. </p>
 
 </div>
 </div>
-<a class="anchor" id="a07e26ca52d27eb4b41bbca04e0f3b9ec"></a>
+<a class="anchor" id="af864d07c047391653ed752084e8f07ff"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class TKey, std::size_t M&gt; </div>
+template&lt;typename T, std::size_t M, unsigned int BlockSize = BLOCK_SIZE&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">TKey <a class="el" href="class_b_tree.html">BTree</a>&lt; TKey, M &gt;::BNode::keys[2 *M+1]</td>
+          <td class="memname">long <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::BNode::offset</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Os dados do nó. </p>
-<p>Na prática, um nó só costuma utilizar as 2M primeiras posições deste vetor. O espaço adicional de 1 dado é usado temporariamente para lidar com overflows. </p>
+<p>Disk address. </p>
+<p>Ideally, the node before being first written should have its offset equal to -1. Only after its first writing should it store its true disk offset. </p>
 
 </div>
 </div>
-<a class="anchor" id="a7da57720fb1c5fd4279a30deb1dc6697"></a>
+<a class="anchor" id="ac35203ce468d3fa79809398804a216fc"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class TKey, std::size_t M&gt; </div>
+template&lt;typename T, std::size_t M, unsigned int BlockSize = BLOCK_SIZE&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">std::size_t <a class="el" href="class_b_tree.html">BTree</a>&lt; TKey, M &gt;::BNode::keysCount</td>
+          <td class="memname">std::size_t <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::BNode::size</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Quantidade de dados dentro do nó, no momento. </p>
+<p>Quantity of values currently stored in the node. </p>
 
 </div>
 </div>
-<a class="anchor" id="a8e0f5e06540af73b1a2f271faefe85ab"></a>
+<a class="anchor" id="a969c8d44f40fae248bd80060293f2eb6"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class TKey, std::size_t M&gt; </div>
+template&lt;typename T, std::size_t M, unsigned int BlockSize = BLOCK_SIZE&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">long <a class="el" href="class_b_tree.html">BTree</a>&lt; TKey, M &gt;::BNode::offset</td>
+          <td class="memname">T <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::BNode::values[2 *M+1]</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Endereço no disco. </p>
-<p>O ideal é que o nó, antes de ser escrito no registro pela primeira vez, esteja com o offset de valor -1. Após a primeira escrita, o offset passa a realmente possuir seu endereço no disco. </p>
+<p>Node values. </p>
+<p>Most of the time, the node will only be using the first <code>2M</code> positions of this array. The additional space for 1 value is used temporarily to deal with overflows during <a class="el" href="class_b_tree.html#a13493d45b50fa350deb1c308890a75a9" title="Inserts a value in the tree. ">BTree::insert</a>. </p>
 
 </div>
 </div>

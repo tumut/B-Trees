@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>BTrees: BTree&lt; TKey, M &gt; Class Template Reference</title>
+<title>BTrees: BTree&lt; T, M, BlockSize &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -25,7 +25,7 @@
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BTrees
    </div>
-   <div id="projectbrief">B-Tree implementation in C++ to index documents based on numerical id&#39;s and title strings.</div>
+   <div id="projectbrief">B-tree implementation in C++ to index documents based on numerical id&#39;s and title strings.</div>
   </td>
  </tr>
  </tbody>
@@ -84,124 +84,223 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
+<a href="#pri-types">Private Types</a> &#124;
 <a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_b_tree-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">BTree&lt; TKey, M &gt; Class Template Reference</div>  </div>
+<div class="title">BTree&lt; T, M, BlockSize &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Classe de árvore B.  
+<p>B-tree class.  
  <a href="class_b_tree.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_b_tree_8hpp_source.html">BTree.hpp</a>&gt;</code></p>
 <div class="dynheader">
-Collaboration diagram for BTree&lt; TKey, M &gt;:</div>
+Collaboration diagram for BTree&lt; T, M, BlockSize &gt;:</div>
 <div class="dyncontent">
-<div class="center"><img src="class_b_tree__coll__graph.png" border="0" usemap="#_b_tree_3_01_t_key_00_01_m_01_4_coll__map" alt="Collaboration graph"/></div>
-<map name="_b_tree_3_01_t_key_00_01_m_01_4_coll__map" id="_b_tree_3_01_t_key_00_01_m_01_4_coll__map">
-<area shape="rect" id="node2" href="union_block.html" title="Block\&lt; BTree::BNode \&gt;" alt="" coords="13,95,176,121"/>
-<area shape="rect" id="node3" href="struct_b_tree_1_1_b_node.html" title="Nó da árvore B. " alt="" coords="5,5,184,32"/>
-<area shape="rect" id="node4" href="struct_b_tree_1_1_statistics.html" title="Estrutura usada pela árvore para guardar métricas de sua execução. " alt="" coords="200,95,395,121"/>
+<div class="center"><img src="class_b_tree__coll__graph.png" border="0" usemap="#_b_tree_3_01_t_00_01_m_00_01_block_size_01_4_coll__map" alt="Collaboration graph"/></div>
+<map name="_b_tree_3_01_t_00_01_m_00_01_block_size_01_4_coll__map" id="_b_tree_3_01_t_00_01_m_00_01_block_size_01_4_coll__map">
+<area shape="rect" id="node2" href="union_block.html" title="Block\&lt; BNode, BlockSize \&gt;" alt="" coords="5,117,192,143"/>
+<area shape="rect" id="node3" href="struct_b_tree_1_1_b_node.html" title="B&#45;tree node. " alt="" coords="17,5,180,47"/>
+<area shape="rect" id="node4" href="struct_b_tree_1_1_statistics.html" title="BTree usage analytics. " alt="" coords="216,109,379,151"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_b_node.html">BNode</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nó da árvore B.  <a href="struct_b_tree_1_1_b_node.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">B-tree node.  <a href="struct_b_tree_1_1_b_node.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_file_header.html">FileHeader</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dados do cabeçalho do arquivo.  <a href="struct_b_tree_1_1_file_header.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">File header data for <a class="el" href="class_b_tree.html" title="B-tree class. ">BTree</a> indexes.  <a href="struct_b_tree_1_1_file_header.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_overflow_result.html">OverflowResult</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registro auxiliar com o resultado de um overflow de inserção.  <a href="struct_b_tree_1_1_overflow_result.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides information to deal with an insertion overflow.  <a href="struct_b_tree_1_1_overflow_result.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_statistics.html">Statistics</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Estrutura usada pela árvore para guardar métricas de sua execução.  <a href="struct_b_tree_1_1_statistics.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_b_tree.html" title="B-tree class. ">BTree</a> usage analytics.  <a href="struct_b_tree_1_1_statistics.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:ad8d543a1bc8fa6f931b69e9e4dce9375"><td class="memItemLeft" align="right" valign="top">typedef T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#ad8d543a1bc8fa6f931b69e9e4dce9375">ValueType</a></td></tr>
+<tr class="memdesc:ad8d543a1bc8fa6f931b69e9e4dce9375"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of the stored values.  <a href="#ad8d543a1bc8fa6f931b69e9e4dce9375">More...</a><br /></td></tr>
+<tr class="separator:ad8d543a1bc8fa6f931b69e9e4dce9375"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ace2795117ce7ba73e15b52c72b3a10b3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#ace2795117ce7ba73e15b52c72b3a10b3">BTree</a> ()</td></tr>
-<tr class="memdesc:ace2795117ce7ba73e15b52c72b3a10b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construtor padrão.  <a href="#ace2795117ce7ba73e15b52c72b3a10b3">More...</a><br /></td></tr>
-<tr class="separator:ace2795117ce7ba73e15b52c72b3a10b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afbb2c2201c1c7b3ebf0719c21c3fc866"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#afbb2c2201c1c7b3ebf0719c21c3fc866">~BTree</a> ()</td></tr>
-<tr class="memdesc:afbb2c2201c1c7b3ebf0719c21c3fc866"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destrutor padrão.  <a href="#afbb2c2201c1c7b3ebf0719c21c3fc866">More...</a><br /></td></tr>
-<tr class="separator:afbb2c2201c1c7b3ebf0719c21c3fc866"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab8e5c6367eed5e552b4fdfe51aad61b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#aab8e5c6367eed5e552b4fdfe51aad61b">create</a> (const char *filepath)</td></tr>
-<tr class="memdesc:aab8e5c6367eed5e552b4fdfe51aad61b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Método de inicialização da árvore, para escrita.  <a href="#aab8e5c6367eed5e552b4fdfe51aad61b">More...</a><br /></td></tr>
-<tr class="separator:aab8e5c6367eed5e552b4fdfe51aad61b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f314aa35d198aa82d96d030b2ba4404"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#a3f314aa35d198aa82d96d030b2ba4404">load</a> (const char *filepath)</td></tr>
-<tr class="memdesc:a3f314aa35d198aa82d96d030b2ba4404"><td class="mdescLeft">&#160;</td><td class="mdescRight">Método de inicialização da árvore, para leitura.  <a href="#a3f314aa35d198aa82d96d030b2ba4404">More...</a><br /></td></tr>
-<tr class="separator:a3f314aa35d198aa82d96d030b2ba4404"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2dcaee02bde80ebe5e1634be84357900"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#a2dcaee02bde80ebe5e1634be84357900">insert</a> (const TKey &amp;key)</td></tr>
-<tr class="memdesc:a2dcaee02bde80ebe5e1634be84357900"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insere um dado dentro da árvore.  <a href="#a2dcaee02bde80ebe5e1634be84357900">More...</a><br /></td></tr>
-<tr class="separator:a2dcaee02bde80ebe5e1634be84357900"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac39de078a8dfb556c4f665c5791ba6ac"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; TKey &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#ac39de078a8dfb556c4f665c5791ba6ac">seek</a> (const TKey &amp;key)</td></tr>
-<tr class="memdesc:ac39de078a8dfb556c4f665c5791ba6ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Busca um dado que seja equivalente ao dado fornecido.  <a href="#ac39de078a8dfb556c4f665c5791ba6ac">More...</a><br /></td></tr>
-<tr class="separator:ac39de078a8dfb556c4f665c5791ba6ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b36fa86b3b3e9b4566ba3b622e107e3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_b_tree_1_1_statistics.html">Statistics</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#a7b36fa86b3b3e9b4566ba3b622e107e3">getStatistics</a> (bool includeFileBlockCount=false) const </td></tr>
-<tr class="memdesc:a7b36fa86b3b3e9b4566ba3b622e107e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retorna as estatísticas da árvore até então.  <a href="#a7b36fa86b3b3e9b4566ba3b622e107e3">More...</a><br /></td></tr>
-<tr class="separator:a7b36fa86b3b3e9b4566ba3b622e107e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8e20ba0b14f93b20302fcb5bd4932dd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#aa8e20ba0b14f93b20302fcb5bd4932dd">resetStatistics</a> ()</td></tr>
-<tr class="memdesc:aa8e20ba0b14f93b20302fcb5bd4932dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atribui valor 0 a todos os campos das estatísticas atuais.  <a href="#aa8e20ba0b14f93b20302fcb5bd4932dd">More...</a><br /></td></tr>
-<tr class="separator:aa8e20ba0b14f93b20302fcb5bd4932dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4d5c0ac3e9ade90c7a830406ecb26f45"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#a4d5c0ac3e9ade90c7a830406ecb26f45">finishInsertions</a> ()</td></tr>
-<tr class="memdesc:a4d5c0ac3e9ade90c7a830406ecb26f45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atualiza o cabeçalho com o total de blocos no arquivo.  <a href="#a4d5c0ac3e9ade90c7a830406ecb26f45">More...</a><br /></td></tr>
-<tr class="separator:a4d5c0ac3e9ade90c7a830406ecb26f45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39d2dc6d0f1ec51fff7b5dbaf42baf5e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#a39d2dc6d0f1ec51fff7b5dbaf42baf5e">BTree</a> ()</td></tr>
+<tr class="memdesc:a39d2dc6d0f1ec51fff7b5dbaf42baf5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#a39d2dc6d0f1ec51fff7b5dbaf42baf5e">More...</a><br /></td></tr>
+<tr class="separator:a39d2dc6d0f1ec51fff7b5dbaf42baf5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b2060ffb0199fce8f7d32e7924af045"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#a3b2060ffb0199fce8f7d32e7924af045">~BTree</a> ()</td></tr>
+<tr class="memdesc:a3b2060ffb0199fce8f7d32e7924af045"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a3b2060ffb0199fce8f7d32e7924af045">More...</a><br /></td></tr>
+<tr class="separator:a3b2060ffb0199fce8f7d32e7924af045"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85386d47c24912f04e71e28ef922258e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#a85386d47c24912f04e71e28ef922258e">create</a> (const char *filepath)</td></tr>
+<tr class="memdesc:a85386d47c24912f04e71e28ef922258e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes <a class="el" href="class_b_tree.html" title="B-tree class. ">BTree</a> for writing.  <a href="#a85386d47c24912f04e71e28ef922258e">More...</a><br /></td></tr>
+<tr class="separator:a85386d47c24912f04e71e28ef922258e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b85dc76d3a2108c5058c9923660ec14"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#a9b85dc76d3a2108c5058c9923660ec14">load</a> (const char *filepath)</td></tr>
+<tr class="memdesc:a9b85dc76d3a2108c5058c9923660ec14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes <a class="el" href="class_b_tree.html" title="B-tree class. ">BTree</a> for reading only.  <a href="#a9b85dc76d3a2108c5058c9923660ec14">More...</a><br /></td></tr>
+<tr class="separator:a9b85dc76d3a2108c5058c9923660ec14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13493d45b50fa350deb1c308890a75a9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#a13493d45b50fa350deb1c308890a75a9">insert</a> (const T &amp;value)</td></tr>
+<tr class="memdesc:a13493d45b50fa350deb1c308890a75a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts a value in the tree.  <a href="#a13493d45b50fa350deb1c308890a75a9">More...</a><br /></td></tr>
+<tr class="separator:a13493d45b50fa350deb1c308890a75a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab354e77e1cec80cfff9178bd874435f1"><td class="memTemplParams" colspan="2">template&lt;typename U &gt; </td></tr>
+<tr class="memitem:ab354e77e1cec80cfff9178bd874435f1"><td class="memTemplItemLeft" align="right" valign="top">std::unique_ptr&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_b_tree.html#ab354e77e1cec80cfff9178bd874435f1">seek</a> (const U &amp;key)</td></tr>
+<tr class="memdesc:ab354e77e1cec80cfff9178bd874435f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Seeks a value that's equivalent to the one provided.  <a href="#ab354e77e1cec80cfff9178bd874435f1">More...</a><br /></td></tr>
+<tr class="separator:ab354e77e1cec80cfff9178bd874435f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cdd54bb9e6e0f2689d8d1fe4aa45400"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="struct_b_tree_1_1_statistics.html">Statistics</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#a2cdd54bb9e6e0f2689d8d1fe4aa45400">getStatistics</a> (bool includeFileBlockCount=false) const </td></tr>
+<tr class="memdesc:a2cdd54bb9e6e0f2689d8d1fe4aa45400"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the <a class="el" href="class_b_tree.html" title="B-tree class. ">BTree</a> usage statistics so far.  <a href="#a2cdd54bb9e6e0f2689d8d1fe4aa45400">More...</a><br /></td></tr>
+<tr class="separator:a2cdd54bb9e6e0f2689d8d1fe4aa45400"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a799522e099df354e9de84237f5a4ba58"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#a799522e099df354e9de84237f5a4ba58">resetStatistics</a> ()</td></tr>
+<tr class="memdesc:a799522e099df354e9de84237f5a4ba58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset all statistics values to 0.  <a href="#a799522e099df354e9de84237f5a4ba58">More...</a><br /></td></tr>
+<tr class="separator:a799522e099df354e9de84237f5a4ba58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaefb64c44b55fbddc9f07aa129ba7656"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#aaefb64c44b55fbddc9f07aa129ba7656">finishInsertions</a> ()</td></tr>
+<tr class="memdesc:aaefb64c44b55fbddc9f07aa129ba7656"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the header with the total blocks in the file.  <a href="#aaefb64c44b55fbddc9f07aa129ba7656">More...</a><br /></td></tr>
+<tr class="separator:aaefb64c44b55fbddc9f07aa129ba7656"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a21640c1085ee30ac291740ef13d66bd4"><td class="memItemLeft" align="right" valign="top">static constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#a21640c1085ee30ac291740ef13d66bd4">Order</a> = M</td></tr>
+<tr class="memdesc:a21640c1085ee30ac291740ef13d66bd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tree order.  <a href="#a21640c1085ee30ac291740ef13d66bd4">More...</a><br /></td></tr>
+<tr class="separator:a21640c1085ee30ac291740ef13d66bd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae474f8f8398cf009b528db3b2dec236"><td class="memItemLeft" align="right" valign="top">static constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#aae474f8f8398cf009b528db3b2dec236">BlockSizeInUse</a> = BlockSize</td></tr>
+<tr class="memdesc:aae474f8f8398cf009b528db3b2dec236"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="union_block.html" title="Union for reading and writing blocks containing serialized data. ">Block</a> size in bytes.  <a href="#aae474f8f8398cf009b528db3b2dec236">More...</a><br /></td></tr>
+<tr class="separator:aae474f8f8398cf009b528db3b2dec236"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
+Private Types</h2></td></tr>
+<tr class="memitem:a5f104fd7668e63982b101db29e69d198"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="union_block.html">Block</a>&lt; <a class="el" href="struct_b_tree_1_1_file_header.html">FileHeader</a>, BlockSize &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#a5f104fd7668e63982b101db29e69d198">FileHeaderBlock</a></td></tr>
+<tr class="memdesc:a5f104fd7668e63982b101db29e69d198"><td class="mdescLeft">&#160;</td><td class="mdescRight">File header block.  <a href="#a5f104fd7668e63982b101db29e69d198">More...</a><br /></td></tr>
+<tr class="separator:a5f104fd7668e63982b101db29e69d198"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9af2ca14c936735538b632075173cbd2"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="union_block.html">Block</a>&lt; <a class="el" href="struct_b_tree_1_1_b_node.html">BNode</a>, BlockSize &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#a9af2ca14c936735538b632075173cbd2">BNodeBlock</a></td></tr>
+<tr class="memdesc:a9af2ca14c936735538b632075173cbd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Node block.  <a href="#a9af2ca14c936735538b632075173cbd2">More...</a><br /></td></tr>
+<tr class="separator:a9af2ca14c936735538b632075173cbd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
-<tr class="memitem:aa4744d293938bd1368e2f1221e85cf03"><td class="memItemLeft" align="right" valign="top"><a class="el" href="union_block.html">Block</a>&lt; <a class="el" href="struct_b_tree_1_1_b_node.html">BNode</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#aa4744d293938bd1368e2f1221e85cf03">readFromDisk</a> (long offset)</td></tr>
-<tr class="memdesc:aa4744d293938bd1368e2f1221e85cf03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retorna um bloco com o nó lido no offset fornecido.  <a href="#aa4744d293938bd1368e2f1221e85cf03">More...</a><br /></td></tr>
-<tr class="separator:aa4744d293938bd1368e2f1221e85cf03"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d70baf9a02151ed8a897eee0b2d9ed5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#a9d70baf9a02151ed8a897eee0b2d9ed5">writeToDisk</a> (<a class="el" href="union_block.html">Block</a>&lt; <a class="el" href="struct_b_tree_1_1_b_node.html">BNode</a> &gt; &amp;node)</td></tr>
-<tr class="memdesc:a9d70baf9a02151ed8a897eee0b2d9ed5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atualiza em disco o nó fornecido.  <a href="#a9d70baf9a02151ed8a897eee0b2d9ed5">More...</a><br /></td></tr>
-<tr class="separator:a9d70baf9a02151ed8a897eee0b2d9ed5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a96a652ee2fe86c5de933590ecc1613c2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="union_block.html">Block</a>&lt; <a class="el" href="struct_b_tree_1_1_file_header.html">FileHeader</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#a96a652ee2fe86c5de933590ecc1613c2">readHeader</a> () const </td></tr>
-<tr class="memdesc:a96a652ee2fe86c5de933590ecc1613c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lê em disco o cabeçalho do arquivo da árvore.  <a href="#a96a652ee2fe86c5de933590ecc1613c2">More...</a><br /></td></tr>
-<tr class="separator:a96a652ee2fe86c5de933590ecc1613c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a373c36f654fa44f096324c677a8fd7ad"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#a373c36f654fa44f096324c677a8fd7ad">writeHeader</a> (const <a class="el" href="union_block.html">Block</a>&lt; <a class="el" href="struct_b_tree_1_1_file_header.html">FileHeader</a> &gt; &amp;header)</td></tr>
-<tr class="memdesc:a373c36f654fa44f096324c677a8fd7ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atualiza o cabeçalho do arquivo da arvore.  <a href="#a373c36f654fa44f096324c677a8fd7ad">More...</a><br /></td></tr>
-<tr class="separator:a373c36f654fa44f096324c677a8fd7ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afad724e5c7ea6f668060846cbbe15368"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="struct_b_tree_1_1_overflow_result.html">OverflowResult</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#afad724e5c7ea6f668060846cbbe15368">insert</a> (<a class="el" href="union_block.html">Block</a>&lt; <a class="el" href="struct_b_tree_1_1_b_node.html">BNode</a> &gt; &amp;node, TKey key, long rightNodeOffset=-1)</td></tr>
-<tr class="memdesc:afad724e5c7ea6f668060846cbbe15368"><td class="mdescLeft">&#160;</td><td class="mdescRight">Método interno de inserção na árvore.  <a href="#afad724e5c7ea6f668060846cbbe15368">More...</a><br /></td></tr>
-<tr class="separator:afad724e5c7ea6f668060846cbbe15368"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbf28ad7c2633b4a1d6570d8ef7ab212"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_b_tree.html#a9af2ca14c936735538b632075173cbd2">BNodeBlock</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#adbf28ad7c2633b4a1d6570d8ef7ab212">readFromDisk</a> (long offset)</td></tr>
+<tr class="memdesc:adbf28ad7c2633b4a1d6570d8ef7ab212"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retorna um bloco com o nó lido no offset fornecido.  <a href="#adbf28ad7c2633b4a1d6570d8ef7ab212">More...</a><br /></td></tr>
+<tr class="separator:adbf28ad7c2633b4a1d6570d8ef7ab212"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39540a7e17906e44d3eda3346818aabf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#a39540a7e17906e44d3eda3346818aabf">writeToDisk</a> (<a class="el" href="class_b_tree.html#a9af2ca14c936735538b632075173cbd2">BNodeBlock</a> &amp;node)</td></tr>
+<tr class="memdesc:a39540a7e17906e44d3eda3346818aabf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes the node to disk.  <a href="#a39540a7e17906e44d3eda3346818aabf">More...</a><br /></td></tr>
+<tr class="separator:a39540a7e17906e44d3eda3346818aabf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83557e0983fe2532cd6c97b2d65afedd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_b_tree.html#a5f104fd7668e63982b101db29e69d198">FileHeaderBlock</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#a83557e0983fe2532cd6c97b2d65afedd">readHeader</a> () const </td></tr>
+<tr class="memdesc:a83557e0983fe2532cd6c97b2d65afedd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the file header.  <a href="#a83557e0983fe2532cd6c97b2d65afedd">More...</a><br /></td></tr>
+<tr class="separator:a83557e0983fe2532cd6c97b2d65afedd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b39b3d173ba3ae596b1fc68f2398da2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#a3b39b3d173ba3ae596b1fc68f2398da2">writeHeader</a> (const <a class="el" href="class_b_tree.html#a5f104fd7668e63982b101db29e69d198">FileHeaderBlock</a> &amp;header)</td></tr>
+<tr class="memdesc:a3b39b3d173ba3ae596b1fc68f2398da2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the file header in disk.  <a href="#a3b39b3d173ba3ae596b1fc68f2398da2">More...</a><br /></td></tr>
+<tr class="separator:a3b39b3d173ba3ae596b1fc68f2398da2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a058a0ae654ae152af0f76aae7fbe8352"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="struct_b_tree_1_1_overflow_result.html">OverflowResult</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#a058a0ae654ae152af0f76aae7fbe8352">insert</a> (<a class="el" href="class_b_tree.html#a9af2ca14c936735538b632075173cbd2">BNodeBlock</a> &amp;node, T value, long rightNodeOffset=-1)</td></tr>
+<tr class="memdesc:a058a0ae654ae152af0f76aae7fbe8352"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal method for B-tree insertion.  <a href="#a058a0ae654ae152af0f76aae7fbe8352">More...</a><br /></td></tr>
+<tr class="separator:a058a0ae654ae152af0f76aae7fbe8352"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:aea30be3db9c762b8d9fe7e44dd4c3c29"><td class="memItemLeft" align="right" valign="top">std::FILE *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#aea30be3db9c762b8d9fe7e44dd4c3c29">m_file</a></td></tr>
-<tr class="memdesc:aea30be3db9c762b8d9fe7e44dd4c3c29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ponteiro de arquivo para o arquivo em que se encontram os dados da árvore.  <a href="#aea30be3db9c762b8d9fe7e44dd4c3c29">More...</a><br /></td></tr>
-<tr class="separator:aea30be3db9c762b8d9fe7e44dd4c3c29"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1658bf8173fb5c33944615ebaaee69d0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="union_block.html">Block</a>&lt; <a class="el" href="struct_b_tree_1_1_b_node.html">BNode</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#a1658bf8173fb5c33944615ebaaee69d0">m_root</a></td></tr>
-<tr class="memdesc:a1658bf8173fb5c33944615ebaaee69d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nó raiz da árvore.  <a href="#a1658bf8173fb5c33944615ebaaee69d0">More...</a><br /></td></tr>
-<tr class="separator:a1658bf8173fb5c33944615ebaaee69d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5142aee6795ec77ea67c3f7702801890"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_b_tree_1_1_statistics.html">Statistics</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#a5142aee6795ec77ea67c3f7702801890">m_stats</a></td></tr>
-<tr class="memdesc:a5142aee6795ec77ea67c3f7702801890"><td class="mdescLeft">&#160;</td><td class="mdescRight">Onde a <a class="el" href="class_b_tree.html" title="Classe de árvore B. ">BTree</a> guarda suas estatísticas de leitura e escrita de blocos.  <a href="#a5142aee6795ec77ea67c3f7702801890">More...</a><br /></td></tr>
-<tr class="separator:a5142aee6795ec77ea67c3f7702801890"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:accbe121bee504d8d445934160a58a7ab"><td class="memItemLeft" align="right" valign="top">std::FILE *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#accbe121bee504d8d445934160a58a7ab">m_file</a></td></tr>
+<tr class="memdesc:accbe121bee504d8d445934160a58a7ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">File pointer to the file where data will be stored.  <a href="#accbe121bee504d8d445934160a58a7ab">More...</a><br /></td></tr>
+<tr class="separator:accbe121bee504d8d445934160a58a7ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0958a9dddcabef39e16e656757e8d2c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_b_tree.html#a9af2ca14c936735538b632075173cbd2">BNodeBlock</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#a0958a9dddcabef39e16e656757e8d2c4">m_root</a></td></tr>
+<tr class="memdesc:a0958a9dddcabef39e16e656757e8d2c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Root node of the B-tree.  <a href="#a0958a9dddcabef39e16e656757e8d2c4">More...</a><br /></td></tr>
+<tr class="separator:a0958a9dddcabef39e16e656757e8d2c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1dd41410a7892910ebacb2383d77e6d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_b_tree_1_1_statistics.html">Statistics</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html#ac1dd41410a7892910ebacb2383d77e6d">m_stats</a></td></tr>
+<tr class="memdesc:ac1dd41410a7892910ebacb2383d77e6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Where <a class="el" href="class_b_tree.html" title="B-tree class. ">BTree</a> stores its read and write statistics.  <a href="#ac1dd41410a7892910ebacb2383d77e6d">More...</a><br /></td></tr>
+<tr class="separator:ac1dd41410a7892910ebacb2383d77e6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;class TKey, std::size_t M&gt;<br />
-class BTree&lt; TKey, M &gt;</h3>
+<div class="textblock"><h3>template&lt;typename T, std::size_t M, unsigned int BlockSize = BLOCK_SIZE&gt;<br />
+class BTree&lt; T, M, BlockSize &gt;</h3>
 
-<p>Classe de árvore B. </p>
-<p>Classe de árvore B multi-uso usada para guardar índices e títulos no trabalho.</p>
-<p>O parâmetro de template TKey determina o tipo de dado que será guardado nos nós da árvore. TKey deve ser um tipo POD (Plain Old Data type) para poder ser sequenciado no arquivo quando o nó for escrito.</p>
-<p>O parâmetro de template M determina a ordem da árvore. Em condições normais, um nó pode ter no máximo 2M dados e 2M+1 apontadores de nó. Em estado de overflow, ele pode temporariamente ter 2M+1 dados e 2M+2 apontadores de nó.</p>
-<p>Antes de usar uma <a class="el" href="class_b_tree.html" title="Classe de árvore B. ">BTree</a> deve sempre se chamar o método load (em caso de apenas leitura) ou create (em caso de escrita de um novo arquivo).</p>
-<p>No fim da inserção, o método <a class="el" href="class_b_tree.html#a4d5c0ac3e9ade90c7a830406ecb26f45" title="Atualiza o cabeçalho com o total de blocos no arquivo. ">finishInsertions()</a> deve ser chamado para a quantidade de blocos do arquivo ser atualizada no cabeçalho.</p>
-<p>Exemplo de uso: </p><div class="fragment"><div class="line"><a class="code" href="class_b_tree.html">BTree&lt;int, 2&gt;</a> arvore;</div><div class="line">arvore.<a class="code" href="class_b_tree.html#aab8e5c6367eed5e552b4fdfe51aad61b">create</a>(<span class="stringliteral">&quot;nomedoarquivo.bin&quot;</span>);</div><div class="line">arvore.<a class="code" href="class_b_tree.html#a2dcaee02bde80ebe5e1634be84357900">insert</a>(1);</div><div class="line">arvore.<a class="code" href="class_b_tree.html#a4d5c0ac3e9ade90c7a830406ecb26f45">finishInsertions</a>();</div><div class="line"></div><div class="line">arvore.<a class="code" href="class_b_tree.html#a3f314aa35d198aa82d96d030b2ba4404">load</a>(<span class="stringliteral">&quot;nomedoarquivo.bin&quot;</span>);</div><div class="line"><span class="keyword">auto</span> valor = arvore.<a class="code" href="class_b_tree.html#ac39de078a8dfb556c4f665c5791ba6ac">seek</a>(1);</div><div class="line"><span class="keywordflow">if</span> (valor) f(*valor); <span class="comment">// Fazer algo com o valor, se encontrado.</span></div></div><!-- fragment --> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="ace2795117ce7ba73e15b52c72b3a10b3"></a>
+<p>B-tree class. </p>
+<p><a class="el" href="class_b_tree.html" title="B-tree class. ">BTree</a> can be used to store T-type values in binary files for fast retrieval later. T must be a POD (Plain Old Data type) and <em>less-than</em> comparable.</p>
+<p>Use the method <a class="el" href="class_b_tree.html#a85386d47c24912f04e71e28ef922258e" title="Initializes BTree for writing. ">BTree::create</a> before inserting values and, once you've finished inserting, call <a class="el" href="class_b_tree.html#aaefb64c44b55fbddc9f07aa129ba7656" title="Updates the header with the total blocks in the file. ">BTree::finishInsertions</a> to update the file header.</p>
+<p>Use <a class="el" href="class_b_tree.html#a9b85dc76d3a2108c5058c9923660ec14" title="Initializes BTree for reading only. ">BTree::load</a> before reading values.</p>
+<p>Example usage: </p><div class="fragment"><div class="line"><a class="code" href="class_b_tree.html">BTree&lt;int, 2&gt;</a> tree;</div><div class="line"></div><div class="line"><span class="comment">// Insert data</span></div><div class="line">tree.<a class="code" href="class_b_tree.html#a85386d47c24912f04e71e28ef922258e">create</a>(<span class="stringliteral">&quot;filename.bin&quot;</span>);</div><div class="line">tree.<a class="code" href="class_b_tree.html#a13493d45b50fa350deb1c308890a75a9">insert</a>(1);</div><div class="line">tree.<a class="code" href="class_b_tree.html#aaefb64c44b55fbddc9f07aa129ba7656">finishInsertions</a>();</div><div class="line"></div><div class="line"><span class="comment">// Read data</span></div><div class="line">tree.<a class="code" href="class_b_tree.html#a9b85dc76d3a2108c5058c9923660ec14">load</a>(<span class="stringliteral">&quot;filename.bin&quot;</span>);</div><div class="line"><span class="keywordtype">int</span> *x = tree.<a class="code" href="class_b_tree.html#ab354e77e1cec80cfff9178bd874435f1">seek</a>(1);</div><div class="line"><span class="keywordflow">if</span> (x) f(*x); <span class="comment">// If found, do something to x</span></div></div><!-- fragment --><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Type of the data to be stored</td></tr>
+    <tr><td class="paramname">M</td><td>Tree order. Each node will store up to 2M values and have up to 2M + 1 children. A node can't be bigger than <code>BLOCK_SIZE</code> bytes.</td></tr>
+    <tr><td class="paramname">BlockSize</td><td><a class="el" href="union_block.html" title="Union for reading and writing blocks containing serialized data. ">Block</a> size to use, in bytes </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a class="anchor" id="a9af2ca14c936735538b632075173cbd2"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class TKey , std::size_t M&gt; </div>
+template&lt;typename T, std::size_t M, unsigned int BlockSize = BLOCK_SIZE&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_b_tree.html">BTree</a>&lt; TKey, M &gt;::<a class="el" href="class_b_tree.html">BTree</a> </td>
+          <td class="memname">typedef <a class="el" href="union_block.html">Block</a>&lt;<a class="el" href="struct_b_tree_1_1_b_node.html">BNode</a>, BlockSize&gt; <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::<a class="el" href="class_b_tree.html#a9af2ca14c936735538b632075173cbd2">BNodeBlock</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Node block. </p>
+
+</div>
+</div>
+<a class="anchor" id="a5f104fd7668e63982b101db29e69d198"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, std::size_t M, unsigned int BlockSize = BLOCK_SIZE&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef <a class="el" href="union_block.html">Block</a>&lt;<a class="el" href="struct_b_tree_1_1_file_header.html">FileHeader</a>, BlockSize&gt; <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::<a class="el" href="class_b_tree.html#a5f104fd7668e63982b101db29e69d198">FileHeaderBlock</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>File header block. </p>
+
+</div>
+</div>
+<a class="anchor" id="ad8d543a1bc8fa6f931b69e9e4dce9375"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, std::size_t M, unsigned int BlockSize = BLOCK_SIZE&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef T <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::<a class="el" href="class_b_tree.html#ad8d543a1bc8fa6f931b69e9e4dce9375">ValueType</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Type of the stored values. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a39d2dc6d0f1ec51fff7b5dbaf42baf5e"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , std::size_t M, unsigned int BlockSize&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::<a class="el" href="class_b_tree.html">BTree</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -209,20 +308,19 @@ template&lt;class TKey , std::size_t M&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Construtor padrão. </p>
-<p>Inicializa com valores 0 as estatísticas e nulifica o ponteiro de arquivo da <a class="el" href="class_b_tree.html" title="Classe de árvore B. ">BTree</a>.</p>
-<dl class="section author"><dt>Author</dt><dd>Timóteo Fonseca </dd></dl>
+<p>Default constructor. </p>
+<p>Initializes the statistics with 0 values and makes the file pointer point to null </p>
 
 </div>
 </div>
-<a class="anchor" id="afbb2c2201c1c7b3ebf0719c21c3fc866"></a>
+<a class="anchor" id="a3b2060ffb0199fce8f7d32e7924af045"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class TKey , std::size_t M&gt; </div>
+template&lt;typename T , std::size_t M, unsigned int BlockSize&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_b_tree.html">BTree</a>&lt; TKey, M &gt;::~<a class="el" href="class_b_tree.html">BTree</a> </td>
+          <td class="memname"><a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::~<a class="el" href="class_b_tree.html">BTree</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -230,20 +328,20 @@ template&lt;class TKey , std::size_t M&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Destrutor padrão. </p>
-<p>Fecha o arquivo se ele estiver aberto. </p>
+<p>Destructor. </p>
+<p>Closes the file if it's open </p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="aab8e5c6367eed5e552b4fdfe51aad61b"></a>
+<a class="anchor" id="a85386d47c24912f04e71e28ef922258e"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class TKey , std::size_t M&gt; </div>
+template&lt;typename T , std::size_t M, unsigned int BlockSize&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="class_b_tree.html">BTree</a>&lt; TKey, M &gt;::create </td>
+          <td class="memname">bool <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::create </td>
           <td>(</td>
           <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>filepath</em></td><td>)</td>
@@ -252,29 +350,29 @@ template&lt;class TKey , std::size_t M&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Método de inicialização da árvore, para escrita. </p>
-<p>Deve sempre ser chamado antes de começar a inserção na árvore, mas também permite a leitura.</p>
-<p>Se já houver um arquivo em filepath, ele será sobreescrito.</p>
-<p>O arquivo novo será criado com um cabeçalho e um nó raiz vazio.</p>
+<p>Initializes <a class="el" href="class_b_tree.html" title="B-tree class. ">BTree</a> for writing. </p>
+<p>Opens the file in "wb+" mode. Must be called before inserting values in the tree. Also allows reading through <a class="el" href="class_b_tree.html#ab354e77e1cec80cfff9178bd874435f1" title="Seeks a value that&#39;s equivalent to the one provided. ">BTree::seek</a>.</p>
+<p>If there's already a file in the filepath, it'll be overwritten.</p>
+<p>The new file will be created in the provided filepath with a header and an empty root node.</p>
+<p>After you've finished inserting values, call <a class="el" href="class_b_tree.html#aaefb64c44b55fbddc9f07aa129ba7656" title="Updates the header with the total blocks in the file. ">BTree::finishInsertions</a> to update the file header.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">filepath</td><td>Caminho do arquivo onde os dados da árvore serão escritos.</td></tr>
+    <tr><td class="paramname">filepath</td><td>Path to the file where the tree data will be written</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Se foi possível criar o arquivo em filepath.</dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Timóteo Fonseca </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the file was created successfully </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a4d5c0ac3e9ade90c7a830406ecb26f45"></a>
+<a class="anchor" id="aaefb64c44b55fbddc9f07aa129ba7656"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class TKey , std::size_t M&gt; </div>
+template&lt;typename T , std::size_t M, unsigned int BlockSize&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="class_b_tree.html">BTree</a>&lt; TKey, M &gt;::finishInsertions </td>
+          <td class="memname">void <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::finishInsertions </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -282,20 +380,19 @@ template&lt;class TKey , std::size_t M&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Atualiza o cabeçalho com o total de blocos no arquivo. </p>
-<p>Muito importante de se usar no final da utilização de uma árvore após ela ser inicializada com <a class="el" href="class_b_tree.html#aab8e5c6367eed5e552b4fdfe51aad61b" title="Método de inicialização da árvore, para escrita. ">create()</a>.</p>
-<dl class="section author"><dt>Author</dt><dd>Timóteo Fonseca </dd></dl>
+<p>Updates the header with the total blocks in the file. </p>
+<p>Very important to be used once you've finished using a tree that was initialized with <a class="el" href="class_b_tree.html#a85386d47c24912f04e71e28ef922258e" title="Initializes BTree for writing. ">BTree::create</a> </p>
 
 </div>
 </div>
-<a class="anchor" id="a7b36fa86b3b3e9b4566ba3b622e107e3"></a>
+<a class="anchor" id="a2cdd54bb9e6e0f2689d8d1fe4aa45400"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class TKey , std::size_t M&gt; </div>
+template&lt;typename T , std::size_t M, unsigned int BlockSize&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_b_tree.html">BTree</a>&lt; TKey, M &gt;::<a class="el" href="struct_b_tree_1_1_statistics.html">Statistics</a> <a class="el" href="class_b_tree.html">BTree</a>&lt; TKey, M &gt;::getStatistics </td>
+          <td class="memname">const <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::<a class="el" href="struct_b_tree_1_1_statistics.html">Statistics</a> &amp; <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::getStatistics </td>
           <td>(</td>
           <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>includeFileBlockCount</em> = <code>false</code></td><td>)</td>
@@ -304,66 +401,64 @@ template&lt;class TKey , std::size_t M&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Retorna as estatísticas da árvore até então. </p>
-<p>A inclusão da quantidade de blocos no arquivo, nas estatísticas, é opcional pois a árvore vai ter que fazer uma leitura do arquivo para poder obter este dado, o que é uma operação custosa.</p>
+<p>Returns the <a class="el" href="class_b_tree.html" title="B-tree class. ">BTree</a> usage statistics so far. </p>
+<p>Including the quantity of blocks in the file is optional because it requires reading the file header to update the field. The read value will be stored in memory and can be accessed later without reading the file header again.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">includeFileBlockCount</td><td>Se deve incluir (true) ou não (false) a quantidade de blocos do arquivo nas estatísticas.</td></tr>
+    <tr><td class="paramname">includeFileBlockCount</td><td>True if you want to update the <a class="el" href="struct_b_tree_1_1_statistics.html#a9a51739f20067b23f5d18193438e0cb0" title="Quantity of blocks stored in disk. ">Statistics::blocksInDisk</a> value, false otherwise</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Estatísticas.</dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Timóteo Fonseca </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_b_tree_1_1_statistics.html" title="BTree usage analytics. ">Statistics</a> </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a2dcaee02bde80ebe5e1634be84357900"></a>
+<a class="anchor" id="a13493d45b50fa350deb1c308890a75a9"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class TKey , std::size_t M&gt; </div>
+template&lt;typename T, std::size_t M, unsigned int BlockSize&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="class_b_tree.html">BTree</a>&lt; TKey, M &gt;::insert </td>
+          <td class="memname">void <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::insert </td>
           <td>(</td>
-          <td class="paramtype">const TKey &amp;&#160;</td>
-          <td class="paramname"><em>key</em></td><td>)</td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Insere um dado dentro da árvore. </p>
+<p>Inserts a value in the tree. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">key</td><td>O dado a ser inserido.</td></tr>
+    <tr><td class="paramname">value</td><td>Value to insert </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section author"><dt>Author</dt><dd>Timóteo Fonseca </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="afad724e5c7ea6f668060846cbbe15368"></a>
+<a class="anchor" id="a058a0ae654ae152af0f76aae7fbe8352"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class TKey , std::size_t M&gt; </div>
+template&lt;typename T, std::size_t M, unsigned int BlockSize&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::unique_ptr&lt; typename <a class="el" href="class_b_tree.html">BTree</a>&lt; TKey, M &gt;::<a class="el" href="struct_b_tree_1_1_overflow_result.html">OverflowResult</a> &gt; <a class="el" href="class_b_tree.html">BTree</a>&lt; TKey, M &gt;::insert </td>
+          <td class="memname">std::unique_ptr&lt; typename <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::<a class="el" href="struct_b_tree_1_1_overflow_result.html">OverflowResult</a> &gt; <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::insert </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="union_block.html">Block</a>&lt; <a class="el" href="struct_b_tree_1_1_b_node.html">BNode</a> &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="class_b_tree.html#a9af2ca14c936735538b632075173cbd2">BNodeBlock</a> &amp;&#160;</td>
           <td class="paramname"><em>node</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">TKey&#160;</td>
-          <td class="paramname"><em>key</em>, </td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>value</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -384,31 +479,30 @@ template&lt;class TKey , std::size_t M&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Método interno de inserção na árvore. </p>
-<p>Caso o nó seja uma folha, ele busca o apontador de nó para o nó em que o dado deve ser inserido e tenta novamente de forma recursiva. Caso não seja uma folha, ele faz a inserção normalmente.</p>
-<p>Em caso de overflow, a função irá realizar um split no nó fornecido por parâmetro e irá retornar dados para o nó pai lidar com o overflow. Ele irá tentar inserir novamente, dessa vez em si mesmo.</p>
-<p>O valor de rightNodeOffset só será diferente de -1 se a função estiver lidando com um overflow previamente encontrado. No caso, node será um nó pai que precisa tentar inserir o dado que restou no último split.</p>
+<p>Internal method for B-tree insertion. </p>
+<p>If the node is a leaf, it seeks the node pointer for the node in which the value must be inserted and tries to insert again recursively. If the node isn't a leaf, inserts normally.</p>
+<p>In case of overflow, the method will split the node provided as parameter and return an <a class="el" href="struct_b_tree_1_1_overflow_result.html" title="Provides information to deal with an insertion overflow. ">OverflowResult</a> instance with data for the parent node to deal with the overflow. The parent will try to insert again but, this time, in itself.</p>
+<p>The value of rightNodeOffset should be different from -1 only if the method is dealing with an overflow. In this case, it's the parent node which must be trying to insert the node.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">node</td><td>O nó em que o dado está sendo inserido. </td></tr>
-    <tr><td class="paramname">key</td><td>O dado a ser inserido. </td></tr>
-    <tr><td class="paramname">rightNodeOffset</td><td>O offset do nó à direita do dado a ser inserido; caso seja -1, ele não existe.</td></tr>
+    <tr><td class="paramname">node</td><td>Node in which to insert </td></tr>
+    <tr><td class="paramname">value</td><td>Value to insert </td></tr>
+    <tr><td class="paramname">rightNodeOffset</td><td>Offset of the node to the right of the value to insert; if -1, the node to the right doesn't exist yet</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Dados de overflow caso tenha houvido um, ou nulo.</dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Timóteo Fonseca </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A pointer with an <a class="el" href="struct_b_tree_1_1_overflow_result.html" title="Provides information to deal with an insertion overflow. ">OverflowResult</a> instance in case of overflow, null otherwise </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a3f314aa35d198aa82d96d030b2ba4404"></a>
+<a class="anchor" id="a9b85dc76d3a2108c5058c9923660ec14"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class TKey , std::size_t M&gt; </div>
+template&lt;typename T , std::size_t M, unsigned int BlockSize&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="class_b_tree.html">BTree</a>&lt; TKey, M &gt;::load </td>
+          <td class="memname">bool <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::load </td>
           <td>(</td>
           <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>filepath</em></td><td>)</td>
@@ -417,31 +511,30 @@ template&lt;class TKey , std::size_t M&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Método de inicialização da árvore, para leitura. </p>
-<p>Deve sempre ser chamado antes de começar a leitura da árvore. Inserções não serão possíveis.</p>
-<p>O arquivo deve existir previamente, de preferência criado por outra execução da <a class="el" href="class_b_tree.html" title="Classe de árvore B. ">BTree</a> após uma chamada de <a class="el" href="class_b_tree.html#aab8e5c6367eed5e552b4fdfe51aad61b" title="Método de inicialização da árvore, para escrita. ">create()</a>.</p>
+<p>Initializes <a class="el" href="class_b_tree.html" title="B-tree class. ">BTree</a> for reading only. </p>
+<p>Opens the file in "rb" mode. Must be before reading values form a file where values have already been inserted. Insertions won't be possible.</p>
+<p>The file must have been previously created by a <a class="el" href="class_b_tree.html" title="B-tree class. ">BTree</a> which successfully called <a class="el" href="class_b_tree.html#a85386d47c24912f04e71e28ef922258e" title="Initializes BTree for writing. ">BTree::create</a> and <a class="el" href="class_b_tree.html#aaefb64c44b55fbddc9f07aa129ba7656" title="Updates the header with the total blocks in the file. ">BTree::finishInsertions</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">filepath</td><td>Caminho pro arquivo onde se encontram os dados da árvore.</td></tr>
+    <tr><td class="paramname">filepath</td><td>Path to the file where tree data can be found</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Se foi possível abrir o arquivo em filepath.</dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Timóteo Fonseca </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if it was possible to open the file in filepath </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="aa4744d293938bd1368e2f1221e85cf03"></a>
+<a class="anchor" id="adbf28ad7c2633b4a1d6570d8ef7ab212"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class TKey , std::size_t M&gt; </div>
+template&lt;typename T , std::size_t M, unsigned int BlockSize&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="union_block.html">Block</a>&lt; typename <a class="el" href="class_b_tree.html">BTree</a>&lt; TKey, M &gt;::<a class="el" href="struct_b_tree_1_1_b_node.html">BNode</a> &gt; <a class="el" href="class_b_tree.html">BTree</a>&lt; TKey, M &gt;::readFromDisk </td>
+          <td class="memname"><a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::<a class="el" href="class_b_tree.html#a9af2ca14c936735538b632075173cbd2">BNodeBlock</a> <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::readFromDisk </td>
           <td>(</td>
           <td class="paramtype">long&#160;</td>
           <td class="paramname"><em>offset</em></td><td>)</td>
@@ -456,30 +549,28 @@ template&lt;class TKey , std::size_t M&gt; </div>
 </div><div class="memdoc">
 
 <p>Retorna um bloco com o nó lido no offset fornecido. </p>
-<p>O resultado da função é indefinido se for fornecido um offset inválido. Presume-se que apenas offsets válidos, com arquivos válidos, serão fornecidos para esta função.</p>
-<p>Esta função incrementa o valor de blocos lidos, nas estatísticas.</p>
+<p>Assumes that the provided offset will always be valid. If an invalid offset is provided, the result is undefined.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">offset</td><td>O offset do nó no arquivo.</td></tr>
+    <tr><td class="paramname">offset</td><td>Node's offset in the file</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Um bloco com o nó no offset.</dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Timóteo Fonseca </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="union_block.html" title="Union for reading and writing blocks containing serialized data. ">Block</a> with the node found in the provided offset </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a96a652ee2fe86c5de933590ecc1613c2"></a>
+<a class="anchor" id="a83557e0983fe2532cd6c97b2d65afedd"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class TKey , std::size_t M&gt; </div>
+template&lt;typename T , std::size_t M, unsigned int BlockSize&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="union_block.html">Block</a>&lt; typename <a class="el" href="class_b_tree.html">BTree</a>&lt; TKey, M &gt;::<a class="el" href="struct_b_tree_1_1_file_header.html">FileHeader</a> &gt; <a class="el" href="class_b_tree.html">BTree</a>&lt; TKey, M &gt;::readHeader </td>
+          <td class="memname"><a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::<a class="el" href="class_b_tree.html#a5f104fd7668e63982b101db29e69d198">FileHeaderBlock</a> <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::readHeader </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -492,22 +583,21 @@ template&lt;class TKey , std::size_t M&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Lê em disco o cabeçalho do arquivo da árvore. </p>
-<p>Esta função tem retorno indefinido se chamada enquanto a árvore ainda não estiver sido inicializada e o arquivo não estiver aberto. Presume-se que ela sempre será chamada em condições satisfatórias.</p>
-<p>Esta função incrementa a quantidade de blocos lidos nas estatísticas.</p>
-<dl class="section return"><dt>Returns</dt><dd>O bloco com o cabeçalho do arquivo.</dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Timóteo Fonseca </dd></dl>
+<p>Reads the file header. </p>
+<p>This method assumes that <a class="el" href="class_b_tree.html" title="B-tree class. ">BTree</a> has already been initialized and the file is open. Otherwise, behavior is undefined.</p>
+<p>Increments <a class="el" href="struct_b_tree_1_1_statistics.html#aae4cf5a07e867124f3ba5e5b11afd576" title="Quantity of blocks read since the tree was initialized. ">Statistics::blocksRead</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="union_block.html" title="Union for reading and writing blocks containing serialized data. ">Block</a> with the file header </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="aa8e20ba0b14f93b20302fcb5bd4932dd"></a>
+<a class="anchor" id="a799522e099df354e9de84237f5a4ba58"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class TKey , std::size_t M&gt; </div>
+template&lt;typename T , std::size_t M, unsigned int BlockSize&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="class_b_tree.html">BTree</a>&lt; TKey, M &gt;::resetStatistics </td>
+          <td class="memname">void <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::resetStatistics </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -515,53 +605,62 @@ template&lt;class TKey , std::size_t M&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Atribui valor 0 a todos os campos das estatísticas atuais. </p>
-<dl class="section author"><dt>Author</dt><dd>Timóteo Fonseca </dd></dl>
+<p>Reset all statistics values to 0. </p>
+<p>Use with caution </p>
 
 </div>
 </div>
-<a class="anchor" id="ac39de078a8dfb556c4f665c5791ba6ac"></a>
+<a class="anchor" id="ab354e77e1cec80cfff9178bd874435f1"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class TKey , std::size_t M&gt; </div>
+template&lt;typename T , std::size_t M, unsigned int BlockSize&gt; </div>
+<div class="memtemplate">
+template&lt;typename U &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">std::unique_ptr&lt; TKey &gt; <a class="el" href="class_b_tree.html">BTree</a>&lt; TKey, M &gt;::seek </td>
+          <td class="memname">std::unique_ptr&lt; T &gt; <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::seek </td>
           <td>(</td>
-          <td class="paramtype">const TKey &amp;&#160;</td>
+          <td class="paramtype">const U &amp;&#160;</td>
           <td class="paramname"><em>key</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Busca um dado que seja equivalente ao dado fornecido. </p>
-<p>Não há garantias que o dado realmente será buscado. Caso não seja encontrado, a função retorna um ponteiro nulo.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">key</td><td>O dado que se está buscando.</td></tr>
+<p>Seeks a value that's equivalent to the one provided. </p>
+<p>If the value is not found, a null pointer will be returned.</p>
+<p>You can optionally provide a custom comparer. Useful in case you want to store key-value pairs within the B-tree; in such a case, you'll want to compare the provided parameter key with the pairs' keys.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">U</td><td>Type of the key to seek. T and U must be less-than comparable.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Ponteiro com o dado ou nulo.</dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Timóteo Fonseca </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>The value to seek </td></tr>
+    <tr><td class="paramname">less</td><td>Comparer instance</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer with the value if found, null otherwise </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a373c36f654fa44f096324c677a8fd7ad"></a>
+<a class="anchor" id="a3b39b3d173ba3ae596b1fc68f2398da2"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class TKey , std::size_t M&gt; </div>
+template&lt;typename T , std::size_t M, unsigned int BlockSize&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="class_b_tree.html">BTree</a>&lt; TKey, M &gt;::writeHeader </td>
+          <td class="memname">void <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::writeHeader </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="union_block.html">Block</a>&lt; <a class="el" href="struct_b_tree_1_1_file_header.html">FileHeader</a> &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="class_b_tree.html#a5f104fd7668e63982b101db29e69d198">FileHeaderBlock</a> &amp;&#160;</td>
           <td class="paramname"><em>header</em></td><td>)</td>
           <td></td>
         </tr>
@@ -573,30 +672,29 @@ template&lt;class TKey , std::size_t M&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Atualiza o cabeçalho do arquivo da arvore. </p>
+<p>Updates the file header in disk. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">header</td><td>Bloco com instância de cabeçalho possuindo os novos valores do cabeçalho do arquivo.</td></tr>
+    <tr><td class="paramname">header</td><td><a class="el" href="union_block.html" title="Union for reading and writing blocks containing serialized data. ">Block</a> with file header to write </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section author"><dt>Author</dt><dd>Timóteo Fonseca </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a9d70baf9a02151ed8a897eee0b2d9ed5"></a>
+<a class="anchor" id="a39540a7e17906e44d3eda3346818aabf"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class TKey , std::size_t M&gt; </div>
+template&lt;typename T , std::size_t M, unsigned int BlockSize&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="class_b_tree.html">BTree</a>&lt; TKey, M &gt;::writeToDisk </td>
+          <td class="memname">void <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::writeToDisk </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="union_block.html">Block</a>&lt; <a class="el" href="struct_b_tree_1_1_b_node.html">BNode</a> &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="class_b_tree.html#a9af2ca14c936735538b632075173cbd2">BNodeBlock</a> &amp;&#160;</td>
           <td class="paramname"><em>node</em></td><td>)</td>
           <td></td>
         </tr>
@@ -608,32 +706,54 @@ template&lt;class TKey , std::size_t M&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Atualiza em disco o nó fornecido. </p>
-<p>Caso o nó ainda não tenha sido escrito em disco, ou seja, possua offset inválido (-1), o nó é concatenado ao fim do arquivo e seu offset atualizado com sua nova posição.</p>
-<p>Esta função incrementa o valor de blocos criados, nas estatísticas, no caso descrito anteriormente.</p>
-<p>Caso o nó já tenha sido escrito, ou seja, possua offset válido, o nó é simplesmente atualizado.</p>
+<p>Writes the node to disk. </p>
+<p>If the node still hasn't been written to disk (<a class="el" href="struct_b_tree_1_1_b_node.html#af864d07c047391653ed752084e8f07ff" title="Disk address. ">BNode::offset</a> == -1), it'll be appended to the end of the file and <a class="el" href="struct_b_tree_1_1_b_node.html#af864d07c047391653ed752084e8f07ff" title="Disk address. ">BNode::offset</a> will be updated. In case this happens, <a class="el" href="struct_b_tree_1_1_statistics.html#a8d6dc6c05d4446dbe4055c1ae63edee1" title="Quantity of blocks created since the tree was initialized. ">Statistics::blocksCreated</a> will be incremented.</p>
+<p>If the node has already been written to disk it'll simply be updated.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">node</td><td>O nó a ser escrito.</td></tr>
+    <tr><td class="paramname">node</td><td>Node to write </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section author"><dt>Author</dt><dd>Timóteo Fonseca </dd></dl>
 
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="aea30be3db9c762b8d9fe7e44dd4c3c29"></a>
+<a class="anchor" id="aae474f8f8398cf009b528db3b2dec236"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class TKey, std::size_t M&gt; </div>
+template&lt;typename T, std::size_t M, unsigned int BlockSize = BLOCK_SIZE&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::FILE* <a class="el" href="class_b_tree.html">BTree</a>&lt; TKey, M &gt;::m_file</td>
+          <td class="memname">constexpr auto <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::BlockSizeInUse = BlockSize</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><a class="el" href="union_block.html" title="Union for reading and writing blocks containing serialized data. ">Block</a> size in bytes. </p>
+
+</div>
+</div>
+<a class="anchor" id="accbe121bee504d8d445934160a58a7ab"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, std::size_t M, unsigned int BlockSize = BLOCK_SIZE&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::FILE* <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::m_file</td>
         </tr>
       </table>
   </td>
@@ -643,21 +763,21 @@ template&lt;class TKey, std::size_t M&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Ponteiro de arquivo para o arquivo em que se encontram os dados da árvore. </p>
+<p>File pointer to the file where data will be stored. </p>
 
 </div>
 </div>
-<a class="anchor" id="a1658bf8173fb5c33944615ebaaee69d0"></a>
+<a class="anchor" id="a0958a9dddcabef39e16e656757e8d2c4"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class TKey, std::size_t M&gt; </div>
+template&lt;typename T, std::size_t M, unsigned int BlockSize = BLOCK_SIZE&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="union_block.html">Block</a>&lt;<a class="el" href="struct_b_tree_1_1_b_node.html">BNode</a>&gt; <a class="el" href="class_b_tree.html">BTree</a>&lt; TKey, M &gt;::m_root</td>
+          <td class="memname"><a class="el" href="class_b_tree.html#a9af2ca14c936735538b632075173cbd2">BNodeBlock</a> <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::m_root</td>
         </tr>
       </table>
   </td>
@@ -667,21 +787,21 @@ template&lt;class TKey, std::size_t M&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Nó raiz da árvore. </p>
+<p>Root node of the B-tree. </p>
 
 </div>
 </div>
-<a class="anchor" id="a5142aee6795ec77ea67c3f7702801890"></a>
+<a class="anchor" id="ac1dd41410a7892910ebacb2383d77e6d"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class TKey, std::size_t M&gt; </div>
+template&lt;typename T, std::size_t M, unsigned int BlockSize = BLOCK_SIZE&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="struct_b_tree_1_1_statistics.html">Statistics</a> <a class="el" href="class_b_tree.html">BTree</a>&lt; TKey, M &gt;::m_stats</td>
+          <td class="memname"><a class="el" href="struct_b_tree_1_1_statistics.html">Statistics</a> <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::m_stats</td>
         </tr>
       </table>
   </td>
@@ -691,7 +811,31 @@ template&lt;class TKey, std::size_t M&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Onde a <a class="el" href="class_b_tree.html" title="Classe de árvore B. ">BTree</a> guarda suas estatísticas de leitura e escrita de blocos. </p>
+<p>Where <a class="el" href="class_b_tree.html" title="B-tree class. ">BTree</a> stores its read and write statistics. </p>
+
+</div>
+</div>
+<a class="anchor" id="a21640c1085ee30ac291740ef13d66bd4"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, std::size_t M, unsigned int BlockSize = BLOCK_SIZE&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::Order = M</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Tree order. </p>
 
 </div>
 </div>

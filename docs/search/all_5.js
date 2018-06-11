@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['getstatistics',['getStatistics',['../class_b_tree.html#a7b36fa86b3b3e9b4566ba3b622e107e3',1,'BTree']]]
+  ['getstatistics',['getStatistics',['../class_b_tree.html#a2cdd54bb9e6e0f2689d8d1fe4aa45400',1,'BTree']]]
 ];

@@ -25,7 +25,7 @@
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BTrees
    </div>
-   <div id="projectbrief">B-Tree implementation in C++ to index documents based on numerical id&#39;s and title strings.</div>
+   <div id="projectbrief">B-tree implementation in C++ to index documents based on numerical id&#39;s and title strings.</div>
   </td>
  </tr>
  </tbody>
@@ -97,9 +97,9 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="_block_8hpp__dep__incl.png" border="0" usemap="#include_2_block_8hppdep" alt=""/></div>
 <map name="include_2_block_8hppdep" id="include_2_block_8hppdep">
-<area shape="rect" id="node2" href="_b_tree_8hpp.html" title="include/BTree.hpp" alt="" coords="13,155,140,181"/>
-<area shape="rect" id="node3" href="_commands_8cpp.html" title="src/Commands.cpp" alt="" coords="59,229,195,256"/>
-<area shape="rect" id="node4" href="_b_tree_8inl.html" title="include/BTree.inl" alt="" coords="21,80,140,107"/>
+<area shape="rect" id="node2" href="_b_tree_8hpp.html" title="include/BTree.hpp" alt="" coords="19,80,146,107"/>
+<area shape="rect" id="node3" href="_ideal_b_tree_8hpp.html" title="include/IdealBTree.hpp" alt="" coords="5,155,160,181"/>
+<area shape="rect" id="node4" href="_commands_8cpp.html" title="src/Commands.cpp" alt="" coords="15,229,151,256"/>
 </map>
 </div>
 </div>
@@ -107,14 +107,14 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="union_block.html">Block&lt; T &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Union para leitura e escrita, em bloco, de tipos arbitrários.  <a href="union_block.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="union_block.html">Block&lt; T, BlockSize &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Union for reading and writing blocks containing serialized data.  <a href="union_block.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:ad51ded0bbd705f02f73fc60c0b721ced"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_block_8hpp.html#ad51ded0bbd705f02f73fc60c0b721ced">BLOCK_SIZE</a>&#160;&#160;&#160;4096</td></tr>
-<tr class="memdesc:ad51ded0bbd705f02f73fc60c0b721ced"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definição do tamanho do Bloco.  <a href="#ad51ded0bbd705f02f73fc60c0b721ced">More...</a><br /></td></tr>
+<tr class="memdesc:ad51ded0bbd705f02f73fc60c0b721ced"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default block size in bytes.  <a href="#ad51ded0bbd705f02f73fc60c0b721ced">More...</a><br /></td></tr>
 <tr class="separator:ad51ded0bbd705f02f73fc60c0b721ced"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
@@ -128,8 +128,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definição do tamanho do Bloco. </p>
-<p>O tamanho foi definido como sendo de tamanho 4096 por ser o tamanho do setor físico indicado através do comando <code>fdisk -l</code> na máquina do Timóteo, um Linux Mint 18.1 Cinnamon 64-bit. </p>
+<p>Default block size in bytes. </p>
+<p>The size was defined as 4096 bytes based on sector storage size of the local machine, obtained through an <code>fdisk -l</code> command </p>
 
 </div>
 </div>

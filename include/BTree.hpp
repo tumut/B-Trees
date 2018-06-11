@@ -1,317 +1,309 @@
 #ifndef _BTREE_HPP_INCLUDED_
 #define _BTREE_HPP_INCLUDED_
 
-#include "Block.hpp"
-
 #include <cstdio>
 #include <memory>
 
-//! Classe de árvore B.
+#include "Block.hpp"
+
+//! B-tree class
 /*!
-  Classe de árvore B multi-uso usada para guardar índices e títulos no trabalho.
-  
-  O parâmetro de template TKey determina o tipo de dado que será guardado nos nós
-  da árvore. TKey deve ser um tipo POD (Plain Old Data type) para poder ser
-  sequenciado no arquivo quando o nó for escrito.
-  
-  O parâmetro de template M determina a ordem da árvore. Em condições normais,
-  um nó pode ter no máximo 2M dados e 2M+1 apontadores de nó. Em estado de
-  overflow, ele pode temporariamente ter 2M+1 dados e 2M+2 apontadores de nó.
-  
-  Antes de usar uma BTree deve sempre se chamar o método load (em caso de apenas
-  leitura) ou create (em caso de escrita de um novo arquivo).
-  
-  No fim da inserção, o método finishInsertions() deve ser chamado para a
-  quantidade de blocos do arquivo ser atualizada no cabeçalho.
-  
-  Exemplo de uso:
-  \code
-  BTree<int, 2> arvore;
-  arvore.create("nomedoarquivo.bin");
-  arvore.insert(1);
-  arvore.finishInsertions();
-  
-  arvore.load("nomedoarquivo.bin");
-  auto valor = arvore.seek(1);
-  if (valor) f(*valor); // Fazer algo com o valor, se encontrado.
-  \endcode
+ * BTree can be used to store T-type values in binary files for fast retrieval
+ * later. T must be a POD (Plain Old Data type) and _less-than_ comparable.
+ *
+ * Use the method BTree::create before inserting values and, once you've
+ * finished inserting, call BTree::finishInsertions to update the file header.
+ *
+ * Use BTree::load before reading values.
+ *
+ * Example usage:
+ * \code
+ * BTree<int, 2> tree;
+ *
+ * // Insert data
+ * tree.create("filename.bin");
+ * tree.insert(1);
+ * tree.finishInsertions();
+ *
+ * // Read data
+ * tree.load("filename.bin");
+ * int *x = tree.seek(1);
+ * if (x) f(*x); // If found, do something to x
+ * \endcode
+ *
+ * @tparam T Type of the data to be stored
+ *
+ * @tparam M Tree order. Each node will store up to 2M values and have up to
+ * 2M + 1 children. A node can't be bigger than `BLOCK_SIZE` bytes.
+ *
+ * @tparam BlockSize Block size to use, in bytes
  */
-template<class TKey, std::size_t M>
+template<typename T, std::size_t M, unsigned int BlockSize = BLOCK_SIZE>
 class BTree {
 public:
-	//! Construtor padrão.
+	//! Type of the stored values
+	typedef T ValueType;
+
+	//! Tree order
+	static constexpr auto Order = M;
+
+	//! Block size in bytes
+	static constexpr auto BlockSizeInUse = BlockSize;
+
+	//! Default constructor
 	/*!
-	  Inicializa com valores 0 as estatísticas e nulifica o ponteiro
-	  de arquivo da BTree.
-	  
-	  \author Timóteo Fonseca
+	 * Initializes the statistics with 0 values and makes the file pointer
+	 * point to null
 	 */
 	BTree();
 	
-	//! Destrutor padrão
-	/*! Fecha o arquivo se ele estiver aberto. */
+	//! Destructor
+	/*! Closes the file if it's open */
 	~BTree();
 	
-	//! Método de inicialização da árvore, para escrita.
+	//! Initializes BTree for writing
 	/*!
-	  Deve sempre ser chamado antes de começar a inserção na árvore, mas também
-	  permite a leitura.
-	  
-	  Se já houver um arquivo em filepath, ele será sobreescrito.
-	  
-	  O arquivo novo será criado com um cabeçalho e um nó raiz vazio.
-	  
-	  \param filepath Caminho do arquivo onde os dados da árvore serão escritos.
-	  
-	  \return Se foi possível criar o arquivo em filepath.
-	  
-	  \author Timóteo Fonseca
-	 */
+	 * Opens the file in "wb+" mode. Must be called before inserting values in
+	 * the tree. Also allows reading through BTree::seek.
+	 *
+	 * If there's already a file in the filepath, it'll be overwritten.
+	 *
+	 * The new file will be created in the provided filepath with a header
+	 * and an empty root node.
+	 *
+	 * After you've finished inserting values, call BTree::finishInsertions to
+	 * update the file header.
+	 *
+	 * @param filepath Path to the file where the tree data will be written
+	 *
+	 * @return True if the file was created successfully
+	*/
 	bool create(const char* filepath);
 	
-	//! Método de inicialização da árvore, para leitura.
+	//! Initializes BTree for reading only
 	/*!
-	  Deve sempre ser chamado antes de começar a leitura da árvore. Inserções
-	  não serão possíveis.
-	  
-	  O arquivo deve existir previamente, de preferência criado por outra
-	  execução da BTree após uma chamada de create().
-	  
-	  \param filepath Caminho pro arquivo onde se encontram os dados da árvore.
-	  
-	  \return Se foi possível abrir o arquivo em filepath.
-	  
-	  \author Timóteo Fonseca
+	 * Opens the file in "rb" mode. Must be before reading values form a file
+	 * where values have already been inserted. Insertions won't be possible.
+	 *
+	 * The file must have been previously created by a BTree which successfully
+	 * called BTree::create and BTree::finishInsertions.
+	 *
+	 * @param filepath Path to the file where tree data can be found
+	 *
+	 * @return True if it was possible to open the file in filepath
 	 */
 	bool load(const char* filepath);
 	
-	//! Insere um dado dentro da árvore.
+	//! Inserts a value in the tree
 	/*!
-	  \param key O dado a ser inserido.
-	  
-	  \author Timóteo Fonseca
+	 * @param value Value to insert
 	 */
-	void insert(const TKey& key);
+	void insert(const T& value);
 	
-	//! Busca um dado que seja equivalente ao dado fornecido.
+	//! Seeks a value that's equivalent to the one provided
 	/*!
-	  Não há garantias que o dado realmente será buscado. Caso não seja
-	  encontrado, a função retorna um ponteiro nulo.
-	  
-	  \param key O dado que se está buscando.
-	  
-	  \return Ponteiro com o dado ou nulo.
-	  
-	  \author Timóteo Fonseca
+	 * If the value is not found, a null pointer will be returned.
+	 *
+	 * You can optionally provide a custom comparer. Useful in case you want to
+	 * store key-value pairs within the B-tree; in such a case, you'll want to
+	 * compare the provided parameter key with the pairs' keys.
+	 *
+	 * @tparam U Type of the key to seek. T and U must be less-than comparable.
+	 *
+	 * @param key The value to seek
+	 * @param less Comparer instance
+	 *
+	 * @return Pointer with the value if found, null otherwise
 	 */
-	std::unique_ptr<TKey> seek(const TKey& key);
+	template <typename U>
+	std::unique_ptr<T> seek(const U& key);
 	
-	//! Estrutura usada pela árvore para guardar métricas de sua execução.
-	/*! \author Timóteo Fonseca */
+	//! BTree usage analytics
 	struct Statistics {
-		unsigned int blocksRead; //!< Quantidade de blocos lidos.
-		unsigned int blocksCreated; //!< Quantidade de blocos criados.
-		unsigned int blocksInDisk; //!< Quantidade de blocos que já foram inseridos em disco.
+		unsigned int blocksRead; //!< Quantity of blocks read since the tree was initialized
+		unsigned int blocksCreated; //!< Quantity of blocks created since the tree was initialized
+		unsigned int blocksInDisk; //!< Quantity of blocks stored in disk
 	};
 	
-	//! Retorna as estatísticas da árvore até então.
+	//! Returns the BTree usage statistics so far
 	/*!
-	  A inclusão da quantidade de blocos no arquivo, nas estatísticas, é
-	  opcional pois a árvore vai ter que fazer uma leitura do arquivo para
-	  poder obter este dado, o que é uma operação custosa.
-	  
-	  \param includeFileBlockCount Se deve incluir (true) ou não (false) a
-	   quantidade de blocos do arquivo nas estatísticas.
-	  
-	  \return Estatísticas.
-	  
-	  \author Timóteo Fonseca
+	 * Including the quantity of blocks in the file is optional
+	 * because it requires reading the file header to update the field. The
+	 * read value will be stored in memory and can be accessed later without
+	 * reading the file header again.
+	 *
+	 * @param includeFileBlockCount True if you want to update the
+	 * Statistics::blocksInDisk value, false otherwise
+	 *
+	 * @return Statistics
 	 */
-	Statistics getStatistics(bool includeFileBlockCount = false) const;
+	const Statistics& getStatistics(bool includeFileBlockCount = false) const;
 	
-	//! Atribui valor 0 a todos os campos das estatísticas atuais.
-	/*!
-	  \author Timóteo Fonseca
-	  */
+	//! Reset all statistics values to 0
+	/*! Use with caution */
 	void resetStatistics();
 	
-	//! Atualiza o cabeçalho com o total de blocos no arquivo.
+	//! Updates the header with the total blocks in the file
 	/*!
-	  Muito importante de se usar no final da utilização de uma árvore após
-	  ela ser inicializada com create().
-	  
-	  \author Timóteo Fonseca
+	 * Very important to be used once you've finished using a tree that was
+	 * initialized with BTree::create
 	 */
 	void finishInsertions();
 	
 private:
-	//! Dados do cabeçalho do arquivo.
+	//! File header data for BTree indexes
 	struct FileHeader {
 		long rootAddress;
 		unsigned int blockCount;
 	};
+
+	//! File header block
+	typedef Block<FileHeader, BlockSize> FileHeaderBlock;
 	
-	//! Nó da árvore B.
+	//! B-tree node
 	struct BNode {
-		//! Endereço no disco.
+		//! Disk address
 		/*!
-		  O ideal é que o nó, antes de ser escrito no registro pela primeira
-		  vez, esteja com o offset de valor -1. Após a primeira escrita, o
-		  offset passa a realmente possuir seu endereço no disco.
+		 * Ideally, the node before being first written should have its offset
+		 * equal to -1. Only after its first writing should it store its true
+		 * disk offset.
 		 */
 		long offset;
-		bool isLeaf; //!< Booleano indicando se o nó é folha (true) ou nó interno (false).
-		std::size_t keysCount; //!< Quantidade de dados dentro do nó, no momento.
+		bool isLeaf; //!< True if the node is a leaf, false if it's an internal node
+		std::size_t size; //!< Quantity of values currently stored in the node
 		
-		//! Os dados do nó.
+		//! Node values
 		/*!
-		  Na prática, um nó só costuma utilizar as 2M primeiras posições deste
-		  vetor. O espaço adicional de 1 dado é usado temporariamente para
-		  lidar com overflows.
+		 * Most of the time, the node will only be using the first `2M`
+		 * positions of this array. The additional space for 1 value is used
+		 * temporarily to deal with overflows during BTree::insert.
 		 */
-		TKey keys[2 * M + 1];
+		T values[2 * M + 1];
 		
 		//! Os apontadores de nó.
 		/*!
-		  Na prática, um nó só costuma utilizar as 2M+1 primeiras posições deste
-		  vetor. O espaço adicional de 1 dado é usado temporariamente para
-		  lidar com overflows.
+		 * Most of the time, the node will only use the first `2M+1` positions
+		 * of this array. The additional space for 1 value is used temporarily
+		 * to deal with overflows during BTree::insert.
 		 */
 		long children[2 * M + 2];
 		
-		//! Inicializa o nó.
+		//! Initializes the node
 		/*!
-		  O valor do campo offset do nó não é fornecido: ele é sempre
-		  inicializado como -1, para permitir que se saiba se ele já foi
-		  escrito no arquivo ou não.
-		  
-		  Se um nó não for lido através de um readFromDisk da BTree, é
-		  obrigatório que esse método seja chamado, pois ele funciona como um
-		  construtor do BNode.
-		  
-		  A inicialização foi implementada como um método ao invés de um
-		  construtor pois é necessário que o BNode seja uma classe de tipo POD
-		  (Plain Old Data type) para poder ser lido e escrito no arquivo, além
-		  de para também poder ser usado como argumento de template para o
-		  Block<T>.
-		  
-		  \param isLeaf Se o nó vai ser inicializado como folha (true) ou não (false).
-		  \param keysCount Quantidade inicial de dados no nó.
-		  
-		  \autor Timóteo Fonseca
+		 * The value of BNode::offset is initialized as -1 so that we can know
+		 * whether the node has already been written to the file or not.
+		 *
+		 * This method must always be called upon declaring a BNode unless the
+		 * node will be read through BTree::readFromDisk.
+		 *
+		 * BNode's initialization was implemented as a method rather than a
+		 * constructor because BNode must be a POD in order to be read and
+		 * written in the file.
+		 *
+		 * @param isLeaf True if the node will be a leaf, false if it will be an internal node
+		 * @param size Initial node size
 		 */
-		void initialize(bool isLeaf = true, int keysCount = 0);
+		void initialize(bool isLeaf = true, int size = 0);
 		
-		//! Verifica se o nó está em sua capacidade máxima (acima de 2M dados).
+		//! Checks if the node has reached its maximum capacity
 		/*!
-		  \author Timóteo Fonseca
+		 * @return True if BNode::size >= 2M, false otherwise
 		 */
 		bool isFull() const;
 		
-		//! Busca um dado que seja equivalente ao dado fornecido.
+		//! Seeks a value that's equivalent to the one provided
 		/*!
-		  Realiza a busca propriamente dita pelo dado, usando a instância de
-		  tree passado por parâmetro para poder realizar leituras no arquivo.
-		  
-		  Retorna um ponteiro nulo se não encontrar o dado.
-		  
-		  \return Ponteiro com o dado ou nulo.
-		  
-		  \author Timóteo Fonseca
+		 * Seeks the value throughout the file
+		 *
+		 * @tparam U See BTree::seek
+		 *
+		 * @param key Value to seek
+		 * @param tree BTree to access the file and statistics
+		 *
+		 * @return Pointer with the value if found, null pointer otherwise
 		 */
-		std::unique_ptr<TKey> seek(const TKey& key, BTree& tree) const;
+		template <typename U>
+		std::unique_ptr<T> seek(const U& key, BTree& tree) const;
 	};
-	
-	std::FILE *m_file; //!< Ponteiro de arquivo para o arquivo em que se encontram os dados da árvore.
-	Block<BNode> m_root; //!< Nó raiz da árvore.
-	mutable Statistics m_stats; //!< Onde a BTree guarda suas estatísticas de leitura e escrita de blocos.
+
+	//! Node block
+	typedef Block<BNode, BlockSize> BNodeBlock;
+
+	std::FILE *m_file; //!< File pointer to the file where data will be stored
+	BNodeBlock m_root; //!< Root node of the B-tree
+	mutable Statistics m_stats; //!< Where BTree stores its read and write statistics
 	
 	//! Retorna um bloco com o nó lido no offset fornecido.
 	/*!
-	  O resultado da função é indefinido se for fornecido um offset inválido.
-	  Presume-se que apenas offsets válidos, com arquivos válidos, serão
-	  fornecidos para esta função.
-	  
-	  Esta função incrementa o valor de blocos lidos, nas estatísticas.
-	  
-	  \param offset O offset do nó no arquivo.
-	  
-	  \return Um bloco com o nó no offset.
-	  
-	  \author Timóteo Fonseca
+	 * Assumes that the provided offset will always be valid. If an invalid
+	 * offset is provided, the result is undefined.
+	 *
+	 * @param offset Node's offset in the file
+	 *
+	 * @return Block with the node found in the provided offset
 	 */
-	Block<BNode> readFromDisk(long offset);
+	BNodeBlock readFromDisk(long offset);
 	
-	//! Atualiza em disco o nó fornecido.
+	//! Writes the node to disk
 	/*!
-	  Caso o nó ainda não tenha sido escrito em disco, ou seja, possua offset
-	  inválido (-1), o nó é concatenado ao fim do arquivo e seu offset atualizado
-	  com sua nova posição.
-	  
-	  Esta função incrementa o valor de blocos criados, nas estatísticas, no
-	  caso descrito anteriormente.
-	  
-	  Caso o nó já tenha sido escrito, ou seja, possua offset válido, o nó
-	  é simplesmente atualizado.
-	  
-	  \param node O nó a ser escrito.
-	  
-	  \author Timóteo Fonseca
+	 * If the node still hasn't been written to disk (BNode::offset == -1),
+	 * it'll be appended to the end of the file and BNode::offset will be
+	 * updated. In case this happens, Statistics::blocksCreated will be
+	 * incremented.
+	 *
+	 * If the node has already been written to disk it'll simply be updated.
+	 *
+	 * @param node Node to write
 	 */
-	void writeToDisk(Block<BNode>& node); // Updates the node's offset if not yet defined
+	void writeToDisk(BNodeBlock& node);
 	
-	//! Lê em disco o cabeçalho do arquivo da árvore.
+	//! Reads the file header
 	/*!
-	  Esta função tem retorno indefinido se chamada enquanto a árvore
-	  ainda não estiver sido inicializada e o arquivo não estiver aberto.
-	  Presume-se que ela sempre será chamada em condições satisfatórias.
-	  
-	  Esta função incrementa a quantidade de blocos lidos nas estatísticas.
-	  
-	  \return O bloco com o cabeçalho do arquivo.
-	  
-	  \author Timóteo Fonseca
+	 * This method assumes that BTree has already been initialized and the file
+	 * is open. Otherwise, behavior is undefined.
+	 *
+	 * Increments Statistics::blocksRead.
+	 *
+	 * @return Block with the file header
 	 */
-	Block<FileHeader> readHeader() const;
+	FileHeaderBlock readHeader() const;
 	
-	//! Atualiza o cabeçalho do arquivo da arvore.
+	//! Updates the file header in disk
 	/*!
-	  \param header Bloco com instância de cabeçalho possuindo os novos valores
-	   do cabeçalho do arquivo. 
-	  
-	  \author Timóteo Fonseca
+	 * @param header Block with file header to write
 	 */
-	void writeHeader(const Block<FileHeader>& header);
+	void writeHeader(const FileHeaderBlock& header);
 	
-	//! Registro auxiliar com o resultado de um overflow de inserção.
+	//! Provides information to deal with an insertion overflow
 	struct OverflowResult {
-		TKey middle; //!< O dado que, após o split de nós, é o valor do meio e deverá ser inserido no nó pai.
-		long rightNode; //!< Offset de nó que vai precisar estar no apontador à direita de onde `middle` for inserido, no nó pai.
+		T middle; //!< The value that, after splitting nodes, shall be used as the middle value and must be inserted in the parent node
+		long rightNode; //!< Offset of the node that'll have to be the pointer to the right of the OverflowResult::middle value
 	};
 	
-	//! Método interno de inserção na árvore.
+	//! Internal method for B-tree insertion
 	/*!
-	  Caso o nó seja uma folha, ele busca o apontador de nó para o nó em que o
-	  dado deve ser inserido e tenta novamente de forma recursiva. Caso não seja
-	  uma folha, ele faz a inserção normalmente.
-	  
-	  Em caso de overflow, a função irá realizar um split no nó fornecido por
-	  parâmetro e irá retornar dados para o nó pai lidar com o overflow. Ele irá
-	  tentar inserir novamente, dessa vez em si mesmo.
-	  
-	  O valor de rightNodeOffset só será diferente de -1 se a função estiver
-	  lidando com um overflow previamente encontrado. No caso, node será um nó
-	  pai que precisa tentar inserir o dado que restou no último split.
-	  
-	  \param node O nó em que o dado está sendo inserido.
-	  \param key O dado a ser inserido.
-	  \param rightNodeOffset O offset do nó à direita do dado a ser inserido; caso seja -1, ele não existe.
-	  
-	  \return Dados de overflow caso tenha houvido um, ou nulo.
-	  
-	  \author Timóteo Fonseca
+	 * If the node is a leaf, it seeks the node pointer for the node in which
+	 * the value must be inserted and tries to insert again recursively. If the
+	 * node isn't a leaf, inserts normally.
+	 *
+	 * In case of overflow, the method will split the node provided as
+	 * parameter and return an OverflowResult instance with data for the parent
+	 * node to deal with the overflow. The parent will try to insert again but,
+	 * this time, in itself.
+	 *
+	 * The value of rightNodeOffset should be different from -1 only if the
+	 * method is dealing with an overflow. In this case, it's the parent node
+	 * which must be trying to insert the node.
+	 *
+	 * @param node Node in which to insert
+	 * @param value Value to insert
+	 * @param rightNodeOffset Offset of the node to the right of the value to
+	 * insert; if -1, the node to the right doesn't exist yet
+	 *
+	 * @return A pointer with an OverflowResult instance in case of overflow,
+	 * null otherwise
 	 */
-	std::unique_ptr<OverflowResult> insert(Block<BNode>& node, TKey key, long rightNodeOffset = -1);
+	std::unique_ptr<OverflowResult> insert(BNodeBlock& node, T value, long rightNodeOffset = -1);
 };
 
 #include "BTree.inl"

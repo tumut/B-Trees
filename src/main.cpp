@@ -3,42 +3,32 @@
 
 #include "Commands.hpp"
 
-//! Entrada main do programa.
+//! Program main
 /*!
-  O procedimento main representa um programa que simplesmente recebe argumentos
-  e chama as funções apropriadas para lidar com eles.
-  
-  Sintaxe do uso:
-  
-  ```
-  $ <nome-do-executavel> upload <caminho-do-arquivo : string>
-  $ <nome-do-executavel> findrec <id : inteiro>
-  $ <nome-do-executavel> seek1 <id : inteiro>
-  $ <nome-do-executavel> seek2 <titulo : string>
-  ```
-  
-  Detalhe importante sobre o comando `upload` e seu argumento `caminho-do-arquivo`:
-  o caminho do arquivo a subir precisa estar no formato CSV com as colunas
-  pré-definidas de cada registro (seguindo o formato da estrutura Entry, salvo
-  o campo `valid` dela). Qualquer outro formato resultará em comportamento
-  indefinido do programa.
-  
-  Detalhe importante sobre o comando `seek2` e seu argumento `titulo`: `titulo`
-  não é uma string entre aspas (`"`). Se um título possuir espaços, espaços
-  devem ser fornecidos com a contrabarra.
-  
-  Exemplo:
-  
-  ```
-  $ bd seek2 Título\ com\ espaços
-  ```
-  
-  \param argc Quantidade de argumentos.
-  \param argv Valores em string dos argumentos.
-  
-  \author Timóteo Fonseca
+ * Receives arguments and calls the appropriate functions for the task.
+ *
+ * Remember to `upload` first before using the other commands.
+ *
+ * Program usage:
+ *
+ * ```
+ * $ <exec-name> upload <input-file : string>
+ * $ <exec-name> findrec <id : int>
+ * $ <exec-name> seek1 <id : int>
+ * $ <exec-name> seek2 <title : string>
+ * ```
+ * @param argc Argument count
+ * @param argv Argument values
  */
 int main(int argc, char **argv) {
+	auto usageExamples = [] {
+		std::cout << "Usage:\n";
+		std::cout << "$ <program> upload  <input-file>\n";
+		std::cout << "$ <program> findrec <id>\n";
+		std::cout << "$ <program> seek1   <id>\n";
+		std::cout << "$ <program> seek2   <title>" << std::endl;
+	};
+
 	if (argc == 3) {
 		char *command = argv[1];
 		char *arg = argv[2];
@@ -58,13 +48,16 @@ int main(int argc, char **argv) {
 			seek2(arg);
 		}
 		else {
-			std::cout << "Comando desconhecido: " << command << std::endl;
+			std::cout << "Unknown command: " << command << '\n';
+			usageExamples();
 		}
 	}
 	else if (argc < 3) {
-		std::cout << "Argumentos insuficientes." << std::endl;
+		std::cout << "Too few arguments." << '\n';
+		usageExamples();
 	}
 	else {
-		std::cout << "Argumentos demais." << std::endl;
+		std::cout << "Too many arguments." << '\n';
+		usageExamples();
 	}
 }

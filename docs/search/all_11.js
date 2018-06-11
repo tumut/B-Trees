@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['valid',['valid',['../struct_entry.html#a652816a5955ed5164038d32671c851b4',1,'Entry']]],
-  ['var',['var',['../union_block.html#a9bdd35d4ccab80bfffe2172f3b9aa4b9',1,'Block']]]
+  ['writeheader',['writeHeader',['../class_b_tree.html#a3b39b3d173ba3ae596b1fc68f2398da2',1,'BTree']]],
+  ['writetodisk',['writeToDisk',['../class_b_tree.html#a39540a7e17906e44d3eda3346818aabf',1,'BTree']]]
 ];

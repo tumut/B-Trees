@@ -25,7 +25,7 @@
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BTrees
    </div>
-   <div id="projectbrief">B-Tree implementation in C++ to index documents based on numerical id&#39;s and title strings.</div>
+   <div id="projectbrief">B-tree implementation in C++ to index documents based on numerical id&#39;s and title strings.</div>
   </td>
  </tr>
  </tbody>
@@ -106,16 +106,16 @@ This graph shows which files directly or indirectly include this file:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a5ce6e0677bf7e74965349db42757f017"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_commands_8hpp.html#a5ce6e0677bf7e74965349db42757f017">upload</a> (const char *filePath)</td></tr>
-<tr class="memdesc:a5ce6e0677bf7e74965349db42757f017"><td class="mdescLeft">&#160;</td><td class="mdescRight">Recebe um arquivo CSV e cria uma base de dados baseado nele.  <a href="#a5ce6e0677bf7e74965349db42757f017">More...</a><br /></td></tr>
+<tr class="memdesc:a5ce6e0677bf7e74965349db42757f017"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives a CSV file and creates a database based on its contents.  <a href="#a5ce6e0677bf7e74965349db42757f017">More...</a><br /></td></tr>
 <tr class="separator:a5ce6e0677bf7e74965349db42757f017"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab4c930d120953d492ab0d53475518e3f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_commands_8hpp.html#ab4c930d120953d492ab0d53475518e3f">findrec</a> (long id)</td></tr>
-<tr class="memdesc:ab4c930d120953d492ab0d53475518e3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Busca no arquivo de hashing um registro a partir de seu ID.  <a href="#ab4c930d120953d492ab0d53475518e3f">More...</a><br /></td></tr>
+<tr class="memdesc:ab4c930d120953d492ab0d53475518e3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds an entry in the hashfile based on the entry's id.  <a href="#ab4c930d120953d492ab0d53475518e3f">More...</a><br /></td></tr>
 <tr class="separator:ab4c930d120953d492ab0d53475518e3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a09d19045f707f9fdb883abe7755f721b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_commands_8hpp.html#a09d19045f707f9fdb883abe7755f721b">seek1</a> (long id)</td></tr>
-<tr class="memdesc:a09d19045f707f9fdb883abe7755f721b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Busca um registro a partir de seu ID usando o arquivo de índices primário.  <a href="#a09d19045f707f9fdb883abe7755f721b">More...</a><br /></td></tr>
+<tr class="memdesc:a09d19045f707f9fdb883abe7755f721b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Seeks an entry by its id using the primary index.  <a href="#a09d19045f707f9fdb883abe7755f721b">More...</a><br /></td></tr>
 <tr class="separator:a09d19045f707f9fdb883abe7755f721b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a590613fba2ff7979a3d35ddf4de00b38"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_commands_8hpp.html#a590613fba2ff7979a3d35ddf4de00b38">seek2</a> (const char *title)</td></tr>
-<tr class="memdesc:a590613fba2ff7979a3d35ddf4de00b38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Busca um registro a partir de seu título usando o arquivo de índices secundário.  <a href="#a590613fba2ff7979a3d35ddf4de00b38">More...</a><br /></td></tr>
+<tr class="memdesc:a590613fba2ff7979a3d35ddf4de00b38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Seeks an entry by its title using the secondary index.  <a href="#a590613fba2ff7979a3d35ddf4de00b38">More...</a><br /></td></tr>
 <tr class="separator:a590613fba2ff7979a3d35ddf4de00b38"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
@@ -133,16 +133,15 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Busca no arquivo de hashing um registro a partir de seu ID. </p>
-<p>O arquivo de hashing usa o hashing perfeito, então a função apenas calcula o offset do arquivo baseado em seu ID e faz a leitura do bloco em que ele se encontra.</p>
-<p>Caso não haja nenhum registro válido na posição encontrada através do ID, a função informará.</p>
+<p>Finds an entry in the hashfile based on the entry's id. </p>
+<p>The hashfile uses perfect hashing. Therefore, the entry's offset in the file can be calculated readily from the id.</p>
+<p>In case the id doesn't result in a valid offset, the procedure will inform.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">id</td><td>O ID do registro a ser buscado.</td></tr>
+    <tr><td class="paramname">id</td><td>Id of the entry to find </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section author"><dt>Author</dt><dd>Oscar Othon </dd></dl>
 
 </div>
 </div>
@@ -160,17 +159,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Busca um registro a partir de seu ID usando o arquivo de índices primário. </p>
-<p>O seek1 usa o arquivo de índices primário, organizado em índices de uma árvore-B, para encontrar o registro buscado.</p>
-<p>Caso ele não seja encontrado, a função informa.</p>
-<p>A função costuma sempre precisar ler mais blocos do que a função findrec, porque o arquivo de hashing perfeito tem acesso em O(1).</p>
+<p>Seeks an entry by its id using the primary index. </p>
+<p>Uses a B-tree to seek the entry by id within the primary index. In case no entry with the id is found, the procedure will inform.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">id</td><td>O ID do registro a ser buscado.</td></tr>
+    <tr><td class="paramname">id</td><td>Id of the entry to find </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section author"><dt>Author</dt><dd>Oscar Othon </dd></dl>
 
 </div>
 </div>
@@ -188,16 +184,16 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Busca um registro a partir de seu título usando o arquivo de índices secundário. </p>
-<p>Já que o título não é uma chave, e sim um campo qualquer, não existe ordenação entre eles no arquivo de hashing. Então é necessário utilizarmos uma árvore-B para poder fazermos dessa busca algo mais plausível em questão de tempo. Sem a árvore teríamos que fazer uma busca linear pelo arquivo de hashing.</p>
-<p>Caso o registro não possa ser encontrado, a função informará nos resultados.</p>
+<p>Seeks an entry by its title using the secondary index. </p>
+<p>Uses a B-tree to seek the entry by title within the secondary index.</p>
+<p>Will return the first entry found with the title.</p>
+<p>In case no entry with the provided title is found, the procedure will inform.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">title</td><td>Título pelo qual o registro será buscado.</td></tr>
+    <tr><td class="paramname">title</td><td>Title of the entry to find </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section author"><dt>Author</dt><dd>Oscar Othon </dd></dl>
 
 </div>
 </div>
@@ -215,19 +211,41 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Recebe um arquivo CSV e cria uma base de dados baseado nele. </p>
-<p>Faz a carga inicial da massa de testes para seu banco de dados e cria um arquivo de dados organizado por hashing, um arquivo de índice primário usando B-Tree e outro arquivo de índice de índice secundário usando B-Tree.</p>
-<p>A função upload faz várias verificações antes de começar a leitura do arquivo. Os detalhes são exibidos em tela. Ela precisa verificar se é possível criar cada um dos arquivos necessários no local do executável, e apenas caso tudo esteja correto ela procede à leitura dos registros.</p>
-<p>No fim de uma execução bem sucedida o programa terá três arquivos gerados, todos com extensão <code>.bin</code>. Um deles será o arquivo de hashing, o outro o arquivo de índices primários, e por último o de índices secundários.</p>
-<p>É esperado que essa função seja chamada antes de todas as demais.</p>
-<p>Apenas arquivos em formato CSV serão aceitos.</p>
+<p>Receives a CSV file and creates a database based on its contents. </p>
+<p>Will load the data in the provided CSV file and, one by one, upload them into a database while indexing each entry by id and title using B-trees.</p>
+<p>Each entry should be represented as a line in the CSV file with the following fields, one in each column:</p>
+<table class="doxtable">
+<tr>
+<th>Field </th><th>Type </th><th>Description  </th></tr>
+<tr>
+<td>ID </td><td>Integer </td><td>Identifier of the article </td></tr>
+<tr>
+<td>Title </td><td>Alpha 300 </td><td>Title of the article </td></tr>
+<tr>
+<td>Year </td><td>Integer </td><td>Publication year </td></tr>
+<tr>
+<td>Authors </td><td>Alpha 1024 </td><td>List of the authors </td></tr>
+<tr>
+<td>Citations </td><td>Integer </td><td>Times the article has been cited </td></tr>
+<tr>
+<td>Update </td><td>Date time </td><td>Time of the last time the article was updated (<code>YYYY-MM-DD HH:mm:SS</code>) </td></tr>
+<tr>
+<td>Snippet </td><td>Alpha 1024 </td><td>Text summary of the article's contents </td></tr>
+</table>
+<p>Details of the execution will be printed as the program executes.</p>
+<p>Creates tree files upon completion:</p>
+<ul>
+<li><code>db-hashfile.bin</code>: where the entries will be stored;</li>
+<li><code>db-idindex.bin</code>: primary index by id;</li>
+<li><code>db-titleindex.bin</code>: secondary index by title.</li>
+</ul>
+<p>The files will be overwritten if they already exist.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">filePath</td><td>Caminho pro arquivo CSV a ser lido.</td></tr>
+    <tr><td class="paramname">filePath</td><td>Path to the CSV file with entries </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section author"><dt>Author</dt><dd>Oscar Othon </dd></dl>
 
 </div>
 </div>

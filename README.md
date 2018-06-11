@@ -1,20 +1,33 @@
 # 🅱️ Trees
 
-B-Tree implementation in C++ to index documents based on numerical id's (main index) and title strings (secondary index). Created as a college assignment.
+B-tree implementation in C++ to index documents based on numerical id's (main index) and title strings (secondary index) in a sample application. Created as a college assignment.
 
-[Click here for the source documentation!](https://tumut.github.io/BTrees/)
+[Check our pre-generated source documentation!](https://tumut.github.io/BTrees/)
 
 ## Building
 
-The project was developed in `CLion` and can be built from there. This means you can also use `CMake` for it if you want.
+### Program
 
-You can generate the documentation yourself with `doxygen` and the repository's `Doxyfile`.
+After cloning the repository, you can explore and build the it with the [CLion IDE](https://www.jetbrains.com/clion/).
+
+Alternatively, use the following commands at the repository's root folder:
+
+```
+mkdir build
+cd build
+cmake ..
+make
+```
+
+### Documentation
+
+If you want to generate the documentation yourself, use `doxygen` at the repository's root folder.
 
 ## Input
 
 The database that was used for testing and development can be downloaded [here](https://drive.google.com/file/d/0B5H52GfdcU-WLVJHOWR3UzB0YzQ/view).
 
-The program was built to accept a `;`-separated CSV file. Each line should represent an entry (in this case, an article), with columns reflecting the following fields (type _Alpha N_ meaning "a string with at most N alphanumeric characters"):
+The program was built to accept a `;`-separated CSV file with quote-enclosed values. Each line should have the following fields (type _Alpha N_ meaning "a string with at most N alphanumeric characters"):
 
 | Field | Type | Description |
 | --- | --- | --- |
@@ -26,15 +39,21 @@ The program was built to accept a `;`-separated CSV file. Each line should repre
 | Update | Date time | Time of the last time the article was updated (`YYYY-MM-DD HH:mm:SS`) |
 | Snippet | Alpha 1024 | Text summary of the article's contents |
 
+Example line:
+
+`"1";"Title";"2017";"Alice|Bob|Carl";"42";"2017-01-30 23:59:59";"Snippet"`
+
+Fields can be left blank.
+
 ## Usage
 
-Use either of the following commands with the executable:
+Usage of the program is based on following commands:
 
 * `$ <exec-name> upload <input>`
-	
-	Upload a CSV file `input` with entries into the database.
 
-	Will generate three files: one for the primary index (`db-idindex.bin`), another for the secondary index (`db-titleindex.bin`), and finally one where the entries themselves will be stored (`db-hashfile.bin`). 
+	Upload a CSV file `input` with entries into the database. This is the first command you should use.
+
+	Will generate three files: one for the primary index (`db-idindex.bin`), another for the secondary index (`db-titleindex.bin`), and finally one where the entries themselves will be stored (`db-hashfile.bin`).
 
 	The files will be overwritten if they already exist.
 

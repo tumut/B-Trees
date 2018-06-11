@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['m_5ffile',['m_file',['../class_b_tree.html#aea30be3db9c762b8d9fe7e44dd4c3c29',1,'BTree']]],
-  ['m_5froot',['m_root',['../class_b_tree.html#a1658bf8173fb5c33944615ebaaee69d0',1,'BTree']]],
-  ['m_5fstats',['m_stats',['../class_b_tree.html#a5142aee6795ec77ea67c3f7702801890',1,'BTree']]],
-  ['middle',['middle',['../struct_b_tree_1_1_overflow_result.html#af9ece362bc328b1a031f78b44c50768a',1,'BTree::OverflowResult']]]
+  ['offset',['offset',['../struct_b_tree_1_1_b_node.html#af864d07c047391653ed752084e8f07ff',1,'BTree::BNode::offset()'],['../struct_id_index.html#a778a7b276e04fb77a956dfc7325f1098',1,'IdIndex::offset()'],['../struct_title_index.html#a82848013a8515b75129251bfd489ac30',1,'TitleIndex::offset()']]],
+  ['order',['Order',['../class_b_tree.html#a21640c1085ee30ac291740ef13d66bd4',1,'BTree']]]
 ];

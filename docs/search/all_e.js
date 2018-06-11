@@ -1,9 +1,10 @@
 var searchData=
 [
-  ['seek',['seek',['../class_b_tree.html#ac39de078a8dfb556c4f665c5791ba6ac',1,'BTree::seek()'],['../struct_b_tree_1_1_b_node.html#a8f68bb4c490164e23dcf06e96483d0e1',1,'BTree::BNode::seek()']]],
-  ['seek1',['seek1',['../_commands_8hpp.html#a09d19045f707f9fdb883abe7755f721b',1,'seek1(long id):&#160;Commands.cpp'],['../_commands_8cpp.html#a09d19045f707f9fdb883abe7755f721b',1,'seek1(long id):&#160;Commands.cpp']]],
-  ['seek2',['seek2',['../_commands_8hpp.html#a590613fba2ff7979a3d35ddf4de00b38',1,'seek2(const char *title):&#160;Commands.cpp'],['../_commands_8cpp.html#a590613fba2ff7979a3d35ddf4de00b38',1,'seek2(const char *title):&#160;Commands.cpp']]],
-  ['snippet',['snippet',['../struct_entry.html#a7ac60a5be36b28e48ac0efa4be08c7da',1,'Entry']]],
-  ['snippet_5fchar_5fmax',['SNIPPET_CHAR_MAX',['../_entry_8hpp.html#a2e4a52bec8d3200228e62c02df7d4404',1,'Entry.hpp']]],
-  ['statistics',['Statistics',['../struct_b_tree_1_1_statistics.html',1,'BTree']]]
+  ['timestamp_5fchar_5fmax',['TIMESTAMP_CHAR_MAX',['../_entry_8hpp.html#aecd1a507c8070a8a040d28d0feb8e66d',1,'Entry.hpp']]],
+  ['title',['title',['../struct_entry.html#a26935b949c65094ed044b1d4cadb54aa',1,'Entry::title()'],['../struct_title_index.html#a01fb5178d25a9b88aaf3feb59d0a017e',1,'TitleIndex::title()']]],
+  ['title_5fchar_5fmax',['TITLE_CHAR_MAX',['../_entry_8hpp.html#a7af6eeb437a5354124968dae124ad5e3',1,'Entry.hpp']]],
+  ['title_5ftree_5ffilename',['TITLE_TREE_FILENAME',['../_commands_8cpp.html#a62caa4daa5d0e0a0b7ba6d435507da5d',1,'Commands.cpp']]],
+  ['title_5ftree_5ffilepath',['TITLE_TREE_FILEPATH',['../_commands_8cpp.html#a4cda967ab7c0939483b2314111fa3731',1,'Commands.cpp']]],
+  ['titlebtree',['TitleBTree',['../_commands_8cpp.html#ad2416696fa2a5e9f2e4431a372f61c00',1,'Commands.cpp']]],
+  ['titleindex',['TitleIndex',['../struct_title_index.html',1,'']]]
 ];
