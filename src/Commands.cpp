@@ -430,11 +430,7 @@ void seek1(long id) {
 		return;
 	}
 	
-	IdIndex ip;
-	ip.id = id;
-	ip.offset = -1;
-	
-	auto found = tree.seek(ip);
+	auto found = tree.seek(id);
 	
 	if (found) {
 		auto stats = tree.getStatistics(true);
@@ -466,11 +462,7 @@ void seek2(const char* title) {
 		return;
 	}
 	
-	TitleIndex tp;
-	std::strcpy(tp.title, title);
-	tp.offset = -1;
-	
-	auto found = tree.seek(tp);
+	auto found = tree.seek(title);
 	
 	if (found) {
 		auto stats = tree.getStatistics(true);
