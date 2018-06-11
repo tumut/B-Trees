@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>BTrees: Block&lt; T &gt; Union Template Reference</title>
+<title>BTrees: Block&lt; T, BlockSize &gt; Union Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -25,7 +25,7 @@
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BTrees
    </div>
-   <div id="projectbrief">B-Tree implementation in C++ to index documents based on numerical id&#39;s and title strings.</div>
+   <div id="projectbrief">B-tree implementation in C++ to index documents based on numerical id&#39;s and title strings.</div>
   </td>
  </tr>
  </tbody>
@@ -86,62 +86,69 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="union_block-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">Block&lt; T &gt; Union Template Reference</div>  </div>
+<div class="title">Block&lt; T, BlockSize &gt; Union Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Union para leitura e escrita, em bloco, de tipos arbitrários.  
+<p>Union for reading and writing blocks containing serialized data.  
  <a href="union_block.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_block_8hpp_source.html">Block.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a67d1058b786a092ce513048600c6b9dd"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="union_block.html#a67d1058b786a092ce513048600c6b9dd">padding</a> [<a class="el" href="_block_8hpp.html#ad51ded0bbd705f02f73fc60c0b721ced">BLOCK_SIZE</a>]</td></tr>
-<tr class="memdesc:a67d1058b786a092ce513048600c6b9dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vetor de caracteres usado para garantir que a instância tenha no mínimo BLOCK_SIZE bytes.  <a href="#a67d1058b786a092ce513048600c6b9dd">More...</a><br /></td></tr>
-<tr class="separator:a67d1058b786a092ce513048600c6b9dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9bdd35d4ccab80bfffe2172f3b9aa4b9"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="union_block.html#a9bdd35d4ccab80bfffe2172f3b9aa4b9">var</a></td></tr>
-<tr class="memdesc:a9bdd35d4ccab80bfffe2172f3b9aa4b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Membro usado para acesso ao valor empacotado no bloco.  <a href="#a9bdd35d4ccab80bfffe2172f3b9aa4b9">More...</a><br /></td></tr>
-<tr class="separator:a9bdd35d4ccab80bfffe2172f3b9aa4b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca7a23265f96c6c1506429ea04a25ac5"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="union_block.html#aca7a23265f96c6c1506429ea04a25ac5">padding</a> [BlockSize]</td></tr>
+<tr class="memdesc:aca7a23265f96c6c1506429ea04a25ac5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Byte array used to guarantee that the instance will have at least <code>BLOCK_SIZE</code> bytes.  <a href="#aca7a23265f96c6c1506429ea04a25ac5">More...</a><br /></td></tr>
+<tr class="separator:aca7a23265f96c6c1506429ea04a25ac5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a056938206fa7c3f4576c7331bf29d8c8"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="union_block.html#a056938206fa7c3f4576c7331bf29d8c8">var</a></td></tr>
+<tr class="memdesc:a056938206fa7c3f4576c7331bf29d8c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Member used to access the wrapped value.  <a href="#a056938206fa7c3f4576c7331bf29d8c8">More...</a><br /></td></tr>
+<tr class="separator:a056938206fa7c3f4576c7331bf29d8c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;class T&gt;<br />
-union Block&lt; T &gt;</h3>
+<div class="textblock"><h3>template&lt;typename T, unsigned int BlockSize = BLOCK_SIZE&gt;<br />
+union Block&lt; T, BlockSize &gt;</h3>
 
-<p>Union para leitura e escrita, em bloco, de tipos arbitrários. </p>
-<p>É essencial que <code>sizeof(T) &lt;= BLOCK_SIZE</code>. Caso esta condição seja violada, o tamanho da instância de union será maior do que BLOCK_SIZE e o programa estará sujeito a comportamento não definido.</p>
-<p>Esta union serve para garantir que, ao escrever um tipo em arquivo, ele ocupe o espaço de exatamente um bloco. Os bytes que restarem além do tamanho do tipo terão valores indefinidos no arquivo. Para realizar a leitura, é prático usar novamente uma variável de Block&lt;T&gt;.</p>
-<p>T deve ser um tipo POD (Plain Old Data type) para poder ser sequenciado no arquivo, além de unions apenas permitirem membros que satisfaçam tal requerimento. </p>
+<p>Union for reading and writing blocks containing serialized data. </p>
+<p>Wraps a T-type value within a block-sized memory space. T must be a POD (Plain Old Data type).</p>
+<p>The condition <code>sizeof(T) &lt;= BLOCK_SIZE</code> must be satisfied. Otherwise, the stored value will be bigger than the block size and reading and writing will be compromised.</p>
+<p>This union is used to guarantee that written data in the files will always individually occupy exactly one block in size. The remaining unused bytes will have undefined values in the file.</p>
+<p>After using <a class="el" href="union_block.html" title="Union for reading and writing blocks containing serialized data. ">Block</a> instances to write a file, use <a class="el" href="union_block.html" title="Union for reading and writing blocks containing serialized data. ">Block</a> again when reading the file.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Type of the data to be stored within the block </td></tr>
+  </table>
+  </dd>
+</dl>
 </div><h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="a67d1058b786a092ce513048600c6b9dd"></a>
+<a class="anchor" id="aca7a23265f96c6c1506429ea04a25ac5"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class T&gt; </div>
+template&lt;typename T, unsigned int BlockSize = BLOCK_SIZE&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">char <a class="el" href="union_block.html">Block</a>&lt; T &gt;::padding[<a class="el" href="_block_8hpp.html#ad51ded0bbd705f02f73fc60c0b721ced">BLOCK_SIZE</a>]</td>
+          <td class="memname">char <a class="el" href="union_block.html">Block</a>&lt; T, BlockSize &gt;::padding[BlockSize]</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Vetor de caracteres usado para garantir que a instância tenha no mínimo BLOCK_SIZE bytes. </p>
+<p>Byte array used to guarantee that the instance will have at least <code>BLOCK_SIZE</code> bytes. </p>
 
 </div>
 </div>
-<a class="anchor" id="a9bdd35d4ccab80bfffe2172f3b9aa4b9"></a>
+<a class="anchor" id="a056938206fa7c3f4576c7331bf29d8c8"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class T&gt; </div>
+template&lt;typename T, unsigned int BlockSize = BLOCK_SIZE&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">T <a class="el" href="union_block.html">Block</a>&lt; T &gt;::var</td>
+          <td class="memname">T <a class="el" href="union_block.html">Block</a>&lt; T, BlockSize &gt;::var</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Membro usado para acesso ao valor empacotado no bloco. </p>
+<p>Member used to access the wrapped value. </p>
 
 </div>
 </div>

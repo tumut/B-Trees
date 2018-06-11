@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>BTrees: IdPointer Struct Reference</title>
+<title>BTrees: TitleIndex Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -25,7 +25,7 @@
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BTrees
    </div>
-   <div id="projectbrief">B-Tree implementation in C++ to index documents based on numerical id&#39;s and title strings.</div>
+   <div id="projectbrief">B-tree implementation in C++ to index documents based on numerical id&#39;s and title strings.</div>
   </td>
  </tr>
  </tbody>
@@ -85,34 +85,34 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="struct_id_pointer-members.html">List of all members</a>  </div>
+<a href="struct_title_index-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">IdPointer Struct Reference</div>  </div>
+<div class="title">TitleIndex Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Struct auxiliar para guardar os índices primários.  
- <a href="struct_id_pointer.html#details">More...</a></p>
+<p>Helper struct to store secondary indexes.  
+ <a href="struct_title_index.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac37a4b78700cccb3e36b911873e60b7b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_id_pointer.html#ac37a4b78700cccb3e36b911873e60b7b">operator&lt;</a> (const <a class="el" href="struct_id_pointer.html">IdPointer</a> &amp;that) const </td></tr>
-<tr class="memdesc:ac37a4b78700cccb3e36b911873e60b7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Comparador de &lt; para o struct auxiliar, assim poderá ser usado na <a class="el" href="class_b_tree.html" title="Classe de árvore B. ">BTree</a>.  <a href="#ac37a4b78700cccb3e36b911873e60b7b">More...</a><br /></td></tr>
-<tr class="separator:ac37a4b78700cccb3e36b911873e60b7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8523bfd840afaee5b12ee32d96a5ee71"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_title_index.html#a8523bfd840afaee5b12ee32d96a5ee71">operator&lt;</a> (const <a class="el" href="struct_title_index.html">TitleIndex</a> &amp;that) const </td></tr>
+<tr class="memdesc:a8523bfd840afaee5b12ee32d96a5ee71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Less-than comparator so that <a class="el" href="struct_title_index.html" title="Helper struct to store secondary indexes. ">TitleIndex</a> can be used in <a class="el" href="class_b_tree.html" title="B-tree class. ">BTree</a>.  <a href="#a8523bfd840afaee5b12ee32d96a5ee71">More...</a><br /></td></tr>
+<tr class="separator:a8523bfd840afaee5b12ee32d96a5ee71"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a538774c9116225b1e6d2f9d22a4b10c7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_id_pointer.html#a538774c9116225b1e6d2f9d22a4b10c7">id</a></td></tr>
-<tr class="memdesc:a538774c9116225b1e6d2f9d22a4b10c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Id do registro.  <a href="#a538774c9116225b1e6d2f9d22a4b10c7">More...</a><br /></td></tr>
-<tr class="separator:a538774c9116225b1e6d2f9d22a4b10c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a090367d92c7b75fd8b6d80fd407a293f"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_id_pointer.html#a090367d92c7b75fd8b6d80fd407a293f">offset</a></td></tr>
-<tr class="memdesc:a090367d92c7b75fd8b6d80fd407a293f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Offset do registro no arquivo de hashing.  <a href="#a090367d92c7b75fd8b6d80fd407a293f">More...</a><br /></td></tr>
-<tr class="separator:a090367d92c7b75fd8b6d80fd407a293f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01fb5178d25a9b88aaf3feb59d0a017e"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_title_index.html#a01fb5178d25a9b88aaf3feb59d0a017e">title</a> [<a class="el" href="_entry_8hpp.html#a7af6eeb437a5354124968dae124ad5e3">TITLE_CHAR_MAX</a>]</td></tr>
+<tr class="memdesc:a01fb5178d25a9b88aaf3feb59d0a017e"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="struct_entry.html" title="Article entry. ">Entry</a> title.  <a href="#a01fb5178d25a9b88aaf3feb59d0a017e">More...</a><br /></td></tr>
+<tr class="separator:a01fb5178d25a9b88aaf3feb59d0a017e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82848013a8515b75129251bfd489ac30"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_title_index.html#a82848013a8515b75129251bfd489ac30">offset</a></td></tr>
+<tr class="memdesc:a82848013a8515b75129251bfd489ac30"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="struct_entry.html" title="Article entry. ">Entry</a> offset in the hashfile.  <a href="#a82848013a8515b75129251bfd489ac30">More...</a><br /></td></tr>
+<tr class="separator:a82848013a8515b75129251bfd489ac30"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Struct auxiliar para guardar os índices primários. </p>
+<div class="textblock"><p>Helper struct to store secondary indexes. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="ac37a4b78700cccb3e36b911873e60b7b"></a>
+<a class="anchor" id="a8523bfd840afaee5b12ee32d96a5ee71"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -120,9 +120,9 @@ Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool IdPointer::operator&lt; </td>
+          <td class="memname">bool TitleIndex::operator&lt; </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="struct_id_pointer.html">IdPointer</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="struct_title_index.html">TitleIndex</a> &amp;&#160;</td>
           <td class="paramname"><em>that</em></td><td>)</td>
           <td> const</td>
         </tr>
@@ -134,36 +134,36 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Comparador de &lt; para o struct auxiliar, assim poderá ser usado na <a class="el" href="class_b_tree.html" title="Classe de árvore B. ">BTree</a>. </p>
+<p>Less-than comparator so that <a class="el" href="struct_title_index.html" title="Helper struct to store secondary indexes. ">TitleIndex</a> can be used in <a class="el" href="class_b_tree.html" title="B-tree class. ">BTree</a>. </p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="a538774c9116225b1e6d2f9d22a4b10c7"></a>
+<a class="anchor" id="a82848013a8515b75129251bfd489ac30"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int IdPointer::id</td>
+          <td class="memname">long TitleIndex::offset</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Id do registro. </p>
+<p><a class="el" href="struct_entry.html" title="Article entry. ">Entry</a> offset in the hashfile. </p>
 
 </div>
 </div>
-<a class="anchor" id="a090367d92c7b75fd8b6d80fd407a293f"></a>
+<a class="anchor" id="a01fb5178d25a9b88aaf3feb59d0a017e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">long IdPointer::offset</td>
+          <td class="memname">char TitleIndex::title[<a class="el" href="_entry_8hpp.html#a7af6eeb437a5354124968dae124ad5e3">TITLE_CHAR_MAX</a>]</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Offset do registro no arquivo de hashing. </p>
+<p><a class="el" href="struct_entry.html" title="Article entry. ">Entry</a> title. </p>
 
 </div>
 </div>

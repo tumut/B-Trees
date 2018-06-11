@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>BTrees: BTree&lt; TKey, M &gt;::FileHeader Struct Reference</title>
+<title>BTrees: BTree&lt; T, M, BlockSize &gt;::FileHeader Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -25,7 +25,7 @@
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BTrees
    </div>
-   <div id="projectbrief">B-Tree implementation in C++ to index documents based on numerical id&#39;s and title strings.</div>
+   <div id="projectbrief">B-tree implementation in C++ to index documents based on numerical id&#39;s and title strings.</div>
   </td>
  </tr>
  </tbody>
@@ -90,48 +90,48 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="struct_b_tree_1_1_file_header-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">BTree&lt; TKey, M &gt;::FileHeader Struct Reference</div>  </div>
+<div class="title">BTree&lt; T, M, BlockSize &gt;::FileHeader Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Dados do cabeçalho do arquivo.  
+<p>File header data for <a class="el" href="class_b_tree.html" title="B-tree class. ">BTree</a> indexes.  
  <a href="struct_b_tree_1_1_file_header.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a31311da126e8c4c24892bc94be578a0c"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_file_header.html#a31311da126e8c4c24892bc94be578a0c">rootAddress</a></td></tr>
-<tr class="separator:a31311da126e8c4c24892bc94be578a0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b665b927c85653445cc391fa6e8d740"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_file_header.html#a7b665b927c85653445cc391fa6e8d740">blockCount</a></td></tr>
-<tr class="separator:a7b665b927c85653445cc391fa6e8d740"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa79683d285cbd1d0aabbf10b297da0c7"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_file_header.html#aa79683d285cbd1d0aabbf10b297da0c7">rootAddress</a></td></tr>
+<tr class="separator:aa79683d285cbd1d0aabbf10b297da0c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3dce4871d244d6ca00e4c54c2d162cbb"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_file_header.html#a3dce4871d244d6ca00e4c54c2d162cbb">blockCount</a></td></tr>
+<tr class="separator:a3dce4871d244d6ca00e4c54c2d162cbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;class TKey, std::size_t M&gt;<br />
-struct BTree&lt; TKey, M &gt;::FileHeader</h3>
+<div class="textblock"><h3>template&lt;typename T, std::size_t M, unsigned int BlockSize = BLOCK_SIZE&gt;<br />
+struct BTree&lt; T, M, BlockSize &gt;::FileHeader</h3>
 
-<p>Dados do cabeçalho do arquivo. </p>
+<p>File header data for <a class="el" href="class_b_tree.html" title="B-tree class. ">BTree</a> indexes. </p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="a7b665b927c85653445cc391fa6e8d740"></a>
+<a class="anchor" id="a3dce4871d244d6ca00e4c54c2d162cbb"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class TKey, std::size_t M&gt; </div>
+template&lt;typename T, std::size_t M, unsigned int BlockSize = BLOCK_SIZE&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">unsigned int <a class="el" href="class_b_tree.html">BTree</a>&lt; TKey, M &gt;::FileHeader::blockCount</td>
+          <td class="memname">unsigned int <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::FileHeader::blockCount</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a31311da126e8c4c24892bc94be578a0c"></a>
+<a class="anchor" id="aa79683d285cbd1d0aabbf10b297da0c7"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class TKey, std::size_t M&gt; </div>
+template&lt;typename T, std::size_t M, unsigned int BlockSize = BLOCK_SIZE&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">long <a class="el" href="class_b_tree.html">BTree</a>&lt; TKey, M &gt;::FileHeader::rootAddress</td>
+          <td class="memname">long <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::FileHeader::rootAddress</td>
         </tr>
       </table>
 </div><div class="memdoc">

@@ -25,7 +25,7 @@
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BTrees
    </div>
-   <div id="projectbrief">B-Tree implementation in C++ to index documents based on numerical id&#39;s and title strings.</div>
+   <div id="projectbrief">B-tree implementation in C++ to index documents based on numerical id&#39;s and title strings.</div>
   </td>
  </tr>
  </tbody>
@@ -91,17 +91,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">BTree.hpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="_block_8hpp_source.html">Block.hpp</a>&quot;</code><br />
-<code>#include &lt;cstdio&gt;</code><br />
+<div class="textblock"><code>#include &lt;cstdio&gt;</code><br />
 <code>#include &lt;memory&gt;</code><br />
+<code>#include &quot;<a class="el" href="_block_8hpp_source.html">Block.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_b_tree_8inl.html">BTree.inl</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for BTree.hpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="_b_tree_8hpp__incl.png" border="0" usemap="#include_2_b_tree_8hpp" alt=""/></div>
 <map name="include_2_b_tree_8hpp" id="include_2_b_tree_8hpp">
-<area shape="rect" id="node2" href="_block_8hpp.html" title="Block.hpp" alt="" coords="19,155,99,181"/>
-<area shape="rect" id="node5" href="_b_tree_8inl.html" title="BTree.inl" alt="" coords="197,80,272,107"/>
+<area shape="rect" id="node4" href="_block_8hpp.html" title="Block.hpp" alt="" coords="181,80,261,107"/>
+<area shape="rect" id="node5" href="_b_tree_8inl.html" title="BTree.inl" alt="" coords="285,80,359,107"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -109,7 +109,8 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="_b_tree_8hpp__dep__incl.png" border="0" usemap="#include_2_b_tree_8hppdep" alt=""/></div>
 <map name="include_2_b_tree_8hppdep" id="include_2_b_tree_8hppdep">
-<area shape="rect" id="node2" href="_commands_8cpp.html" title="src/Commands.cpp" alt="" coords="5,80,141,107"/>
+<area shape="rect" id="node2" href="_ideal_b_tree_8hpp.html" title="include/IdealBTree.hpp" alt="" coords="5,80,160,107"/>
+<area shape="rect" id="node3" href="_commands_8cpp.html" title="src/Commands.cpp" alt="" coords="15,155,151,181"/>
 </map>
 </div>
 </div>
@@ -117,20 +118,20 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html">BTree&lt; TKey, M &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Classe de árvore B.  <a href="class_b_tree.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_b_tree.html">BTree&lt; T, M, BlockSize &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">B-tree class.  <a href="class_b_tree.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_statistics.html">BTree&lt; TKey, M &gt;::Statistics</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Estrutura usada pela árvore para guardar métricas de sua execução.  <a href="struct_b_tree_1_1_statistics.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_statistics.html">BTree&lt; T, M, BlockSize &gt;::Statistics</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_b_tree.html" title="B-tree class. ">BTree</a> usage analytics.  <a href="struct_b_tree_1_1_statistics.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_file_header.html">BTree&lt; TKey, M &gt;::FileHeader</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dados do cabeçalho do arquivo.  <a href="struct_b_tree_1_1_file_header.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_file_header.html">BTree&lt; T, M, BlockSize &gt;::FileHeader</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">File header data for <a class="el" href="class_b_tree.html" title="B-tree class. ">BTree</a> indexes.  <a href="struct_b_tree_1_1_file_header.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_b_node.html">BTree&lt; TKey, M &gt;::BNode</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nó da árvore B.  <a href="struct_b_tree_1_1_b_node.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_b_node.html">BTree&lt; T, M, BlockSize &gt;::BNode</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">B-tree node.  <a href="struct_b_tree_1_1_b_node.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_overflow_result.html">BTree&lt; TKey, M &gt;::OverflowResult</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registro auxiliar com o resultado de um overflow de inserção.  <a href="struct_b_tree_1_1_overflow_result.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_overflow_result.html">BTree&lt; T, M, BlockSize &gt;::OverflowResult</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides information to deal with an insertion overflow.  <a href="struct_b_tree_1_1_overflow_result.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->

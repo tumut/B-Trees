@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['titlepointer',['TitlePointer',['../struct_title_pointer.html',1,'']]]
+  ['titleindex',['TitleIndex',['../struct_title_index.html',1,'']]]
 ];

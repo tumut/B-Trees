@@ -2,15 +2,16 @@ var searchData=
 [
   ['block',['Block',['../union_block.html',1,'']]],
   ['block_2ehpp',['Block.hpp',['../_block_8hpp.html',1,'']]],
-  ['block_3c_20btree_3a_3abnode_20_3e',['Block&lt; BTree::BNode &gt;',['../union_block.html',1,'']]],
+  ['block_3c_20bnode_2c_20blocksize_20_3e',['Block&lt; BNode, BlockSize &gt;',['../union_block.html',1,'']]],
   ['block_5fsize',['BLOCK_SIZE',['../_block_8hpp.html#ad51ded0bbd705f02f73fc60c0b721ced',1,'Block.hpp']]],
-  ['blockcount',['blockCount',['../struct_b_tree_1_1_file_header.html#a7b665b927c85653445cc391fa6e8d740',1,'BTree::FileHeader::blockCount()'],['../struct_hashfile_header.html#a46bc188b9282360f810099193e2e0095',1,'HashfileHeader::blockCount()']]],
-  ['blockscreated',['blocksCreated',['../struct_b_tree_1_1_statistics.html#a7912636750c818aa997a4192e1ebbf07',1,'BTree::Statistics']]],
-  ['blocksindisk',['blocksInDisk',['../struct_b_tree_1_1_statistics.html#a2a013d0b06d2092733b2ceb8f4c05897',1,'BTree::Statistics']]],
-  ['blocksread',['blocksRead',['../struct_b_tree_1_1_statistics.html#a3f72564e0a0b63c9d1ab54dfe88c800d',1,'BTree::Statistics']]],
+  ['blockcount',['blockCount',['../struct_b_tree_1_1_file_header.html#a3dce4871d244d6ca00e4c54c2d162cbb',1,'BTree::FileHeader::blockCount()'],['../struct_hashfile_header.html#a46bc188b9282360f810099193e2e0095',1,'HashfileHeader::blockCount()']]],
+  ['blockscreated',['blocksCreated',['../struct_b_tree_1_1_statistics.html#a8d6dc6c05d4446dbe4055c1ae63edee1',1,'BTree::Statistics']]],
+  ['blocksindisk',['blocksInDisk',['../struct_b_tree_1_1_statistics.html#a9a51739f20067b23f5d18193438e0cb0',1,'BTree::Statistics']]],
+  ['blocksizeinuse',['BlockSizeInUse',['../class_b_tree.html#aae474f8f8398cf009b528db3b2dec236',1,'BTree']]],
+  ['blocksread',['blocksRead',['../struct_b_tree_1_1_statistics.html#aae4cf5a07e867124f3ba5e5b11afd576',1,'BTree::Statistics']]],
   ['bnode',['BNode',['../struct_b_tree_1_1_b_node.html',1,'BTree']]],
-  ['btree',['BTree',['../class_b_tree.html',1,'BTree&lt; TKey, M &gt;'],['../class_b_tree.html#ace2795117ce7ba73e15b52c72b3a10b3',1,'BTree::BTree()']]],
+  ['bnodeblock',['BNodeBlock',['../class_b_tree.html#a9af2ca14c936735538b632075173cbd2',1,'BTree']]],
+  ['btree',['BTree',['../class_b_tree.html',1,'BTree&lt; T, M, BlockSize &gt;'],['../class_b_tree.html#a39d2dc6d0f1ec51fff7b5dbaf42baf5e',1,'BTree::BTree()']]],
   ['btree_2ehpp',['BTree.hpp',['../_b_tree_8hpp.html',1,'']]],
-  ['btree_2einl',['BTree.inl',['../_b_tree_8inl.html',1,'']]],
-  ['btree_5forder',['BTREE_ORDER',['../_commands_8cpp.html#a76d03763b4acc5d33fee808c7b9be2cf',1,'Commands.cpp']]]
+  ['btree_2einl',['BTree.inl',['../_b_tree_8inl.html',1,'']]]
 ];

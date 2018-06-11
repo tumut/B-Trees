@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['main_2ecpp',['main.cpp',['../main_8cpp.html',1,'']]]
+  ['idealbtree_2ehpp',['IdealBTree.hpp',['../_ideal_b_tree_8hpp.html',1,'']]]
 ];

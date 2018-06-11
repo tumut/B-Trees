@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>BTrees: BTree&lt; TKey, M &gt;::Statistics Struct Reference</title>
+<title>BTrees: BTree&lt; T, M, BlockSize &gt;::Statistics Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -25,7 +25,7 @@
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BTrees
    </div>
-   <div id="projectbrief">B-Tree implementation in C++ to index documents based on numerical id&#39;s and title strings.</div>
+   <div id="projectbrief">B-tree implementation in C++ to index documents based on numerical id&#39;s and title strings.</div>
   </td>
  </tr>
  </tbody>
@@ -90,79 +90,78 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="struct_b_tree_1_1_statistics-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">BTree&lt; TKey, M &gt;::Statistics Struct Reference</div>  </div>
+<div class="title">BTree&lt; T, M, BlockSize &gt;::Statistics Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Estrutura usada pela árvore para guardar métricas de sua execução.  
+<p><a class="el" href="class_b_tree.html" title="B-tree class. ">BTree</a> usage analytics.  
  <a href="struct_b_tree_1_1_statistics.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_b_tree_8hpp_source.html">BTree.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a3f72564e0a0b63c9d1ab54dfe88c800d"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_statistics.html#a3f72564e0a0b63c9d1ab54dfe88c800d">blocksRead</a></td></tr>
-<tr class="memdesc:a3f72564e0a0b63c9d1ab54dfe88c800d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Quantidade de blocos lidos.  <a href="#a3f72564e0a0b63c9d1ab54dfe88c800d">More...</a><br /></td></tr>
-<tr class="separator:a3f72564e0a0b63c9d1ab54dfe88c800d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7912636750c818aa997a4192e1ebbf07"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_statistics.html#a7912636750c818aa997a4192e1ebbf07">blocksCreated</a></td></tr>
-<tr class="memdesc:a7912636750c818aa997a4192e1ebbf07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Quantidade de blocos criados.  <a href="#a7912636750c818aa997a4192e1ebbf07">More...</a><br /></td></tr>
-<tr class="separator:a7912636750c818aa997a4192e1ebbf07"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2a013d0b06d2092733b2ceb8f4c05897"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_statistics.html#a2a013d0b06d2092733b2ceb8f4c05897">blocksInDisk</a></td></tr>
-<tr class="memdesc:a2a013d0b06d2092733b2ceb8f4c05897"><td class="mdescLeft">&#160;</td><td class="mdescRight">Quantidade de blocos que já foram inseridos em disco.  <a href="#a2a013d0b06d2092733b2ceb8f4c05897">More...</a><br /></td></tr>
-<tr class="separator:a2a013d0b06d2092733b2ceb8f4c05897"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae4cf5a07e867124f3ba5e5b11afd576"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_statistics.html#aae4cf5a07e867124f3ba5e5b11afd576">blocksRead</a></td></tr>
+<tr class="memdesc:aae4cf5a07e867124f3ba5e5b11afd576"><td class="mdescLeft">&#160;</td><td class="mdescRight">Quantity of blocks read since the tree was initialized.  <a href="#aae4cf5a07e867124f3ba5e5b11afd576">More...</a><br /></td></tr>
+<tr class="separator:aae4cf5a07e867124f3ba5e5b11afd576"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d6dc6c05d4446dbe4055c1ae63edee1"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_statistics.html#a8d6dc6c05d4446dbe4055c1ae63edee1">blocksCreated</a></td></tr>
+<tr class="memdesc:a8d6dc6c05d4446dbe4055c1ae63edee1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Quantity of blocks created since the tree was initialized.  <a href="#a8d6dc6c05d4446dbe4055c1ae63edee1">More...</a><br /></td></tr>
+<tr class="separator:a8d6dc6c05d4446dbe4055c1ae63edee1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a51739f20067b23f5d18193438e0cb0"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_statistics.html#a9a51739f20067b23f5d18193438e0cb0">blocksInDisk</a></td></tr>
+<tr class="memdesc:a9a51739f20067b23f5d18193438e0cb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Quantity of blocks stored in disk.  <a href="#a9a51739f20067b23f5d18193438e0cb0">More...</a><br /></td></tr>
+<tr class="separator:a9a51739f20067b23f5d18193438e0cb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;class TKey, std::size_t M&gt;<br />
-struct BTree&lt; TKey, M &gt;::Statistics</h3>
+<div class="textblock"><h3>template&lt;typename T, std::size_t M, unsigned int BlockSize = BLOCK_SIZE&gt;<br />
+struct BTree&lt; T, M, BlockSize &gt;::Statistics</h3>
 
-<p>Estrutura usada pela árvore para guardar métricas de sua execução. </p>
-<dl class="section author"><dt>Author</dt><dd>Timóteo Fonseca </dd></dl>
+<p><a class="el" href="class_b_tree.html" title="B-tree class. ">BTree</a> usage analytics. </p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="a7912636750c818aa997a4192e1ebbf07"></a>
+<a class="anchor" id="a8d6dc6c05d4446dbe4055c1ae63edee1"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class TKey, std::size_t M&gt; </div>
+template&lt;typename T, std::size_t M, unsigned int BlockSize = BLOCK_SIZE&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">unsigned int <a class="el" href="class_b_tree.html">BTree</a>&lt; TKey, M &gt;::Statistics::blocksCreated</td>
+          <td class="memname">unsigned int <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::Statistics::blocksCreated</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Quantidade de blocos criados. </p>
+<p>Quantity of blocks created since the tree was initialized. </p>
 
 </div>
 </div>
-<a class="anchor" id="a2a013d0b06d2092733b2ceb8f4c05897"></a>
+<a class="anchor" id="a9a51739f20067b23f5d18193438e0cb0"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class TKey, std::size_t M&gt; </div>
+template&lt;typename T, std::size_t M, unsigned int BlockSize = BLOCK_SIZE&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">unsigned int <a class="el" href="class_b_tree.html">BTree</a>&lt; TKey, M &gt;::Statistics::blocksInDisk</td>
+          <td class="memname">unsigned int <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::Statistics::blocksInDisk</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Quantidade de blocos que já foram inseridos em disco. </p>
+<p>Quantity of blocks stored in disk. </p>
 
 </div>
 </div>
-<a class="anchor" id="a3f72564e0a0b63c9d1ab54dfe88c800d"></a>
+<a class="anchor" id="aae4cf5a07e867124f3ba5e5b11afd576"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class TKey, std::size_t M&gt; </div>
+template&lt;typename T, std::size_t M, unsigned int BlockSize = BLOCK_SIZE&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">unsigned int <a class="el" href="class_b_tree.html">BTree</a>&lt; TKey, M &gt;::Statistics::blocksRead</td>
+          <td class="memname">unsigned int <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::Statistics::blocksRead</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Quantidade de blocos lidos. </p>
+<p>Quantity of blocks read since the tree was initialized. </p>
 
 </div>
 </div>

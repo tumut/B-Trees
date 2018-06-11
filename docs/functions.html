@@ -25,7 +25,7 @@
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BTrees
    </div>
-   <div id="projectbrief">B-Tree implementation in C++ to index documents based on numerical id&#39;s and title strings.</div>
+   <div id="projectbrief">B-tree implementation in C++ to index documents based on numerical id&#39;s and title strings.</div>
   </td>
  </tr>
  </tbody>
@@ -71,6 +71,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li class="current"><a href="functions.html"><span>All</span></a></li>
       <li><a href="functions_func.html"><span>Functions</span></a></li>
       <li><a href="functions_vars.html"><span>Variables</span></a></li>
+      <li><a href="functions_type.html"><span>Typedefs</span></a></li>
     </ul>
   </div>
   <div id="navrow4" class="tabs3">
@@ -81,7 +82,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="#index_f"><span>f</span></a></li>
       <li><a href="#index_g"><span>g</span></a></li>
       <li><a href="#index_i"><span>i</span></a></li>
-      <li><a href="#index_k"><span>k</span></a></li>
       <li><a href="#index_l"><span>l</span></a></li>
       <li><a href="#index_m"><span>m</span></a></li>
       <li><a href="#index_o"><span>o</span></a></li>
@@ -123,47 +123,56 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <h3><a class="anchor" id="index_b"></a>- b -</h3><ul>
 <li>blockCount
-: <a class="el" href="struct_b_tree_1_1_file_header.html#a7b665b927c85653445cc391fa6e8d740">BTree&lt; TKey, M &gt;::FileHeader</a>
+: <a class="el" href="struct_b_tree_1_1_file_header.html#a3dce4871d244d6ca00e4c54c2d162cbb">BTree&lt; T, M, BlockSize &gt;::FileHeader</a>
 , <a class="el" href="struct_hashfile_header.html#a46bc188b9282360f810099193e2e0095">HashfileHeader</a>
 </li>
 <li>blocksCreated
-: <a class="el" href="struct_b_tree_1_1_statistics.html#a7912636750c818aa997a4192e1ebbf07">BTree&lt; TKey, M &gt;::Statistics</a>
+: <a class="el" href="struct_b_tree_1_1_statistics.html#a8d6dc6c05d4446dbe4055c1ae63edee1">BTree&lt; T, M, BlockSize &gt;::Statistics</a>
 </li>
 <li>blocksInDisk
-: <a class="el" href="struct_b_tree_1_1_statistics.html#a2a013d0b06d2092733b2ceb8f4c05897">BTree&lt; TKey, M &gt;::Statistics</a>
+: <a class="el" href="struct_b_tree_1_1_statistics.html#a9a51739f20067b23f5d18193438e0cb0">BTree&lt; T, M, BlockSize &gt;::Statistics</a>
+</li>
+<li>BlockSizeInUse
+: <a class="el" href="class_b_tree.html#aae474f8f8398cf009b528db3b2dec236">BTree&lt; T, M, BlockSize &gt;</a>
 </li>
 <li>blocksRead
-: <a class="el" href="struct_b_tree_1_1_statistics.html#a3f72564e0a0b63c9d1ab54dfe88c800d">BTree&lt; TKey, M &gt;::Statistics</a>
+: <a class="el" href="struct_b_tree_1_1_statistics.html#aae4cf5a07e867124f3ba5e5b11afd576">BTree&lt; T, M, BlockSize &gt;::Statistics</a>
+</li>
+<li>BNodeBlock
+: <a class="el" href="class_b_tree.html#a9af2ca14c936735538b632075173cbd2">BTree&lt; T, M, BlockSize &gt;</a>
 </li>
 <li>BTree()
-: <a class="el" href="class_b_tree.html#ace2795117ce7ba73e15b52c72b3a10b3">BTree&lt; TKey, M &gt;</a>
+: <a class="el" href="class_b_tree.html#a39d2dc6d0f1ec51fff7b5dbaf42baf5e">BTree&lt; T, M, BlockSize &gt;</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_c"></a>- c -</h3><ul>
 <li>children
-: <a class="el" href="struct_b_tree_1_1_b_node.html#a16759b3a85e23fcf83e9a4e2a92c0b93">BTree&lt; TKey, M &gt;::BNode</a>
+: <a class="el" href="struct_b_tree_1_1_b_node.html#a46c583bf14e3bdee6951a24bbfc54f3e">BTree&lt; T, M, BlockSize &gt;::BNode</a>
 </li>
 <li>citations
 : <a class="el" href="struct_entry.html#af3c7ba96953787b54f0d49ff21d7d2b7">Entry</a>
 </li>
 <li>create()
-: <a class="el" href="class_b_tree.html#aab8e5c6367eed5e552b4fdfe51aad61b">BTree&lt; TKey, M &gt;</a>
+: <a class="el" href="class_b_tree.html#a85386d47c24912f04e71e28ef922258e">BTree&lt; T, M, BlockSize &gt;</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_f"></a>- f -</h3><ul>
+<li>FileHeaderBlock
+: <a class="el" href="class_b_tree.html#a5f104fd7668e63982b101db29e69d198">BTree&lt; T, M, BlockSize &gt;</a>
+</li>
 <li>finishInsertions()
-: <a class="el" href="class_b_tree.html#a4d5c0ac3e9ade90c7a830406ecb26f45">BTree&lt; TKey, M &gt;</a>
+: <a class="el" href="class_b_tree.html#aaefb64c44b55fbddc9f07aa129ba7656">BTree&lt; T, M, BlockSize &gt;</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_g"></a>- g -</h3><ul>
 <li>getStatistics()
-: <a class="el" href="class_b_tree.html#a7b36fa86b3b3e9b4566ba3b622e107e3">BTree&lt; TKey, M &gt;</a>
+: <a class="el" href="class_b_tree.html#a2cdd54bb9e6e0f2689d8d1fe4aa45400">BTree&lt; T, M, BlockSize &gt;</a>
 </li>
 </ul>
 
@@ -171,99 +180,95 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <h3><a class="anchor" id="index_i"></a>- i -</h3><ul>
 <li>id
 : <a class="el" href="struct_entry.html#aa5d205a77ff70e820e536617e4ee480d">Entry</a>
-, <a class="el" href="struct_id_pointer.html#a538774c9116225b1e6d2f9d22a4b10c7">IdPointer</a>
+, <a class="el" href="struct_id_index.html#a7dc366242281eff963f4016954b8a2ce">IdIndex</a>
 </li>
 <li>initialize()
-: <a class="el" href="struct_b_tree_1_1_b_node.html#a27994df173046454415dccf8274b54e3">BTree&lt; TKey, M &gt;::BNode</a>
+: <a class="el" href="struct_b_tree_1_1_b_node.html#a7227e47e36a8edfdab0fbfdf547817ab">BTree&lt; T, M, BlockSize &gt;::BNode</a>
 </li>
 <li>insert()
-: <a class="el" href="class_b_tree.html#afad724e5c7ea6f668060846cbbe15368">BTree&lt; TKey, M &gt;</a>
+: <a class="el" href="class_b_tree.html#a13493d45b50fa350deb1c308890a75a9">BTree&lt; T, M, BlockSize &gt;</a>
 </li>
 <li>isFull()
-: <a class="el" href="struct_b_tree_1_1_b_node.html#ae7c7e81cad32c0843addc3711d70d0f7">BTree&lt; TKey, M &gt;::BNode</a>
+: <a class="el" href="struct_b_tree_1_1_b_node.html#a16569f4e716b2dedb6799f4c1e767540">BTree&lt; T, M, BlockSize &gt;::BNode</a>
 </li>
 <li>isLeaf
-: <a class="el" href="struct_b_tree_1_1_b_node.html#ad112117785c2e7b8e5169f31db5dfe59">BTree&lt; TKey, M &gt;::BNode</a>
-</li>
-</ul>
-
-
-<h3><a class="anchor" id="index_k"></a>- k -</h3><ul>
-<li>keys
-: <a class="el" href="struct_b_tree_1_1_b_node.html#a07e26ca52d27eb4b41bbca04e0f3b9ec">BTree&lt; TKey, M &gt;::BNode</a>
-</li>
-<li>keysCount
-: <a class="el" href="struct_b_tree_1_1_b_node.html#a7da57720fb1c5fd4279a30deb1dc6697">BTree&lt; TKey, M &gt;::BNode</a>
+: <a class="el" href="struct_b_tree_1_1_b_node.html#a0b0b9930e9474ce76d7823f4567c1faa">BTree&lt; T, M, BlockSize &gt;::BNode</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_l"></a>- l -</h3><ul>
 <li>load()
-: <a class="el" href="class_b_tree.html#a3f314aa35d198aa82d96d030b2ba4404">BTree&lt; TKey, M &gt;</a>
+: <a class="el" href="class_b_tree.html#a9b85dc76d3a2108c5058c9923660ec14">BTree&lt; T, M, BlockSize &gt;</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_m"></a>- m -</h3><ul>
 <li>m_file
-: <a class="el" href="class_b_tree.html#aea30be3db9c762b8d9fe7e44dd4c3c29">BTree&lt; TKey, M &gt;</a>
+: <a class="el" href="class_b_tree.html#accbe121bee504d8d445934160a58a7ab">BTree&lt; T, M, BlockSize &gt;</a>
 </li>
 <li>m_root
-: <a class="el" href="class_b_tree.html#a1658bf8173fb5c33944615ebaaee69d0">BTree&lt; TKey, M &gt;</a>
+: <a class="el" href="class_b_tree.html#a0958a9dddcabef39e16e656757e8d2c4">BTree&lt; T, M, BlockSize &gt;</a>
 </li>
 <li>m_stats
-: <a class="el" href="class_b_tree.html#a5142aee6795ec77ea67c3f7702801890">BTree&lt; TKey, M &gt;</a>
+: <a class="el" href="class_b_tree.html#ac1dd41410a7892910ebacb2383d77e6d">BTree&lt; T, M, BlockSize &gt;</a>
 </li>
 <li>middle
-: <a class="el" href="struct_b_tree_1_1_overflow_result.html#af9ece362bc328b1a031f78b44c50768a">BTree&lt; TKey, M &gt;::OverflowResult</a>
+: <a class="el" href="struct_b_tree_1_1_overflow_result.html#a6896195c86bf468fe9fc4e3c5afd4772">BTree&lt; T, M, BlockSize &gt;::OverflowResult</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_o"></a>- o -</h3><ul>
 <li>offset
-: <a class="el" href="struct_b_tree_1_1_b_node.html#a8e0f5e06540af73b1a2f271faefe85ab">BTree&lt; TKey, M &gt;::BNode</a>
-, <a class="el" href="struct_id_pointer.html#a090367d92c7b75fd8b6d80fd407a293f">IdPointer</a>
-, <a class="el" href="struct_title_pointer.html#a4562336754a2c64ee9962a8cba7204cd">TitlePointer</a>
+: <a class="el" href="struct_b_tree_1_1_b_node.html#af864d07c047391653ed752084e8f07ff">BTree&lt; T, M, BlockSize &gt;::BNode</a>
+, <a class="el" href="struct_id_index.html#a778a7b276e04fb77a956dfc7325f1098">IdIndex</a>
+, <a class="el" href="struct_title_index.html#a82848013a8515b75129251bfd489ac30">TitleIndex</a>
 </li>
 <li>operator&lt;()
-: <a class="el" href="struct_id_pointer.html#ac37a4b78700cccb3e36b911873e60b7b">IdPointer</a>
-, <a class="el" href="struct_title_pointer.html#ad2a2f792d19c7426fec2cd5e4ca7c52f">TitlePointer</a>
+: <a class="el" href="struct_id_index.html#aa6361d146ea5234a22639268b1878a65">IdIndex</a>
+, <a class="el" href="struct_title_index.html#a8523bfd840afaee5b12ee32d96a5ee71">TitleIndex</a>
+</li>
+<li>Order
+: <a class="el" href="class_b_tree.html#a21640c1085ee30ac291740ef13d66bd4">BTree&lt; T, M, BlockSize &gt;</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_p"></a>- p -</h3><ul>
 <li>padding
-: <a class="el" href="union_block.html#a67d1058b786a092ce513048600c6b9dd">Block&lt; T &gt;</a>
+: <a class="el" href="union_block.html#aca7a23265f96c6c1506429ea04a25ac5">Block&lt; T, BlockSize &gt;</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_r"></a>- r -</h3><ul>
 <li>readFromDisk()
-: <a class="el" href="class_b_tree.html#aa4744d293938bd1368e2f1221e85cf03">BTree&lt; TKey, M &gt;</a>
+: <a class="el" href="class_b_tree.html#adbf28ad7c2633b4a1d6570d8ef7ab212">BTree&lt; T, M, BlockSize &gt;</a>
 </li>
 <li>readHeader()
-: <a class="el" href="class_b_tree.html#a96a652ee2fe86c5de933590ecc1613c2">BTree&lt; TKey, M &gt;</a>
+: <a class="el" href="class_b_tree.html#a83557e0983fe2532cd6c97b2d65afedd">BTree&lt; T, M, BlockSize &gt;</a>
 </li>
 <li>resetStatistics()
-: <a class="el" href="class_b_tree.html#aa8e20ba0b14f93b20302fcb5bd4932dd">BTree&lt; TKey, M &gt;</a>
+: <a class="el" href="class_b_tree.html#a799522e099df354e9de84237f5a4ba58">BTree&lt; T, M, BlockSize &gt;</a>
 </li>
 <li>rightNode
-: <a class="el" href="struct_b_tree_1_1_overflow_result.html#a49c924a0543041577a16e0ae6a3729d6">BTree&lt; TKey, M &gt;::OverflowResult</a>
+: <a class="el" href="struct_b_tree_1_1_overflow_result.html#a26f7f0aeff21bbe6807c5f091e757510">BTree&lt; T, M, BlockSize &gt;::OverflowResult</a>
 </li>
 <li>rootAddress
-: <a class="el" href="struct_b_tree_1_1_file_header.html#a31311da126e8c4c24892bc94be578a0c">BTree&lt; TKey, M &gt;::FileHeader</a>
+: <a class="el" href="struct_b_tree_1_1_file_header.html#aa79683d285cbd1d0aabbf10b297da0c7">BTree&lt; T, M, BlockSize &gt;::FileHeader</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_s"></a>- s -</h3><ul>
 <li>seek()
-: <a class="el" href="struct_b_tree_1_1_b_node.html#a8f68bb4c490164e23dcf06e96483d0e1">BTree&lt; TKey, M &gt;::BNode</a>
-, <a class="el" href="class_b_tree.html#ac39de078a8dfb556c4f665c5791ba6ac">BTree&lt; TKey, M &gt;</a>
+: <a class="el" href="struct_b_tree_1_1_b_node.html#a9359c1223ce3d0788ae96adac2ab90f8">BTree&lt; T, M, BlockSize &gt;::BNode</a>
+, <a class="el" href="class_b_tree.html#ab354e77e1cec80cfff9178bd874435f1">BTree&lt; T, M, BlockSize &gt;</a>
+</li>
+<li>size
+: <a class="el" href="struct_b_tree_1_1_b_node.html#ac35203ce468d3fa79809398804a216fc">BTree&lt; T, M, BlockSize &gt;::BNode</a>
 </li>
 <li>snippet
 : <a class="el" href="struct_entry.html#a7ac60a5be36b28e48ac0efa4be08c7da">Entry</a>
@@ -274,7 +279,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <h3><a class="anchor" id="index_t"></a>- t -</h3><ul>
 <li>title
 : <a class="el" href="struct_entry.html#a26935b949c65094ed044b1d4cadb54aa">Entry</a>
-, <a class="el" href="struct_title_pointer.html#a14ee251cade63270a361efef543bc532">TitlePointer</a>
+, <a class="el" href="struct_title_index.html#a01fb5178d25a9b88aaf3feb59d0a017e">TitleIndex</a>
 </li>
 </ul>
 
@@ -290,18 +295,24 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>valid
 : <a class="el" href="struct_entry.html#a652816a5955ed5164038d32671c851b4">Entry</a>
 </li>
+<li>values
+: <a class="el" href="struct_b_tree_1_1_b_node.html#a969c8d44f40fae248bd80060293f2eb6">BTree&lt; T, M, BlockSize &gt;::BNode</a>
+</li>
+<li>ValueType
+: <a class="el" href="class_b_tree.html#ad8d543a1bc8fa6f931b69e9e4dce9375">BTree&lt; T, M, BlockSize &gt;</a>
+</li>
 <li>var
-: <a class="el" href="union_block.html#a9bdd35d4ccab80bfffe2172f3b9aa4b9">Block&lt; T &gt;</a>
+: <a class="el" href="union_block.html#a056938206fa7c3f4576c7331bf29d8c8">Block&lt; T, BlockSize &gt;</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_w"></a>- w -</h3><ul>
 <li>writeHeader()
-: <a class="el" href="class_b_tree.html#a373c36f654fa44f096324c677a8fd7ad">BTree&lt; TKey, M &gt;</a>
+: <a class="el" href="class_b_tree.html#a3b39b3d173ba3ae596b1fc68f2398da2">BTree&lt; T, M, BlockSize &gt;</a>
 </li>
 <li>writeToDisk()
-: <a class="el" href="class_b_tree.html#a9d70baf9a02151ed8a897eee0b2d9ed5">BTree&lt; TKey, M &gt;</a>
+: <a class="el" href="class_b_tree.html#a39540a7e17906e44d3eda3346818aabf">BTree&lt; T, M, BlockSize &gt;</a>
 </li>
 </ul>
 
@@ -315,7 +326,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <h3><a class="anchor" id="index_0x7e"></a>- ~ -</h3><ul>
 <li>~BTree()
-: <a class="el" href="class_b_tree.html#afbb2c2201c1c7b3ebf0719c21c3fc866">BTree&lt; TKey, M &gt;</a>
+: <a class="el" href="class_b_tree.html#a3b2060ffb0199fce8f7d32e7924af045">BTree&lt; T, M, BlockSize &gt;</a>
 </li>
 </ul>
 </div><!-- contents -->

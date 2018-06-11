@@ -25,7 +25,7 @@
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BTrees
    </div>
-   <div id="projectbrief">B-Tree implementation in C++ to index documents based on numerical id&#39;s and title strings.</div>
+   <div id="projectbrief">B-tree implementation in C++ to index documents based on numerical id&#39;s and title strings.</div>
   </td>
  </tr>
  </tbody>
@@ -106,7 +106,7 @@ Include dependency graph for main.cpp:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a> (int argc, char **argv)</td></tr>
-<tr class="memdesc:a3c04138a5bfe5d72780bb7e82a18e627"><td class="mdescLeft">&#160;</td><td class="mdescRight">Entrada main do programa.  <a href="#a3c04138a5bfe5d72780bb7e82a18e627">More...</a><br /></td></tr>
+<tr class="memdesc:a3c04138a5bfe5d72780bb7e82a18e627"><td class="mdescLeft">&#160;</td><td class="mdescRight">Program main.  <a href="#a3c04138a5bfe5d72780bb7e82a18e627">More...</a><br /></td></tr>
 <tr class="separator:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
@@ -134,20 +134,17 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Entrada main do programa. </p>
-<p>O procedimento main representa um programa que simplesmente recebe argumentos e chama as funções apropriadas para lidar com eles.</p>
-<p>Sintaxe do uso:</p>
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;$ &lt;nome-do-executavel&gt; upload &lt;caminho-do-arquivo : string&gt;</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;$ &lt;nome-do-executavel&gt; findrec &lt;id : inteiro&gt;</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;$ &lt;nome-do-executavel&gt; seek1 &lt;id : inteiro&gt;</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;$ &lt;nome-do-executavel&gt; seek2 &lt;titulo : string&gt;</div></div><!-- fragment --><p>Detalhe importante sobre o comando <code>upload</code> e seu argumento <code>caminho-do-arquivo</code>: o caminho do arquivo a subir precisa estar no formato CSV com as colunas pré-definidas de cada registro (seguindo o formato da estrutura <a class="el" href="struct_entry.html" title="Registro básico do arquivo. ">Entry</a>, salvo o campo <code>valid</code> dela). Qualquer outro formato resultará em comportamento indefinido do programa.</p>
-<p>Detalhe importante sobre o comando <code>seek2</code> e seu argumento <code>titulo</code>: <code>titulo</code> não é uma string entre aspas (<code>"</code>). Se um título possuir espaços, espaços devem ser fornecidos com a contrabarra.</p>
-<p>Exemplo:</p>
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;$ bd seek2 Título\ com\ espaços</div></div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
+<p>Program main. </p>
+<p>Receives arguments and calls the appropriate functions for the task.</p>
+<p>Remember to <code>upload</code> first before using the other commands.</p>
+<p>Program usage:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;$ &lt;exec-name&gt; upload &lt;input-file : string&gt;</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;$ &lt;exec-name&gt; findrec &lt;id : int&gt;</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;$ &lt;exec-name&gt; seek1 &lt;id : int&gt;</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;$ &lt;exec-name&gt; seek2 &lt;title : string&gt;</div></div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">argc</td><td>Quantidade de argumentos. </td></tr>
-    <tr><td class="paramname">argv</td><td>Valores em string dos argumentos.</td></tr>
+    <tr><td class="paramname">argc</td><td>Argument count </td></tr>
+    <tr><td class="paramname">argv</td><td>Argument values </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section author"><dt>Author</dt><dd>Timóteo Fonseca </dd></dl>
 
 </div>
 </div>

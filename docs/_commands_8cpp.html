@@ -25,7 +25,7 @@
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BTrees
    </div>
-   <div id="projectbrief">B-Tree implementation in C++ to index documents based on numerical id&#39;s and title strings.</div>
+   <div id="projectbrief">B-tree implementation in C++ to index documents based on numerical id&#39;s and title strings.</div>
   </td>
  </tr>
  </tbody>
@@ -95,130 +95,120 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="_commands_8hpp_source.html">Commands.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_block_8hpp_source.html">Block.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_b_tree_8hpp_source.html">BTree.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_entry_8hpp_source.html">Entry.hpp</a>&quot;</code><br />
-<code>#include &lt;cstdio&gt;</code><br />
 <code>#include &lt;cstring&gt;</code><br />
 <code>#include &lt;iostream&gt;</code><br />
+<code>#include &quot;<a class="el" href="_ideal_b_tree_8hpp_source.html">IdealBTree.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_entry_8hpp_source.html">Entry.hpp</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for Commands.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="_commands_8cpp__incl.png" border="0" usemap="#src_2_commands_8cpp" alt=""/></div>
 <map name="src_2_commands_8cpp" id="src_2_commands_8cpp">
 <area shape="rect" id="node2" href="_commands_8hpp.html" title="Commands.hpp" alt="" coords="5,80,120,107"/>
-<area shape="rect" id="node3" href="_block_8hpp.html" title="Block.hpp" alt="" coords="251,229,331,256"/>
-<area shape="rect" id="node4" href="_b_tree_8hpp.html" title="BTree.hpp" alt="" coords="249,80,332,107"/>
-<area shape="rect" id="node9" href="_entry_8hpp.html" title="Entry.hpp" alt="" coords="357,80,435,107"/>
-<area shape="rect" id="node7" href="_b_tree_8inl.html" title="BTree.inl" alt="" coords="421,155,496,181"/>
+<area shape="rect" id="node5" href="_ideal_b_tree_8hpp.html" title="IdealBTree.hpp" alt="" coords="326,80,437,107"/>
+<area shape="rect" id="node12" href="_entry_8hpp.html" title="Entry.hpp" alt="" coords="461,80,539,107"/>
+<area shape="rect" id="node6" href="_b_tree_8hpp.html" title="BTree.hpp" alt="" coords="340,155,423,181"/>
+<area shape="rect" id="node9" href="_block_8hpp.html" title="Block.hpp" alt="" coords="391,229,471,256"/>
+<area shape="rect" id="node10" href="_b_tree_8inl.html" title="BTree.inl" alt="" coords="495,229,569,256"/>
 </map>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_id_pointer.html">IdPointer</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Struct auxiliar para guardar os índices primários.  <a href="struct_id_pointer.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_id_index.html">IdIndex</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper struct to store primary indexes.  <a href="struct_id_index.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_title_pointer.html">TitlePointer</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Struct auxiliar para guardar os índices secundários.  <a href="struct_title_pointer.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_title_index.html">TitleIndex</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper struct to store secondary indexes.  <a href="struct_title_index.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hashfile_header.html">HashfileHeader</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Struct do cabeçalho do arquivo de hashing.  <a href="struct_hashfile_header.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Header data for the hashfile.  <a href="struct_hashfile_header.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a70535ccc618237a0c7fce8317c55628e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_commands_8cpp.html#a70535ccc618237a0c7fce8317c55628e">FILEPATH</a>&#160;&#160;&#160;&quot;./&quot;</td></tr>
-<tr class="memdesc:a70535ccc618237a0c7fce8317c55628e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Caminho do local onde os arquivos do banco de dados serão criados.  <a href="#a70535ccc618237a0c7fce8317c55628e">More...</a><br /></td></tr>
-<tr class="separator:a70535ccc618237a0c7fce8317c55628e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77988da40e9a35da51ea0e8943ebbd4a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_commands_8cpp.html#a77988da40e9a35da51ea0e8943ebbd4a">ROOT</a>&#160;&#160;&#160;&quot;./&quot;</td></tr>
+<tr class="memdesc:a77988da40e9a35da51ea0e8943ebbd4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">File path to the folder where database files will be created.  <a href="#a77988da40e9a35da51ea0e8943ebbd4a">More...</a><br /></td></tr>
+<tr class="separator:a77988da40e9a35da51ea0e8943ebbd4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a030abb644c76a5ccc3ac67269fd89290"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_commands_8cpp.html#a030abb644c76a5ccc3ac67269fd89290">ID_TREE_FILENAME</a>&#160;&#160;&#160;&quot;bd-idtree.bin&quot;</td></tr>
-<tr class="memdesc:a030abb644c76a5ccc3ac67269fd89290"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nome do arquivo que guardará os índices do arquivo de índice primário.  <a href="#a030abb644c76a5ccc3ac67269fd89290">More...</a><br /></td></tr>
+<tr class="memdesc:a030abb644c76a5ccc3ac67269fd89290"><td class="mdescLeft">&#160;</td><td class="mdescRight">Primary index data filename.  <a href="#a030abb644c76a5ccc3ac67269fd89290">More...</a><br /></td></tr>
 <tr class="separator:a030abb644c76a5ccc3ac67269fd89290"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad74aa5691bd23a429f51e7b629c24c78"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_commands_8cpp.html#ad74aa5691bd23a429f51e7b629c24c78">ID_TREE_FILEPATH</a>&#160;&#160;&#160;<a class="el" href="_commands_8cpp.html#a70535ccc618237a0c7fce8317c55628e">FILEPATH</a> <a class="el" href="_commands_8cpp.html#a030abb644c76a5ccc3ac67269fd89290">ID_TREE_FILENAME</a></td></tr>
-<tr class="memdesc:ad74aa5691bd23a429f51e7b629c24c78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Caminho completo pro arquivo que guardará os índices do arquivo de índice primário.  <a href="#ad74aa5691bd23a429f51e7b629c24c78">More...</a><br /></td></tr>
+<tr class="memitem:ad74aa5691bd23a429f51e7b629c24c78"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_commands_8cpp.html#ad74aa5691bd23a429f51e7b629c24c78">ID_TREE_FILEPATH</a>&#160;&#160;&#160;<a class="el" href="_commands_8cpp.html#a77988da40e9a35da51ea0e8943ebbd4a">ROOT</a> <a class="el" href="_commands_8cpp.html#a030abb644c76a5ccc3ac67269fd89290">ID_TREE_FILENAME</a></td></tr>
+<tr class="memdesc:ad74aa5691bd23a429f51e7b629c24c78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Full filepath to the primary index file.  <a href="#ad74aa5691bd23a429f51e7b629c24c78">More...</a><br /></td></tr>
 <tr class="separator:ad74aa5691bd23a429f51e7b629c24c78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a62caa4daa5d0e0a0b7ba6d435507da5d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_commands_8cpp.html#a62caa4daa5d0e0a0b7ba6d435507da5d">TITLE_TREE_FILENAME</a>&#160;&#160;&#160;&quot;bd-titletree.bin&quot;</td></tr>
-<tr class="memdesc:a62caa4daa5d0e0a0b7ba6d435507da5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nome do arquivo que guardará os índices do arquivo de índice secundário.  <a href="#a62caa4daa5d0e0a0b7ba6d435507da5d">More...</a><br /></td></tr>
+<tr class="memdesc:a62caa4daa5d0e0a0b7ba6d435507da5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Secondary index data filename.  <a href="#a62caa4daa5d0e0a0b7ba6d435507da5d">More...</a><br /></td></tr>
 <tr class="separator:a62caa4daa5d0e0a0b7ba6d435507da5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4cda967ab7c0939483b2314111fa3731"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_commands_8cpp.html#a4cda967ab7c0939483b2314111fa3731">TITLE_TREE_FILEPATH</a>&#160;&#160;&#160;<a class="el" href="_commands_8cpp.html#a70535ccc618237a0c7fce8317c55628e">FILEPATH</a> <a class="el" href="_commands_8cpp.html#a62caa4daa5d0e0a0b7ba6d435507da5d">TITLE_TREE_FILENAME</a></td></tr>
-<tr class="memdesc:a4cda967ab7c0939483b2314111fa3731"><td class="mdescLeft">&#160;</td><td class="mdescRight">Caminho completo pro arquivo que guardará os índices do arquivo de índice secundário.  <a href="#a4cda967ab7c0939483b2314111fa3731">More...</a><br /></td></tr>
+<tr class="memitem:a4cda967ab7c0939483b2314111fa3731"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_commands_8cpp.html#a4cda967ab7c0939483b2314111fa3731">TITLE_TREE_FILEPATH</a>&#160;&#160;&#160;<a class="el" href="_commands_8cpp.html#a77988da40e9a35da51ea0e8943ebbd4a">ROOT</a> <a class="el" href="_commands_8cpp.html#a62caa4daa5d0e0a0b7ba6d435507da5d">TITLE_TREE_FILENAME</a></td></tr>
+<tr class="memdesc:a4cda967ab7c0939483b2314111fa3731"><td class="mdescLeft">&#160;</td><td class="mdescRight">Full filepath to the secondary index file.  <a href="#a4cda967ab7c0939483b2314111fa3731">More...</a><br /></td></tr>
 <tr class="separator:a4cda967ab7c0939483b2314111fa3731"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a538d8295e3aa0ab7c6219633ff6ffdba"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_commands_8cpp.html#a538d8295e3aa0ab7c6219633ff6ffdba">HASHFILE_FILENAME</a>&#160;&#160;&#160;&quot;bd-hashfile.bin&quot;</td></tr>
-<tr class="memdesc:a538d8295e3aa0ab7c6219633ff6ffdba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nome do arquivo de hashing que guardará os registros.  <a href="#a538d8295e3aa0ab7c6219633ff6ffdba">More...</a><br /></td></tr>
+<tr class="memdesc:a538d8295e3aa0ab7c6219633ff6ffdba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hashing file filename.  <a href="#a538d8295e3aa0ab7c6219633ff6ffdba">More...</a><br /></td></tr>
 <tr class="separator:a538d8295e3aa0ab7c6219633ff6ffdba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00b032dcc1b72c3deaf8029036788809"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_commands_8cpp.html#a00b032dcc1b72c3deaf8029036788809">HASHFILE_FILEPATH</a>&#160;&#160;&#160;<a class="el" href="_commands_8cpp.html#a70535ccc618237a0c7fce8317c55628e">FILEPATH</a> <a class="el" href="_commands_8cpp.html#a538d8295e3aa0ab7c6219633ff6ffdba">HASHFILE_FILENAME</a></td></tr>
-<tr class="memdesc:a00b032dcc1b72c3deaf8029036788809"><td class="mdescLeft">&#160;</td><td class="mdescRight">Caminho completo pro arquivo de hashing.  <a href="#a00b032dcc1b72c3deaf8029036788809">More...</a><br /></td></tr>
+<tr class="memitem:a00b032dcc1b72c3deaf8029036788809"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_commands_8cpp.html#a00b032dcc1b72c3deaf8029036788809">HASHFILE_FILEPATH</a>&#160;&#160;&#160;<a class="el" href="_commands_8cpp.html#a77988da40e9a35da51ea0e8943ebbd4a">ROOT</a> <a class="el" href="_commands_8cpp.html#a538d8295e3aa0ab7c6219633ff6ffdba">HASHFILE_FILENAME</a></td></tr>
+<tr class="memdesc:a00b032dcc1b72c3deaf8029036788809"><td class="mdescLeft">&#160;</td><td class="mdescRight">Full filepath to the hashing file.  <a href="#a00b032dcc1b72c3deaf8029036788809">More...</a><br /></td></tr>
 <tr class="separator:a00b032dcc1b72c3deaf8029036788809"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a76d03763b4acc5d33fee808c7b9be2cf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_commands_8cpp.html#a76d03763b4acc5d33fee808c7b9be2cf">BTREE_ORDER</a>(T_SIZE)&#160;&#160;&#160;((<a class="el" href="_block_8hpp.html#ad51ded0bbd705f02f73fc60c0b721ced">BLOCK_SIZE</a> - 3 * sizeof(long) - sizeof(bool) + sizeof(int) - (T_SIZE)) / (2 * ((T_SIZE) + sizeof(long))))</td></tr>
-<tr class="memdesc:a76d03763b4acc5d33fee808c7b9be2cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro para definição da ordem máxima do nó de um <a class="el" href="class_b_tree.html" title="Classe de árvore B. ">BTree</a>, baseado no tipo de dados que ele guardará.  <a href="#a76d03763b4acc5d33fee808c7b9be2cf">More...</a><br /></td></tr>
-<tr class="separator:a76d03763b4acc5d33fee808c7b9be2cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0bce3c4f019c8b1e51eff533df71a88c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_commands_8cpp.html#a0bce3c4f019c8b1e51eff533df71a88c">ID_ORDER</a>&#160;&#160;&#160;<a class="el" href="_commands_8cpp.html#a76d03763b4acc5d33fee808c7b9be2cf">BTREE_ORDER</a>(sizeof(int))</td></tr>
-<tr class="memdesc:a0bce3c4f019c8b1e51eff533df71a88c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro com a ordem máxima que um nó de id's pode ter sem ultrapassar o tamanho do bloco.  <a href="#a0bce3c4f019c8b1e51eff533df71a88c">More...</a><br /></td></tr>
-<tr class="separator:a0bce3c4f019c8b1e51eff533df71a88c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad0926834999cddbc754bcac04cadacd8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_commands_8cpp.html#ad0926834999cddbc754bcac04cadacd8">TITLE_ORDER</a>&#160;&#160;&#160;<a class="el" href="_commands_8cpp.html#a76d03763b4acc5d33fee808c7b9be2cf">BTREE_ORDER</a>(sizeof(char) * <a class="el" href="_entry_8hpp.html#a7af6eeb437a5354124968dae124ad5e3">TITLE_CHAR_MAX</a>)</td></tr>
-<tr class="memdesc:ad0926834999cddbc754bcac04cadacd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro com a ordem máxima que um nó de títulos pode ter sem ultrapassar o tamanho do bloco.  <a href="#ad0926834999cddbc754bcac04cadacd8">More...</a><br /></td></tr>
-<tr class="separator:ad0926834999cddbc754bcac04cadacd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f95aadcc6b0ff612dd228446018a928"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_commands_8cpp.html#a3f95aadcc6b0ff612dd228446018a928">HASHFILE_BLOCK_SIZE</a>&#160;&#160;&#160;<a class="el" href="_block_8hpp.html#ad51ded0bbd705f02f73fc60c0b721ced">BLOCK_SIZE</a></td></tr>
+<tr class="memdesc:a3f95aadcc6b0ff612dd228446018a928"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="union_block.html" title="Union for reading and writing blocks containing serialized data. ">Block</a> size in bytes to be used in the hashing file.  <a href="#a3f95aadcc6b0ff612dd228446018a928">More...</a><br /></td></tr>
+<tr class="separator:a3f95aadcc6b0ff612dd228446018a928"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf3cbe3cd1916b901498eafd88f37552"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_commands_8cpp.html#acf3cbe3cd1916b901498eafd88f37552">PATIENCE_STEP</a>&#160;&#160;&#160;10000</td></tr>
+<tr class="memdesc:acf3cbe3cd1916b901498eafd88f37552"><td class="mdescLeft">&#160;</td><td class="mdescRight">Show how many entries have already been read and indexed every once in a while.  <a href="#acf3cbe3cd1916b901498eafd88f37552">More...</a><br /></td></tr>
+<tr class="separator:acf3cbe3cd1916b901498eafd88f37552"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:addd9ea82fa14ac70d664c1425a2b9239"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="class_b_tree.html">BTree</a>&lt; <a class="el" href="struct_id_pointer.html">IdPointer</a>, <a class="el" href="_commands_8cpp.html#a0bce3c4f019c8b1e51eff533df71a88c">ID_ORDER</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_commands_8cpp.html#addd9ea82fa14ac70d664c1425a2b9239">IdBTree</a></td></tr>
-<tr class="memdesc:addd9ea82fa14ac70d664c1425a2b9239"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typedef de uma árvore B para índices.  <a href="#addd9ea82fa14ac70d664c1425a2b9239">More...</a><br /></td></tr>
-<tr class="separator:addd9ea82fa14ac70d664c1425a2b9239"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a46fc1b0270ddec755583ac61f7e847e7"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="class_b_tree.html">BTree</a>&lt; <a class="el" href="struct_title_pointer.html">TitlePointer</a>, <a class="el" href="_commands_8cpp.html#ad0926834999cddbc754bcac04cadacd8">TITLE_ORDER</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_commands_8cpp.html#a46fc1b0270ddec755583ac61f7e847e7">TitleBTree</a></td></tr>
-<tr class="memdesc:a46fc1b0270ddec755583ac61f7e847e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typedef de uma árvore B para títulos.  <a href="#a46fc1b0270ddec755583ac61f7e847e7">More...</a><br /></td></tr>
-<tr class="separator:a46fc1b0270ddec755583ac61f7e847e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae197a0a68a01aceae1c879f2d5ce126"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="_ideal_b_tree_8hpp.html#a72279196842ef7757d016d7ce393b0bc">IdealBTree</a>&lt; <a class="el" href="struct_id_index.html">IdIndex</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_commands_8cpp.html#aae197a0a68a01aceae1c879f2d5ce126">IdBTree</a></td></tr>
+<tr class="memdesc:aae197a0a68a01aceae1c879f2d5ce126"><td class="mdescLeft">&#160;</td><td class="mdescRight">Primary index B-tree.  <a href="#aae197a0a68a01aceae1c879f2d5ce126">More...</a><br /></td></tr>
+<tr class="separator:aae197a0a68a01aceae1c879f2d5ce126"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2416696fa2a5e9f2e4431a372f61c00"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="_ideal_b_tree_8hpp.html#a72279196842ef7757d016d7ce393b0bc">IdealBTree</a>&lt; <a class="el" href="struct_title_index.html">TitleIndex</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_commands_8cpp.html#ad2416696fa2a5e9f2e4431a372f61c00">TitleBTree</a></td></tr>
+<tr class="memdesc:ad2416696fa2a5e9f2e4431a372f61c00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Secondary index B-tree.  <a href="#ad2416696fa2a5e9f2e4431a372f61c00">More...</a><br /></td></tr>
+<tr class="separator:ad2416696fa2a5e9f2e4431a372f61c00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a746c52531cafe5d982fc6ba9592df651"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="union_block.html">Block</a>&lt; <a class="el" href="struct_hashfile_header.html">HashfileHeader</a>, <a class="el" href="_commands_8cpp.html#a3f95aadcc6b0ff612dd228446018a928">HASHFILE_BLOCK_SIZE</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_commands_8cpp.html#a746c52531cafe5d982fc6ba9592df651">HashfileHeaderBlock</a></td></tr>
+<tr class="memdesc:a746c52531cafe5d982fc6ba9592df651"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="struct_hashfile_header.html" title="Header data for the hashfile. ">HashfileHeader</a> block.  <a href="#a746c52531cafe5d982fc6ba9592df651">More...</a><br /></td></tr>
+<tr class="separator:a746c52531cafe5d982fc6ba9592df651"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0a64a1d5fcef5df2d919c718f61dbb4"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="union_block.html">Block</a>&lt; <a class="el" href="struct_entry.html">Entry</a>, <a class="el" href="_commands_8cpp.html#a3f95aadcc6b0ff612dd228446018a928">HASHFILE_BLOCK_SIZE</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_commands_8cpp.html#ad0a64a1d5fcef5df2d919c718f61dbb4">EntryBlock</a></td></tr>
+<tr class="memdesc:ad0a64a1d5fcef5df2d919c718f61dbb4"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="struct_entry.html" title="Article entry. ">Entry</a> block.  <a href="#ad0a64a1d5fcef5df2d919c718f61dbb4">More...</a><br /></td></tr>
+<tr class="separator:ad0a64a1d5fcef5df2d919c718f61dbb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a12ed0bdc13be66313b2acbefbadb1ff7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_commands_8cpp.html#a12ed0bdc13be66313b2acbefbadb1ff7">operator&lt;</a> (const <a class="el" href="struct_id_index.html">IdIndex</a> &amp;index, int i)</td></tr>
+<tr class="memdesc:a12ed0bdc13be66313b2acbefbadb1ff7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Less-than comparator between <a class="el" href="struct_id_index.html#a7dc366242281eff963f4016954b8a2ce" title="Entry id. ">IdIndex::id</a> and int.  <a href="#a12ed0bdc13be66313b2acbefbadb1ff7">More...</a><br /></td></tr>
+<tr class="separator:a12ed0bdc13be66313b2acbefbadb1ff7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae03bfea933d8efed5c160274aaa3488c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_commands_8cpp.html#ae03bfea933d8efed5c160274aaa3488c">operator&lt;</a> (int i, const <a class="el" href="struct_id_index.html">IdIndex</a> &amp;index)</td></tr>
+<tr class="memdesc:ae03bfea933d8efed5c160274aaa3488c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Less-than comparator between int and <a class="el" href="struct_id_index.html#a7dc366242281eff963f4016954b8a2ce" title="Entry id. ">IdIndex::id</a>.  <a href="#ae03bfea933d8efed5c160274aaa3488c">More...</a><br /></td></tr>
+<tr class="separator:ae03bfea933d8efed5c160274aaa3488c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb435aea98f70c382bb1f5553ce8d344"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_commands_8cpp.html#abb435aea98f70c382bb1f5553ce8d344">operator&lt;</a> (const <a class="el" href="struct_title_index.html">TitleIndex</a> &amp;index, const char *title)</td></tr>
+<tr class="memdesc:abb435aea98f70c382bb1f5553ce8d344"><td class="mdescLeft">&#160;</td><td class="mdescRight">Less-than comparator between <a class="el" href="struct_title_index.html#a01fb5178d25a9b88aaf3feb59d0a017e" title="Entry title. ">TitleIndex::title</a> and string.  <a href="#abb435aea98f70c382bb1f5553ce8d344">More...</a><br /></td></tr>
+<tr class="separator:abb435aea98f70c382bb1f5553ce8d344"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab12d423b803e029ac156ccdfcc610a20"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_commands_8cpp.html#ab12d423b803e029ac156ccdfcc610a20">operator&lt;</a> (const char *title, const <a class="el" href="struct_title_index.html">TitleIndex</a> &amp;index)</td></tr>
+<tr class="memdesc:ab12d423b803e029ac156ccdfcc610a20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Less-than comparator between string and <a class="el" href="struct_title_index.html#a01fb5178d25a9b88aaf3feb59d0a017e" title="Entry title. ">TitleIndex::title</a>.  <a href="#ab12d423b803e029ac156ccdfcc610a20">More...</a><br /></td></tr>
+<tr class="separator:ab12d423b803e029ac156ccdfcc610a20"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5ce6e0677bf7e74965349db42757f017"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_commands_8cpp.html#a5ce6e0677bf7e74965349db42757f017">upload</a> (const char *filePath)</td></tr>
-<tr class="memdesc:a5ce6e0677bf7e74965349db42757f017"><td class="mdescLeft">&#160;</td><td class="mdescRight">Recebe um arquivo CSV e cria uma base de dados baseado nele.  <a href="#a5ce6e0677bf7e74965349db42757f017">More...</a><br /></td></tr>
+<tr class="memdesc:a5ce6e0677bf7e74965349db42757f017"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives a CSV file and creates a database based on its contents.  <a href="#a5ce6e0677bf7e74965349db42757f017">More...</a><br /></td></tr>
 <tr class="separator:a5ce6e0677bf7e74965349db42757f017"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab4c930d120953d492ab0d53475518e3f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_commands_8cpp.html#ab4c930d120953d492ab0d53475518e3f">findrec</a> (long id)</td></tr>
-<tr class="memdesc:ab4c930d120953d492ab0d53475518e3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Busca no arquivo de hashing um registro a partir de seu ID.  <a href="#ab4c930d120953d492ab0d53475518e3f">More...</a><br /></td></tr>
+<tr class="memdesc:ab4c930d120953d492ab0d53475518e3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds an entry in the hashfile based on the entry's id.  <a href="#ab4c930d120953d492ab0d53475518e3f">More...</a><br /></td></tr>
 <tr class="separator:ab4c930d120953d492ab0d53475518e3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a09d19045f707f9fdb883abe7755f721b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_commands_8cpp.html#a09d19045f707f9fdb883abe7755f721b">seek1</a> (long id)</td></tr>
-<tr class="memdesc:a09d19045f707f9fdb883abe7755f721b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Busca um registro a partir de seu ID usando o arquivo de índices primário.  <a href="#a09d19045f707f9fdb883abe7755f721b">More...</a><br /></td></tr>
+<tr class="memdesc:a09d19045f707f9fdb883abe7755f721b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Seeks an entry by its id using the primary index.  <a href="#a09d19045f707f9fdb883abe7755f721b">More...</a><br /></td></tr>
 <tr class="separator:a09d19045f707f9fdb883abe7755f721b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a590613fba2ff7979a3d35ddf4de00b38"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_commands_8cpp.html#a590613fba2ff7979a3d35ddf4de00b38">seek2</a> (const char *title)</td></tr>
-<tr class="memdesc:a590613fba2ff7979a3d35ddf4de00b38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Busca um registro a partir de seu título usando o arquivo de índices secundário.  <a href="#a590613fba2ff7979a3d35ddf4de00b38">More...</a><br /></td></tr>
+<tr class="memdesc:a590613fba2ff7979a3d35ddf4de00b38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Seeks an entry by its title using the secondary index.  <a href="#a590613fba2ff7979a3d35ddf4de00b38">More...</a><br /></td></tr>
 <tr class="separator:a590613fba2ff7979a3d35ddf4de00b38"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="a76d03763b4acc5d33fee808c7b9be2cf"></a>
+<a class="anchor" id="a3f95aadcc6b0ff612dd228446018a928"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BTREE_ORDER</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">T_SIZE</td><td>)</td>
-          <td>&#160;&#160;&#160;((<a class="el" href="_block_8hpp.html#ad51ded0bbd705f02f73fc60c0b721ced">BLOCK_SIZE</a> - 3 * sizeof(long) - sizeof(bool) + sizeof(int) - (T_SIZE)) / (2 * ((T_SIZE) + sizeof(long))))</td>
+          <td class="memname">#define HASHFILE_BLOCK_SIZE&#160;&#160;&#160;<a class="el" href="_block_8hpp.html#ad51ded0bbd705f02f73fc60c0b721ced">BLOCK_SIZE</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Macro para definição da ordem máxima do nó de um <a class="el" href="class_b_tree.html" title="Classe de árvore B. ">BTree</a>, baseado no tipo de dados que ele guardará. </p>
-<p>O cálculo é feito a partir do tamanho de BLOCK_SIZE e determina a ordem máxima que o nó pode ter sem ultrapassar o tamanho do bloco, considerando que ele estará guardando dados de um tipo cujo tamanho em bytes é T_SIZE.</p>
-<p>A fórmula do macro foi obtido a partir desta fórmula inicial:</p>
-<p><code>BLOCK_SIZE = sizeof(long) + sizeof(bool) + sizeof(int) + (2 * M + 1) * sizeof(T) + (2 * M + 2) * sizeof(long)</code></p>
-<p>Ele é baseado nos campos padrões da estrutura BNode, interna à classe <a class="el" href="class_b_tree.html" title="Classe de árvore B. ">BTree</a>. </p>
-
-</div>
-</div>
-<a class="anchor" id="a70535ccc618237a0c7fce8317c55628e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FILEPATH&#160;&#160;&#160;&quot;./&quot;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Caminho do local onde os arquivos do banco de dados serão criados. </p>
-<p>Este é um define auxiliar que é usado apenas na definição de outros defines.</p>
-<p>Por padrão, os arquivos serã criados na mesma pasta que o executável. </p>
+<p><a class="el" href="union_block.html" title="Union for reading and writing blocks containing serialized data. ">Block</a> size in bytes to be used in the hashing file. </p>
 
 </div>
 </div>
@@ -232,7 +222,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Nome do arquivo de hashing que guardará os registros. </p>
+<p>Hashing file filename. </p>
 
 </div>
 </div>
@@ -241,26 +231,12 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define HASHFILE_FILEPATH&#160;&#160;&#160;<a class="el" href="_commands_8cpp.html#a70535ccc618237a0c7fce8317c55628e">FILEPATH</a> <a class="el" href="_commands_8cpp.html#a538d8295e3aa0ab7c6219633ff6ffdba">HASHFILE_FILENAME</a></td>
+          <td class="memname">#define HASHFILE_FILEPATH&#160;&#160;&#160;<a class="el" href="_commands_8cpp.html#a77988da40e9a35da51ea0e8943ebbd4a">ROOT</a> <a class="el" href="_commands_8cpp.html#a538d8295e3aa0ab7c6219633ff6ffdba">HASHFILE_FILENAME</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Caminho completo pro arquivo de hashing. </p>
-
-</div>
-</div>
-<a class="anchor" id="a0bce3c4f019c8b1e51eff533df71a88c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ID_ORDER&#160;&#160;&#160;<a class="el" href="_commands_8cpp.html#a76d03763b4acc5d33fee808c7b9be2cf">BTREE_ORDER</a>(sizeof(int))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Macro com a ordem máxima que um nó de id's pode ter sem ultrapassar o tamanho do bloco. </p>
+<p>Full filepath to the hashing file. </p>
 
 </div>
 </div>
@@ -274,7 +250,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Nome do arquivo que guardará os índices do arquivo de índice primário. </p>
+<p>Primary index data filename. </p>
 
 </div>
 </div>
@@ -283,26 +259,40 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ID_TREE_FILEPATH&#160;&#160;&#160;<a class="el" href="_commands_8cpp.html#a70535ccc618237a0c7fce8317c55628e">FILEPATH</a> <a class="el" href="_commands_8cpp.html#a030abb644c76a5ccc3ac67269fd89290">ID_TREE_FILENAME</a></td>
+          <td class="memname">#define ID_TREE_FILEPATH&#160;&#160;&#160;<a class="el" href="_commands_8cpp.html#a77988da40e9a35da51ea0e8943ebbd4a">ROOT</a> <a class="el" href="_commands_8cpp.html#a030abb644c76a5ccc3ac67269fd89290">ID_TREE_FILENAME</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Caminho completo pro arquivo que guardará os índices do arquivo de índice primário. </p>
+<p>Full filepath to the primary index file. </p>
 
 </div>
 </div>
-<a class="anchor" id="ad0926834999cddbc754bcac04cadacd8"></a>
+<a class="anchor" id="acf3cbe3cd1916b901498eafd88f37552"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define TITLE_ORDER&#160;&#160;&#160;<a class="el" href="_commands_8cpp.html#a76d03763b4acc5d33fee808c7b9be2cf">BTREE_ORDER</a>(sizeof(char) * <a class="el" href="_entry_8hpp.html#a7af6eeb437a5354124968dae124ad5e3">TITLE_CHAR_MAX</a>)</td>
+          <td class="memname">#define PATIENCE_STEP&#160;&#160;&#160;10000</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Macro com a ordem máxima que um nó de títulos pode ter sem ultrapassar o tamanho do bloco. </p>
+<p>Show how many entries have already been read and indexed every once in a while. </p>
+
+</div>
+</div>
+<a class="anchor" id="a77988da40e9a35da51ea0e8943ebbd4a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ROOT&#160;&#160;&#160;&quot;./&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>File path to the folder where database files will be created. </p>
 
 </div>
 </div>
@@ -316,7 +306,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Nome do arquivo que guardará os índices do arquivo de índice secundário. </p>
+<p>Secondary index data filename. </p>
 
 </div>
 </div>
@@ -325,41 +315,69 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define TITLE_TREE_FILEPATH&#160;&#160;&#160;<a class="el" href="_commands_8cpp.html#a70535ccc618237a0c7fce8317c55628e">FILEPATH</a> <a class="el" href="_commands_8cpp.html#a62caa4daa5d0e0a0b7ba6d435507da5d">TITLE_TREE_FILENAME</a></td>
+          <td class="memname">#define TITLE_TREE_FILEPATH&#160;&#160;&#160;<a class="el" href="_commands_8cpp.html#a77988da40e9a35da51ea0e8943ebbd4a">ROOT</a> <a class="el" href="_commands_8cpp.html#a62caa4daa5d0e0a0b7ba6d435507da5d">TITLE_TREE_FILENAME</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Caminho completo pro arquivo que guardará os índices do arquivo de índice secundário. </p>
+<p>Full filepath to the secondary index file. </p>
 
 </div>
 </div>
 <h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="addd9ea82fa14ac70d664c1425a2b9239"></a>
+<a class="anchor" id="ad0a64a1d5fcef5df2d919c718f61dbb4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef <a class="el" href="class_b_tree.html">BTree</a>&lt;<a class="el" href="struct_id_pointer.html">IdPointer</a>, <a class="el" href="_commands_8cpp.html#a0bce3c4f019c8b1e51eff533df71a88c">ID_ORDER</a>&gt; <a class="el" href="_commands_8cpp.html#addd9ea82fa14ac70d664c1425a2b9239">IdBTree</a></td>
+          <td class="memname">typedef <a class="el" href="union_block.html">Block</a>&lt;<a class="el" href="struct_entry.html">Entry</a>, <a class="el" href="_commands_8cpp.html#a3f95aadcc6b0ff612dd228446018a928">HASHFILE_BLOCK_SIZE</a>&gt; <a class="el" href="_commands_8cpp.html#ad0a64a1d5fcef5df2d919c718f61dbb4">EntryBlock</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Typedef de uma árvore B para índices. </p>
+<p><a class="el" href="struct_entry.html" title="Article entry. ">Entry</a> block. </p>
 
 </div>
 </div>
-<a class="anchor" id="a46fc1b0270ddec755583ac61f7e847e7"></a>
+<a class="anchor" id="a746c52531cafe5d982fc6ba9592df651"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef <a class="el" href="class_b_tree.html">BTree</a>&lt;<a class="el" href="struct_title_pointer.html">TitlePointer</a>, <a class="el" href="_commands_8cpp.html#ad0926834999cddbc754bcac04cadacd8">TITLE_ORDER</a>&gt; <a class="el" href="_commands_8cpp.html#a46fc1b0270ddec755583ac61f7e847e7">TitleBTree</a></td>
+          <td class="memname">typedef <a class="el" href="union_block.html">Block</a>&lt;<a class="el" href="struct_hashfile_header.html">HashfileHeader</a>, <a class="el" href="_commands_8cpp.html#a3f95aadcc6b0ff612dd228446018a928">HASHFILE_BLOCK_SIZE</a>&gt; <a class="el" href="_commands_8cpp.html#a746c52531cafe5d982fc6ba9592df651">HashfileHeaderBlock</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Typedef de uma árvore B para títulos. </p>
+<p><a class="el" href="struct_hashfile_header.html" title="Header data for the hashfile. ">HashfileHeader</a> block. </p>
+
+</div>
+</div>
+<a class="anchor" id="aae197a0a68a01aceae1c879f2d5ce126"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef <a class="el" href="_ideal_b_tree_8hpp.html#a72279196842ef7757d016d7ce393b0bc">IdealBTree</a>&lt;<a class="el" href="struct_id_index.html">IdIndex</a>&gt; <a class="el" href="_commands_8cpp.html#aae197a0a68a01aceae1c879f2d5ce126">IdBTree</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Primary index B-tree. </p>
+
+</div>
+</div>
+<a class="anchor" id="ad2416696fa2a5e9f2e4431a372f61c00"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef <a class="el" href="_ideal_b_tree_8hpp.html#a72279196842ef7757d016d7ce393b0bc">IdealBTree</a>&lt;<a class="el" href="struct_title_index.html">TitleIndex</a>&gt; <a class="el" href="_commands_8cpp.html#ad2416696fa2a5e9f2e4431a372f61c00">TitleBTree</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Secondary index B-tree. </p>
 
 </div>
 </div>
@@ -378,16 +396,127 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Busca no arquivo de hashing um registro a partir de seu ID. </p>
-<p>O arquivo de hashing usa o hashing perfeito, então a função apenas calcula o offset do arquivo baseado em seu ID e faz a leitura do bloco em que ele se encontra.</p>
-<p>Caso não haja nenhum registro válido na posição encontrada através do ID, a função informará.</p>
+<p>Finds an entry in the hashfile based on the entry's id. </p>
+<p>The hashfile uses perfect hashing. Therefore, the entry's offset in the file can be calculated readily from the id.</p>
+<p>In case the id doesn't result in a valid offset, the procedure will inform.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">id</td><td>O ID do registro a ser buscado.</td></tr>
+    <tr><td class="paramname">id</td><td>Id of the entry to find </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section author"><dt>Author</dt><dd>Oscar Othon </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a12ed0bdc13be66313b2acbefbadb1ff7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool operator&lt; </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_id_index.html">IdIndex</a> &amp;&#160;</td>
+          <td class="paramname"><em>index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>i</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Less-than comparator between <a class="el" href="struct_id_index.html#a7dc366242281eff963f4016954b8a2ce" title="Entry id. ">IdIndex::id</a> and int. </p>
+
+</div>
+</div>
+<a class="anchor" id="ae03bfea933d8efed5c160274aaa3488c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool operator&lt; </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>i</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_id_index.html">IdIndex</a> &amp;&#160;</td>
+          <td class="paramname"><em>index</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Less-than comparator between int and <a class="el" href="struct_id_index.html#a7dc366242281eff963f4016954b8a2ce" title="Entry id. ">IdIndex::id</a>. </p>
+
+</div>
+</div>
+<a class="anchor" id="abb435aea98f70c382bb1f5553ce8d344"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool operator&lt; </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_title_index.html">TitleIndex</a> &amp;&#160;</td>
+          <td class="paramname"><em>index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>title</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Less-than comparator between <a class="el" href="struct_title_index.html#a01fb5178d25a9b88aaf3feb59d0a017e" title="Entry title. ">TitleIndex::title</a> and string. </p>
+
+</div>
+</div>
+<a class="anchor" id="ab12d423b803e029ac156ccdfcc610a20"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool operator&lt; </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>title</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_title_index.html">TitleIndex</a> &amp;&#160;</td>
+          <td class="paramname"><em>index</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Less-than comparator between string and <a class="el" href="struct_title_index.html#a01fb5178d25a9b88aaf3feb59d0a017e" title="Entry title. ">TitleIndex::title</a>. </p>
 
 </div>
 </div>
@@ -405,17 +534,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Busca um registro a partir de seu ID usando o arquivo de índices primário. </p>
-<p>O seek1 usa o arquivo de índices primário, organizado em índices de uma árvore-B, para encontrar o registro buscado.</p>
-<p>Caso ele não seja encontrado, a função informa.</p>
-<p>A função costuma sempre precisar ler mais blocos do que a função findrec, porque o arquivo de hashing perfeito tem acesso em O(1).</p>
+<p>Seeks an entry by its id using the primary index. </p>
+<p>Uses a B-tree to seek the entry by id within the primary index. In case no entry with the id is found, the procedure will inform.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">id</td><td>O ID do registro a ser buscado.</td></tr>
+    <tr><td class="paramname">id</td><td>Id of the entry to find </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section author"><dt>Author</dt><dd>Oscar Othon </dd></dl>
 
 </div>
 </div>
@@ -433,16 +559,16 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Busca um registro a partir de seu título usando o arquivo de índices secundário. </p>
-<p>Já que o título não é uma chave, e sim um campo qualquer, não existe ordenação entre eles no arquivo de hashing. Então é necessário utilizarmos uma árvore-B para poder fazermos dessa busca algo mais plausível em questão de tempo. Sem a árvore teríamos que fazer uma busca linear pelo arquivo de hashing.</p>
-<p>Caso o registro não possa ser encontrado, a função informará nos resultados.</p>
+<p>Seeks an entry by its title using the secondary index. </p>
+<p>Uses a B-tree to seek the entry by title within the secondary index.</p>
+<p>Will return the first entry found with the title.</p>
+<p>In case no entry with the provided title is found, the procedure will inform.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">title</td><td>Título pelo qual o registro será buscado.</td></tr>
+    <tr><td class="paramname">title</td><td>Title of the entry to find </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section author"><dt>Author</dt><dd>Oscar Othon </dd></dl>
 
 </div>
 </div>
@@ -460,19 +586,41 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Recebe um arquivo CSV e cria uma base de dados baseado nele. </p>
-<p>Faz a carga inicial da massa de testes para seu banco de dados e cria um arquivo de dados organizado por hashing, um arquivo de índice primário usando B-Tree e outro arquivo de índice de índice secundário usando B-Tree.</p>
-<p>A função upload faz várias verificações antes de começar a leitura do arquivo. Os detalhes são exibidos em tela. Ela precisa verificar se é possível criar cada um dos arquivos necessários no local do executável, e apenas caso tudo esteja correto ela procede à leitura dos registros.</p>
-<p>No fim de uma execução bem sucedida o programa terá três arquivos gerados, todos com extensão <code>.bin</code>. Um deles será o arquivo de hashing, o outro o arquivo de índices primários, e por último o de índices secundários.</p>
-<p>É esperado que essa função seja chamada antes de todas as demais.</p>
-<p>Apenas arquivos em formato CSV serão aceitos.</p>
+<p>Receives a CSV file and creates a database based on its contents. </p>
+<p>Will load the data in the provided CSV file and, one by one, upload them into a database while indexing each entry by id and title using B-trees.</p>
+<p>Each entry should be represented as a line in the CSV file with the following fields, one in each column:</p>
+<table class="doxtable">
+<tr>
+<th>Field </th><th>Type </th><th>Description  </th></tr>
+<tr>
+<td>ID </td><td>Integer </td><td>Identifier of the article </td></tr>
+<tr>
+<td>Title </td><td>Alpha 300 </td><td>Title of the article </td></tr>
+<tr>
+<td>Year </td><td>Integer </td><td>Publication year </td></tr>
+<tr>
+<td>Authors </td><td>Alpha 1024 </td><td>List of the authors </td></tr>
+<tr>
+<td>Citations </td><td>Integer </td><td>Times the article has been cited </td></tr>
+<tr>
+<td>Update </td><td>Date time </td><td>Time of the last time the article was updated (<code>YYYY-MM-DD HH:mm:SS</code>) </td></tr>
+<tr>
+<td>Snippet </td><td>Alpha 1024 </td><td>Text summary of the article's contents </td></tr>
+</table>
+<p>Details of the execution will be printed as the program executes.</p>
+<p>Creates tree files upon completion:</p>
+<ul>
+<li><code>db-hashfile.bin</code>: where the entries will be stored;</li>
+<li><code>db-idindex.bin</code>: primary index by id;</li>
+<li><code>db-titleindex.bin</code>: secondary index by title.</li>
+</ul>
+<p>The files will be overwritten if they already exist.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">filePath</td><td>Caminho pro arquivo CSV a ser lido.</td></tr>
+    <tr><td class="paramname">filePath</td><td>Path to the CSV file with entries </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section author"><dt>Author</dt><dd>Oscar Othon </dd></dl>
 
 </div>
 </div>

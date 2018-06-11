@@ -1,9 +1,7 @@
 var searchData=
 [
-  ['m_5ffile',['m_file',['../class_b_tree.html#aea30be3db9c762b8d9fe7e44dd4c3c29',1,'BTree']]],
-  ['m_5froot',['m_root',['../class_b_tree.html#a1658bf8173fb5c33944615ebaaee69d0',1,'BTree']]],
-  ['m_5fstats',['m_stats',['../class_b_tree.html#a5142aee6795ec77ea67c3f7702801890',1,'BTree']]],
-  ['main',['main',['../main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main.cpp']]],
-  ['main_2ecpp',['main.cpp',['../main_8cpp.html',1,'']]],
-  ['middle',['middle',['../struct_b_tree_1_1_overflow_result.html#af9ece362bc328b1a031f78b44c50768a',1,'BTree::OverflowResult']]]
+  ['offset',['offset',['../struct_b_tree_1_1_b_node.html#af864d07c047391653ed752084e8f07ff',1,'BTree::BNode::offset()'],['../struct_id_index.html#a778a7b276e04fb77a956dfc7325f1098',1,'IdIndex::offset()'],['../struct_title_index.html#a82848013a8515b75129251bfd489ac30',1,'TitleIndex::offset()']]],
+  ['operator_3c',['operator&lt;',['../struct_id_index.html#aa6361d146ea5234a22639268b1878a65',1,'IdIndex::operator&lt;()'],['../struct_title_index.html#a8523bfd840afaee5b12ee32d96a5ee71',1,'TitleIndex::operator&lt;()'],['../_commands_8cpp.html#a12ed0bdc13be66313b2acbefbadb1ff7',1,'operator&lt;(const IdIndex &amp;index, int i):&#160;Commands.cpp'],['../_commands_8cpp.html#ae03bfea933d8efed5c160274aaa3488c',1,'operator&lt;(int i, const IdIndex &amp;index):&#160;Commands.cpp'],['../_commands_8cpp.html#abb435aea98f70c382bb1f5553ce8d344',1,'operator&lt;(const TitleIndex &amp;index, const char *title):&#160;Commands.cpp'],['../_commands_8cpp.html#ab12d423b803e029ac156ccdfcc610a20',1,'operator&lt;(const char *title, const TitleIndex &amp;index):&#160;Commands.cpp']]],
+  ['order',['Order',['../class_b_tree.html#a21640c1085ee30ac291740ef13d66bd4',1,'BTree']]],
+  ['overflowresult',['OverflowResult',['../struct_b_tree_1_1_overflow_result.html',1,'BTree']]]
 ];

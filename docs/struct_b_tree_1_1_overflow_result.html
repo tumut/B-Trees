@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>BTrees: BTree&lt; TKey, M &gt;::OverflowResult Struct Reference</title>
+<title>BTrees: BTree&lt; T, M, BlockSize &gt;::OverflowResult Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -25,7 +25,7 @@
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BTrees
    </div>
-   <div id="projectbrief">B-Tree implementation in C++ to index documents based on numerical id&#39;s and title strings.</div>
+   <div id="projectbrief">B-tree implementation in C++ to index documents based on numerical id&#39;s and title strings.</div>
   </td>
  </tr>
  </tbody>
@@ -90,57 +90,57 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="struct_b_tree_1_1_overflow_result-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">BTree&lt; TKey, M &gt;::OverflowResult Struct Reference</div>  </div>
+<div class="title">BTree&lt; T, M, BlockSize &gt;::OverflowResult Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Registro auxiliar com o resultado de um overflow de inserção.  
+<p>Provides information to deal with an insertion overflow.  
  <a href="struct_b_tree_1_1_overflow_result.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:af9ece362bc328b1a031f78b44c50768a"><td class="memItemLeft" align="right" valign="top">TKey&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_overflow_result.html#af9ece362bc328b1a031f78b44c50768a">middle</a></td></tr>
-<tr class="memdesc:af9ece362bc328b1a031f78b44c50768a"><td class="mdescLeft">&#160;</td><td class="mdescRight">O dado que, após o split de nós, é o valor do meio e deverá ser inserido no nó pai.  <a href="#af9ece362bc328b1a031f78b44c50768a">More...</a><br /></td></tr>
-<tr class="separator:af9ece362bc328b1a031f78b44c50768a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a49c924a0543041577a16e0ae6a3729d6"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_overflow_result.html#a49c924a0543041577a16e0ae6a3729d6">rightNode</a></td></tr>
-<tr class="memdesc:a49c924a0543041577a16e0ae6a3729d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Offset de nó que vai precisar estar no apontador à direita de onde <code>middle</code> for inserido, no nó pai.  <a href="#a49c924a0543041577a16e0ae6a3729d6">More...</a><br /></td></tr>
-<tr class="separator:a49c924a0543041577a16e0ae6a3729d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6896195c86bf468fe9fc4e3c5afd4772"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_overflow_result.html#a6896195c86bf468fe9fc4e3c5afd4772">middle</a></td></tr>
+<tr class="memdesc:a6896195c86bf468fe9fc4e3c5afd4772"><td class="mdescLeft">&#160;</td><td class="mdescRight">The value that, after splitting nodes, shall be used as the middle value and must be inserted in the parent node.  <a href="#a6896195c86bf468fe9fc4e3c5afd4772">More...</a><br /></td></tr>
+<tr class="separator:a6896195c86bf468fe9fc4e3c5afd4772"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26f7f0aeff21bbe6807c5f091e757510"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_b_tree_1_1_overflow_result.html#a26f7f0aeff21bbe6807c5f091e757510">rightNode</a></td></tr>
+<tr class="memdesc:a26f7f0aeff21bbe6807c5f091e757510"><td class="mdescLeft">&#160;</td><td class="mdescRight">Offset of the node that'll have to be the pointer to the right of the <a class="el" href="struct_b_tree_1_1_overflow_result.html#a6896195c86bf468fe9fc4e3c5afd4772" title="The value that, after splitting nodes, shall be used as the middle value and must be inserted in the ...">OverflowResult::middle</a> value.  <a href="#a26f7f0aeff21bbe6807c5f091e757510">More...</a><br /></td></tr>
+<tr class="separator:a26f7f0aeff21bbe6807c5f091e757510"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;class TKey, std::size_t M&gt;<br />
-struct BTree&lt; TKey, M &gt;::OverflowResult</h3>
+<div class="textblock"><h3>template&lt;typename T, std::size_t M, unsigned int BlockSize = BLOCK_SIZE&gt;<br />
+struct BTree&lt; T, M, BlockSize &gt;::OverflowResult</h3>
 
-<p>Registro auxiliar com o resultado de um overflow de inserção. </p>
+<p>Provides information to deal with an insertion overflow. </p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="af9ece362bc328b1a031f78b44c50768a"></a>
+<a class="anchor" id="a6896195c86bf468fe9fc4e3c5afd4772"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class TKey, std::size_t M&gt; </div>
+template&lt;typename T, std::size_t M, unsigned int BlockSize = BLOCK_SIZE&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">TKey <a class="el" href="class_b_tree.html">BTree</a>&lt; TKey, M &gt;::OverflowResult::middle</td>
+          <td class="memname">T <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::OverflowResult::middle</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>O dado que, após o split de nós, é o valor do meio e deverá ser inserido no nó pai. </p>
+<p>The value that, after splitting nodes, shall be used as the middle value and must be inserted in the parent node. </p>
 
 </div>
 </div>
-<a class="anchor" id="a49c924a0543041577a16e0ae6a3729d6"></a>
+<a class="anchor" id="a26f7f0aeff21bbe6807c5f091e757510"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class TKey, std::size_t M&gt; </div>
+template&lt;typename T, std::size_t M, unsigned int BlockSize = BLOCK_SIZE&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">long <a class="el" href="class_b_tree.html">BTree</a>&lt; TKey, M &gt;::OverflowResult::rightNode</td>
+          <td class="memname">long <a class="el" href="class_b_tree.html">BTree</a>&lt; T, M, BlockSize &gt;::OverflowResult::rightNode</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Offset de nó que vai precisar estar no apontador à direita de onde <code>middle</code> for inserido, no nó pai. </p>
+<p>Offset of the node that'll have to be the pointer to the right of the <a class="el" href="struct_b_tree_1_1_overflow_result.html#a6896195c86bf468fe9fc4e3c5afd4772" title="The value that, after splitting nodes, shall be used as the middle value and must be inserted in the ...">OverflowResult::middle</a> value. </p>
 
 </div>
 </div>

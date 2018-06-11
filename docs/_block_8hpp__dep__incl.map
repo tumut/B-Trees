@@ -1,5 +1,5 @@
 <map id="include/Block.hpp" name="include/Block.hpp">
-<area shape="rect" id="node2" href="$_b_tree_8hpp.html" title="include/BTree.hpp" alt="" coords="13,155,140,181"/>
-<area shape="rect" id="node3" href="$_commands_8cpp.html" title="src/Commands.cpp" alt="" coords="59,229,195,256"/>
-<area shape="rect" id="node4" href="$_b_tree_8inl.html" title="include/BTree.inl" alt="" coords="21,80,140,107"/>
+<area shape="rect" id="node2" href="$_b_tree_8hpp.html" title="include/BTree.hpp" alt="" coords="19,80,146,107"/>
+<area shape="rect" id="node3" href="$_ideal_b_tree_8hpp.html" title="include/IdealBTree.hpp" alt="" coords="5,155,160,181"/>
+<area shape="rect" id="node4" href="$_commands_8cpp.html" title="src/Commands.cpp" alt="" coords="15,229,151,256"/>
 </map>

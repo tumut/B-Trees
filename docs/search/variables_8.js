@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['rightnode',['rightNode',['../struct_b_tree_1_1_overflow_result.html#a49c924a0543041577a16e0ae6a3729d6',1,'BTree::OverflowResult']]],
-  ['rootaddress',['rootAddress',['../struct_b_tree_1_1_file_header.html#a31311da126e8c4c24892bc94be578a0c',1,'BTree::FileHeader']]]
+  ['size',['size',['../struct_b_tree_1_1_b_node.html#ac35203ce468d3fa79809398804a216fc',1,'BTree::BNode']]],
+  ['snippet',['snippet',['../struct_entry.html#a7ac60a5be36b28e48ac0efa4be08c7da',1,'Entry']]]
 ];

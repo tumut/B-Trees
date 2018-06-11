@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['_7ebtree',['~BTree',['../class_b_tree.html#afbb2c2201c1c7b3ebf0719c21c3fc866',1,'BTree']]]
+  ['_7ebtree',['~BTree',['../class_b_tree.html#a3b2060ffb0199fce8f7d32e7924af045',1,'BTree']]]
 ];
