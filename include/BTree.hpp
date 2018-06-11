@@ -103,11 +103,7 @@ public:
 	//! Seeks a value that's equivalent to the one provided
 	/*!
 	 * If the value is not found, a null pointer will be returned.
-	 *
-	 * You can optionally provide a custom comparer. Useful in case you want to
-	 * store key-value pairs within the B-tree; in such a case, you'll want to
-	 * compare the provided parameter key with the pairs' keys.
-	 *
+	 * 
 	 * @tparam U Type of the key to seek. T and U must be less-than comparable.
 	 *
 	 * @param key The value to seek
@@ -213,8 +209,6 @@ private:
 		
 		//! Seeks a value that's equivalent to the one provided
 		/*!
-		 * Seeks the value throughout the file
-		 *
 		 * @tparam U See BTree::seek
 		 *
 		 * @param key Value to seek
