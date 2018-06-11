@@ -235,51 +235,51 @@ void upload(const char* filePath) {
 	std::cout << "[DEBUG]\n";
 	#endif
 	
-	std::cout << "Tamanho do bloco sendo considerado: " << BLOCK_SIZE << " bytes\n";
-	std::cout << "Ordem da árvore de id's: " << IdBTree::Order << '\n';
-	std::cout << "Ordem da árvore de títulos: " << TitleBTree::Order << "\n\n";
+	std::cout << "Default block size in use : " << BLOCK_SIZE << " bytes\n";
+	std::cout << "Id B-tree order (M)       : " << IdBTree::Order << '\n';
+	std::cout << "Title B-tree order (M)    : " << TitleBTree::Order << "\n\n";
 	
-	std::cout << "Abrindo os arquivos...\n\n";
+	std::cout << "Opening files...\n\n";
 
 	std::FILE *input = std::fopen(filePath, "rb");
 	if (!input) {
-		std::cout << "Não foi possível abrir o arquivo de leitura.\n";
-		std::cout << "Caminho: \"" << filePath << "\"\n";
-		std::cout << "Abortando." << std::endl;
+		std::cout << "Couldn't open input file.\n";
+		std::cout << "Filepath: \"" << filePath << "\"\n";
+		std::cout << "Aborting." << std::endl;
 		return;
 	}
 	
 	IdBTree idTree;
 	if (!idTree.create(ID_TREE_FILEPATH)) {
-		std::cout << "Falha na criação do arquivo para a árvore B de id's.\n";
-		std::cout << "Caminho: \"" << ID_TREE_FILEPATH << "\"\n";
-		std::cout << "Abortando." << std::endl;
+		std::cout << "Couldn't create the primary index file.\n";
+		std::cout << "Filepath: \"" << ID_TREE_FILEPATH << "\"\n";
+		std::cout << "Aborting." << std::endl;
 		return;
 	}
 	
-	std::cout << "Arquivo para a árvore B de id's criado em " << ID_TREE_FILEPATH << '\n';
+	std::cout << "Primary index file created at \"" << ID_TREE_FILEPATH << "\"\n";
 	
 	TitleBTree titleTree;
 	if (!titleTree.create(TITLE_TREE_FILEPATH)) {
-		std::cout << "Falha na criação do arquivo para a árvore B de títulos.\n";
-		std::cout << "Caminho: \"" << TITLE_TREE_FILEPATH << "\"\n";
-		std::cout << "Abortando." << std::endl;
+		std::cout << "Couldn't create the secondary index file.\n";
+		std::cout << "Filepath: \"" << TITLE_TREE_FILEPATH << "\"\n";
+		std::cout << "Aborting." << std::endl;
 		return;
 	}
 	
-	std::cout << "Arquivo para a árvore B de títulos criado em " << TITLE_TREE_FILEPATH << '\n';
+	std::cout << "Secondary index file created at \"" << TITLE_TREE_FILEPATH << "\"\n";
 	
 	std::FILE *output = std::fopen(HASHFILE_FILEPATH, "wb");
 	if (!output) {
-		std::cout << "Não foi possível criar o arquivo de saída.\n";
-		std::cout << "Caminho: \"" << HASHFILE_FILEPATH << "\"\n";
-		std::cout << "Abortando." << std::endl;
+		std::cout << "Couldn't create the hashing file.\n";
+		std::cout << "Filepath: \"" << HASHFILE_FILEPATH << "\"\n";
+		std::cout << "Aborting." << std::endl;
 		return;
 	}
 	
-	std::cout << "Arquivo de hashing criado em " << HASHFILE_FILEPATH << "\n\n";
+	std::cout << "Hashing file created at \"" << HASHFILE_FILEPATH << "\"\n\n";
 	
-	std::cout << "Iniciando a atualização...\n\n";
+	std::cout << "Begin uploading...\n\n";
 	
 	HashfileHeaderBlock header;
 	header.var.blockCount = 1;
@@ -291,7 +291,7 @@ void upload(const char* filePath) {
 	
 	while (readEntry(e.var, input)) {
 		if (++entriesFound % PATIENCE_STEP == 0) {
-			std::cout << entriesFound << " registros já foram lidos, paciência.\n";
+			std::cout << entriesFound << " entries read so far, patience.\n";
 		}
 		
 		int idDifference = e.var.id - lastId - 1;
@@ -333,12 +333,12 @@ void upload(const char* filePath) {
 	
 	if (entriesFound >= 1000) std::cout << '\n';
 	
-	std::cout << "Atualização dos arquivos finalizada.\n";
-	std::cout << entriesFound << " registro(s) lido(s) no total.\n\n";
+	std::cout << "Uploading finished.\n";
+	std::cout << entriesFound << " entries read in total.\n\n";
 	
-	std::cout << "Arquivo de hashing:           " << header.var.blockCount << " blocos.\n";
-	std::cout << "Arquivo de índice primário:   " << idStats.blocksCreated << " blocos.\n";
-	std::cout << "Arquivo de índice secundário: " << titleStats.blocksCreated << " blocos." << std::endl;
+	std::cout << "Hashing file:         " << header.var.blockCount << " blocks.\n";
+	std::cout << "Primary index file:   " << idStats.blocksCreated << " blocks.\n";
+	std::cout << "Secondary index file: " << titleStats.blocksCreated << " blocks." << std::endl;
 }
 
 //! Function that prints a found entry and associated data
@@ -351,10 +351,10 @@ void upload(const char* filePath) {
  * @param blockCount Blocks in the file
  */
 static void foundEntryMessage(const Entry& e, std::size_t blocksRead, std::size_t blockCount) {
-	std::cout << "Registro encontrado:\n\n";
+	std::cout << "Entry found:\n\n";
 	printEntry(e);
-	std::cout << blocksRead << " bloco" << (blocksRead > 1? "s foram lidos" : " foi lido") << " pra encontrá-lo.\n";
-	std::cout << "O arquivo está no momento com " << blockCount << " blocos totais." << std::endl;
+	std::cout << blocksRead << " block" << (blocksRead > 1? "s were" : " was") << " read.\n";
+	std::cout << "The file currently has " << blockCount << " total blocks." << std::endl;
 }
 
 //! Function that seeks an entry by offset in the hashfile and prints it if successful
@@ -369,7 +369,7 @@ static void foundEntryMessage(const Entry& e, std::size_t blocksRead, std::size_
  * @return True in case of success, false otherwise
  */
 static bool findEntryAndPrint(std::FILE *hashfile, long offset, std::size_t blocksReadSoFar, std::size_t blockCount) {
-	std::cout << "Lendo o registro no offset " << offset << '\n';
+	std::cout << "Reading entry in offset " << offset << '\n';
 	
 	if (!std::fseek(hashfile, offset, SEEK_SET)) {
 		Block<Entry> e;
@@ -381,11 +381,11 @@ static bool findEntryAndPrint(std::FILE *hashfile, long offset, std::size_t bloc
 			return true;
 		}
 		else {
-			std::cout << "Falha na leitura. ";
+			std::cout << "Read failure. ";
 		}
 	}
 	else {
-		std::cout << "Falha no seek (" << offset << "). ";
+		std::cout << "Seek failure (" << offset << "). ";
 	}
 	
 	return false;
@@ -395,7 +395,7 @@ void findrec(long id) {
 	std::FILE *hashfile = std::fopen(HASHFILE_FILEPATH, "rb");
 	
 	if (!hashfile) {
-		std::cout << "Sem arquivo de hashing para a consulta." << std::endl;
+		std::cout << "No hashfile found. Consider uploading your data first." << std::endl;
 		return;
 	}
 	
@@ -409,7 +409,7 @@ void findrec(long id) {
 	std::fread(reinterpret_cast<char*>(&header), sizeof(header), 1, hashfile);
 	
 	if (!findEntryAndPrint(hashfile, offset, 0, header.var.blockCount)) {
-		std::cout << "O registro com o id " << id << " não foi encontrado." << std::endl;
+		std::cout << "Entry with id " << id << " not found." << std::endl;
 	}
 	
 	std::fclose(hashfile);
@@ -419,14 +419,14 @@ void seek1(long id) {
 	std::FILE *hashfile = std::fopen(HASHFILE_FILEPATH, "rb");
 	
 	if (!hashfile) {
-		std::cout << "Sem arquivo de hashing para a consulta." << std::endl;
+		std::cout << "No hashfile found. Consider uploading your data first." << std::endl;
 		return;
 	}
 	
 	IdBTree tree;
 	
 	if (!tree.load(ID_TREE_FILEPATH)) {
-		std::cout << "Sem arquivo de índice primário para a consulta." << std::endl;
+		std::cout << "No primary index file found." << std::endl;
 		return;
 	}
 	
@@ -440,13 +440,12 @@ void seek1(long id) {
 		auto stats = tree.getStatistics(true);
 		
 		if (!findEntryAndPrint(hashfile, found->offset, stats.blocksRead, stats.blocksInDisk)) {
-			std::cout << "O registro com o id " << id << " (offset=" << found->offset
-				<< ") não foi encontrado no arquivo de hashing." << std::endl;
+			std::cout << "Entry with id " << id << " (offset=" << found->offset
+				<< ") not found in the hashfile." << std::endl;
 		}
 	}
 	else {
-		std::cout << "O registro com o id " << id
-			<< " não foi encontrado no arquivo de índice primário." << std::endl;
+		std::cout << "Entry with id " << id << " not found in the primary index." << std::endl;
 	}
 	
 	std::fclose(hashfile);
@@ -456,14 +455,14 @@ void seek2(const char* title) {
 	std::FILE *hashfile = std::fopen(HASHFILE_FILEPATH, "rb");
 	
 	if (!hashfile) {
-		std::cout << "Sem arquivo de hashing para a consulta." << std::endl;
+		std::cout << "No hashfile found. Consider uploading your data first." << std::endl;
 		return;
 	}
 	
 	TitleBTree tree;
 	
 	if (!tree.load(TITLE_TREE_FILEPATH)) {
-		std::cout << "Sem arquivo de índice secundário para a consulta." << std::endl;
+		std::cout << "No secondary index file found." << std::endl;
 		return;
 	}
 	
@@ -477,14 +476,13 @@ void seek2(const char* title) {
 		auto stats = tree.getStatistics(true);
 		
 		if (!findEntryAndPrint(hashfile, found->offset, stats.blocksRead, stats.blocksInDisk)) {
-			std::cout << "O registro com o título \"" << title
+			std::cout << "Entry with title \"" << title
 				<< "\" (offset=" << found->offset
-				<< ") não foi encontrado no arquivo de hashing." << std::endl;
+				<< ") not found in the hashfile." << std::endl;
 		}
 	}
 	else {
-		std::cout << "O registro com o título \"" << title
-			<< "\" não foi encontrado no arquivo de índice secundário." << std::endl;
+		std::cout << "Entry with title \"" << title << "\" not found in the secondary index file." << std::endl;
 	}
 	
 	std::fclose(hashfile);
