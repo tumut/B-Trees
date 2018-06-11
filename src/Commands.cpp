@@ -89,55 +89,52 @@ struct HashfileHeader {
 //! HashfileHeader block
 typedef Block<HashfileHeader, HASHFILE_BLOCK_SIZE> HashfileHeaderBlock;
 
+//! Entry block
+typedef Block<Entry, HASHFILE_BLOCK_SIZE> EntryBlock;
+
 // --- //
 
-//! Lê a coluna de um registro a partir do arquivo CSV.
+//! Reads a string field from a line in the CSV file
 /*!
-	Essa função é chamada para a leitura do arquivo. Nela são tratadas todas as possíveis exceções que podem ocorrer na leitura, essas exceções sao a presença no local
-	incorreto de diversos símbolos descritos a seguir. 
-
-	Os símbolos são: ; (ponto e vírgula), `\n`(contra-barra n), \r(contra-barra r), "(aspas), `NULL`.
-
-	No caso das aspas é necessário ser verificado se elas realmente se encontram em um local inválido, ou se elas são o final de uma coluna. Para isso fazemos uma etapa de verificação
-	a mais nas aspas, nessa etapa verificamos se as aspas são seguidas de `\r`, `;`, `\n`, EOF. Se ela for seguida por algum desses significa que essas aspas estão demarcando o final
-	de uma coluna.
-
-	\param field Ponteiro para o vetor de caracteres onde a coluna lida será guardada.
-	\param file O arquivo sendo lido.
-	\param fieldSize O tamanho máximo, em caracteres, que a string do campo pode ter.
-
-	\author Oscar Othon
-*/
+ * Will read the quotes-enclosed value from a column in the `;`-delimited CSV
+ * file and put it into a char* buffer.
+ *
+ * Allows the column to be left blank or as `NULL` (no quotes).
+ *
+ * @param field Buffer where the read field will be stored (must be at least as big as `fieldSize`)
+ * @param file File where the contents will be read
+ * @param fieldSize Maximum field size in characters
+ */
 static void readStringField(char *field, std::FILE *file, int fieldSize) {
-	static char buffer[1024 * 2];
+	static char buffer[1024 * 2]; // A reasonably large size so that we can read what is required
 	
 	char previous = ';';
 	char current = std::fgetc(file);
 	int index = 0;
 
 	switch (current) {
-	// Caso em que o campo não tem caracteres: ;;
+	// Case in which the field has no characters: ;;
 	case ';':
 		break;
 	
-	// Caso em que o último campo não tem caracteres, então sobra apenas uma quebra de linha (estilo LF).
+	// Case in which the last field has no characters, so there's only an LF line break
 	case '\n':
 		break;
 	
-	// Caso em que o último campo não tem caracteres, mas sobra uma quebra de linha estilo CRLF.
+	// Case in which the last field has no characters, but there's still a CRLF line break
 	case '\r':
 		std::fgetc(file); // '\n'
 		break;
 	
-	// Caso em que ao invés de um campo há apenas NULL.
+	// Case in which instead of a field there's only NULL
 	case 'N':
 		std::fgetc(file); // 'U'
 		std::fgetc(file); // 'L'
 		std::fgetc(file); // 'L'
-		if (std::fgetc(file) == '\r') std::fgetc(file); // Pula a quebra de linha, seja ela LF or CRLF
+		if (std::fgetc(file) == '\r') std::fgetc(file); // Skips the line break, be it LF or CRLF
 		break;
 	
-	// Caso em que há uma string na coluna.
+	// Case in which there's a string in the field
 	case '"':
 		while (true) {
 			previous = current;
@@ -146,10 +143,10 @@ static void readStringField(char *field, std::FILE *file, int fieldSize) {
 			if (previous == '"') {
 				bool fieldEnded = false;
 				
-				// Se as aspas forem seguidas desses elementos a seguir, então é porque é o final de um campo.
+				// If the quotes are followed by either of these elements, then we've reached the end of the field
 				switch (current) {
 				case '\r':
-					std::fgetc(file); // \n
+					std::fgetc(file); // '\n'
 				case ';':
 				case '\n':
 				case EOF:
@@ -177,18 +174,13 @@ static void readStringField(char *field, std::FILE *file, int fieldSize) {
 	std::memcpy(field, buffer, index + 1);
 }
 
-//! Lê por inteiro, campo a campo, um registro do arquivo CSV.
+//! Reads a whole line, field by field, from the CSV file
 /*!
-	Recebendo o arquivo pelo parâmetro std::FILE *file, essa função percorre por completa uma linha de instância de registro no arquivo, dividindo esse artigo em seus campos de título, ano, autor,
-	citações, atualização e snippet. Cada um desses campos é separado ou por meio da utilização da função readField(), ou utilizando-se fscanf().
-
-	\param e O registro do registro a ter seus campos lidos.
-	\param file O arquivo sendo lido.
-
-	\returns Se o registro foi lido com sucesso ou não, dará falso ao chegar no final do arquivo pois não haverão mais registros para ler.
-
-	\author Oscar Othon
-*/
+ * @param e Entry to read
+ * @param file File with contents
+ *
+ * @return True if the entry was successfully read, false if we've reached the end of the file
+ */
 static bool readEntry(Entry& e, std::FILE *file) {
 	int endChecker = std::fscanf(file, "\"%d\";", &e.id);
 	
@@ -208,11 +200,9 @@ static bool readEntry(Entry& e, std::FILE *file) {
 	return true;
 }
 
-//! Imprime um registro campo por campo.
-/*!	
-	\param e O registro a ser impresso.
-
-	\author Oscar Othon
+//! Prints an entry field by field
+/*!
+ * @param e Entry to print
  */
 static void printEntry(const Entry& e) {
 	std::cout << "id        : " << e.id << '\n';
@@ -227,9 +217,9 @@ static void printEntry(const Entry& e) {
 // ---
 
 void upload(const char* filePath) {
-	// Registro "fantasma" que será usado para preencher os espaços entre os id's
+	// Phantom entry that'll be used to pad the spaces between id's
 	static auto phantomEntry = []{
-			Block<Entry> pe;
+			EntryBlock pe;
 			pe.var.valid = false;
 			return pe;
 		}();
@@ -284,11 +274,11 @@ void upload(const char* filePath) {
 	
 	std::cout << "Iniciando a atualização...\n\n";
 	
-	Block<HashfileHeader> header;
+	HashfileHeaderBlock header;
 	header.var.blockCount = 1;
 	std::fwrite(reinterpret_cast<const char*>(&header), sizeof(header), 1, output);
 	
-	Block<Entry> e;
+	EntryBlock e;
 	int lastId = -1;
 	unsigned int entriesFound = 0;
 	
@@ -319,8 +309,6 @@ void upload(const char* filePath) {
 		titlePointer.offset = offset;
 		titleTree.insert(titlePointer);
 		
-		// titleTree.traverse(true);
-		
 		lastId = e.var.id;
 	}
 	
@@ -346,15 +334,15 @@ void upload(const char* filePath) {
 	std::cout << "Arquivo de índice secundário: " << titleStats.blocksCreated << " blocos." << std::endl;
 }
 
-//! Função que mostra que um registro foi encontrado, quantos blocos foram lidos para encontrá-lo e quantos blocos o arquivo possui no momento.
+//! Function that prints a found entry and associated data
 /*!
-
-	\param e Um registro do arquivo.
-	\param blocksRead O número de blocos lidos até chegar no registro.
-	\param blockCount A contagem do número total de blocos no arquivo.
-
-	\author Oscar Othon
-*/
+ * Prints how many blocks were read to find it and how many blocks the file
+ * currently contains as a whole
+ *
+ * @param e Found entry
+ * @param blocksRead Blocks read
+ * @param blockCount Blocks in the file
+ */
 static void foundEntryMessage(const Entry& e, std::size_t blocksRead, std::size_t blockCount) {
 	std::cout << "Registro encontrado:\n\n";
 	printEntry(e);
@@ -362,18 +350,17 @@ static void foundEntryMessage(const Entry& e, std::size_t blocksRead, std::size_
 	std::cout << "O arquivo está no momento com " << blockCount << " blocos totais." << std::endl;
 }
 
-//! Função que acha um registro no arquivo e printa se a busca foi completa ou não, ou se ocorreu algum erro de leitura.
+//! Function that seeks an entry by offset in the hashfile and prints it if successful
 /*!
-
-	Essa função recebe o arquivo já aberto, se dirige até o offset e, então, lê o registro.
-
-	\param *hashfile Ponteiro do arquivo pro arquivo de hashing.
-	\param	offset O offset do registro no arquivo.
-	\param	blocksReadSoFar Quantos blocos foram lidos até o momento.
-	\param	blockCount A contagem do número total de blocos no arquivo.
-
-	\author Oscar Othon
-*/
+ * In case of failure, it'll inform you
+ *
+ * @param hashfile File pointer to the hashfile
+ * @param offset Entry offset
+ * @param blocksReadSoFar Blocks read so far
+ * @param blockCount Blocks in the file
+ *
+ * @return True in case of success, false otherwise
+ */
 static bool findEntryAndPrint(std::FILE *hashfile, long offset, std::size_t blocksReadSoFar, std::size_t blockCount) {
 	std::cout << "Lendo o registro no offset " << offset << '\n';
 	
@@ -381,7 +368,7 @@ static bool findEntryAndPrint(std::FILE *hashfile, long offset, std::size_t bloc
 		Block<Entry> e;
 		
 		if (std::fread(reinterpret_cast<char*>(&e), sizeof(e), 1, hashfile) && e.var.valid) {
-			++blocksReadSoFar; // +1 porque o bloco do registro foi lido.
+			++blocksReadSoFar; // +1 because the entry block has been read
 			
 			foundEntryMessage(e.var, blocksReadSoFar, blockCount);
 			return true;
@@ -407,10 +394,10 @@ void findrec(long id) {
 	
 	long offset = BLOCK_SIZE /* header */ + BLOCK_SIZE * id;
 	
-	// A leitura deste bloco de cabeçalho não é contada pois ela não
-	// influencia na busca pelo registro. O cabeçalho é usado apenas
-	// para saber a quantidade de blocos no arquivo.
-	Block<HashfileHeader> header;
+	// The block read for the header doesn't count because it's not used in the
+	// entry search. The header is only used to provide the total blocks in the
+	// file.
+	HashfileHeaderBlock header;
 	std::fseek(hashfile, 0, SEEK_SET);
 	std::fread(reinterpret_cast<char*>(&header), sizeof(header), 1, hashfile);
 	
