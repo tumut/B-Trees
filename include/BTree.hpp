@@ -118,7 +118,7 @@ public:
 	template <typename U>
 	std::unique_ptr<T> seek(const U& key);
 	
-	//! Stored analytics of the BTree usage
+	//! BTree usage analytics
 	struct Statistics {
 		unsigned int blocksRead; //!< Quantity of blocks read since the tree was initialized
 		unsigned int blocksCreated; //!< Quantity of blocks created since the tree was initialized
