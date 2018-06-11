@@ -46,24 +46,24 @@ void findrec(long id);
 
 //! Seeks an entry by its id using the primary index
 /*!
- * Uses B-trees to seek an entry by id within the primary index. In case no
+ * Uses a B-tree to seek the entry by id within the primary index. In case no
  * entry with the id is found, the procedure will inform.
  *
  * @param id Id of the entry to find
  */
 void seek1(long id);
 
-//! Busca um registro a partir de seu título usando o arquivo de índices secundário.
+//! Seeks an entry by its title using the secondary index
 /*!
-	Já que o título não é uma chave, e sim um campo qualquer, não existe ordenação entre eles no arquivo de hashing. Então é necessário utilizarmos uma árvore-B
-    para poder fazermos dessa busca algo mais plausível em questão de tempo. Sem a árvore teríamos que fazer uma busca linear pelo arquivo de hashing.
-
-    Caso o registro não possa ser encontrado, a função informará nos resultados.
-	
-	\param title Título pelo qual o registro será buscado.
-
-	\author Oscar Othon
-*/
+ * Uses a B-tree to seek the entry by title within the secondary index.
+ *
+ * Will return the first entry found with the title.
+ *
+ * In case no entry with the provided title is found, the procedure will
+ * inform.
+ *
+ * @param title Title of the entry to find
+ */
 void seek2(const char* title);
 
 #endif
