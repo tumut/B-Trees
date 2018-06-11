@@ -4,7 +4,7 @@
 //! Receives a CSV file and creates a database based on its contents
 /*!
  * Will load the data in the provided CSV file and, one by one, upload them
- * into a database while indexing each entry by id and title.
+ * into a database while indexing each entry by id and title using B-trees.
  *
  * Each entry should be represented as a line in the CSV file with the
  * following fields, one in each column:
@@ -38,26 +38,19 @@ void upload(const char* filePath);
  * The hashfile uses perfect hashing. Therefore, the entry's offset in the file
  * can be calculated readily from the id.
  *
- * In case the id doesn't result in a valid offset, the procedure will inform
- * you.
+ * In case the id doesn't result in a valid offset, the procedure will inform.
  *
  * @param id Id of the entry to find
  */
 void findrec(long id);
 
-//! Busca um registro a partir de seu ID usando o arquivo de índices primário.
+//! Seeks an entry by its id using the primary index
 /*!
-	O seek1 usa o arquivo de índices primário, organizado em índices de uma árvore-B, para encontrar o registro buscado.
-	
-	Caso ele não seja encontrado, a função informa.
-	
-	A função costuma sempre precisar ler mais blocos do que a função findrec, porque o arquivo de hashing perfeito tem
-	acesso em O(1).
-
-	\param id O ID do registro a ser buscado.
-
-	\author Oscar Othon
-*/
+ * Uses B-trees to seek an entry by id within the primary index. In case no
+ * entry with the id is found, the procedure will inform.
+ *
+ * @param id Id of the entry to find
+ */
 void seek1(long id);
 
 //! Busca um registro a partir de seu título usando o arquivo de índices secundário.
