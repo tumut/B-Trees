@@ -104,13 +104,11 @@ typedef Block<Entry, HASHFILE_BLOCK_SIZE> EntryBlock;
  *
  * Allows the column to be left blank or as `NULL` (no quotes).
  *
- * @param field Buffer where the read field will be stored (must be at least as big as `fieldSize`)
+ * @param field Buffer to store the read string (must be at least as big as `fieldSize`)
  * @param file File where the contents will be read
  * @param fieldSize Maximum field size in characters
  */
 static void readStringField(char *field, std::FILE *file, int fieldSize) {
-	static char buffer[1024 * 2]; // A reasonably large size so that we can read what is required
-	
 	char previous = ';';
 	char current = std::fgetc(file);
 	int index = 0;
@@ -161,8 +159,16 @@ static void readStringField(char *field, std::FILE *file, int fieldSize) {
 				if (fieldEnded) break;
 			}
 			
-			if (current >= 0)
-				buffer[index++] = current;
+			if (current >= 0) {
+				// Only insert the character in the buffer if there's still
+				// space left (taking into account the '\0' end character).
+				// We'll keep reading the file until the end of the column.
+				if (index < fieldSize - 1) {
+					field[index] = current;
+				}
+
+				++index;
+			}
 		}
 		
 		break;
@@ -172,9 +178,7 @@ static void readStringField(char *field, std::FILE *file, int fieldSize) {
 		index = fieldSize - 1;
 	}
 	
-	buffer[index] = '\0';
-	
-	std::memcpy(field, buffer, index + 1);
+	field[index] = '\0';
 }
 
 //! Reads a whole line, field by field, from the CSV file
