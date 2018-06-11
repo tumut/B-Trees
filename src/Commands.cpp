@@ -29,6 +29,9 @@
 //! Block size in bytes to be used in the hashing file
 #define HASHFILE_BLOCK_SIZE BLOCK_SIZE
 
+//! Show how many entries have already been read and indexed every once in a while
+#define PATIENCE_STEP 1000
+
 // --- //
 
 //! Helper struct to store primary indexes
@@ -283,7 +286,7 @@ void upload(const char* filePath) {
 	unsigned int entriesFound = 0;
 	
 	while (readEntry(e.var, input)) {
-		if (++entriesFound % 100000 == 0) {
+		if (++entriesFound % PATIENCE_STEP == 0) {
 			std::cout << entriesFound << " registros já foram lidos, paciência.\n";
 		}
 		
