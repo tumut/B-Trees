@@ -229,8 +229,8 @@ void upload(const char* filePath) {
 	#endif
 	
 	std::cout << "Tamanho do bloco sendo considerado: " << BLOCK_SIZE << " bytes\n";
-	std::cout << "Ordem da árvore de id's: " << ID_ORDER << '\n';
-	std::cout << "Ordem da árvore de títulos: " << TITLE_ORDER << "\n\n";
+	std::cout << "Ordem da árvore de id's: " << IdBTree::Order << '\n';
+	std::cout << "Ordem da árvore de títulos: " << TitleBTree::Order << "\n\n";
 	
 	std::cout << "Abrindo os arquivos...\n\n";
 
