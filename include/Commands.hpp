@@ -33,17 +33,16 @@
  */
 void upload(const char* filePath);
 
-//! Busca no arquivo de hashing um registro a partir de seu ID.
+//! Finds an entry in the hashfile based on the entry's id
 /*!
-	O arquivo de hashing usa o hashing perfeito, então a função apenas calcula o offset do arquivo baseado em seu ID e faz a leitura do bloco em que
-	ele se encontra.
-	
-	Caso não haja nenhum registro válido na posição encontrada através do ID, a função informará.
-
-	\param id O ID do registro a ser buscado.
-
-	\author Oscar Othon
-*/
+ * The hashfile uses perfect hashing. Therefore, the entry's offset in the file
+ * can be calculated readily from the id.
+ *
+ * In case the id doesn't result in a valid offset, the procedure will inform
+ * you.
+ *
+ * @param id Id of the entry to find
+ */
 void findrec(long id);
 
 //! Busca um registro a partir de seu ID usando o arquivo de índices primário.
