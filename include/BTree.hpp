@@ -1,10 +1,10 @@
 #ifndef _BTREE_HPP_INCLUDED_
 #define _BTREE_HPP_INCLUDED_
 
-#include "Block.hpp"
-
 #include <cstdio>
 #include <memory>
+
+#include "Block.hpp"
 
 //! B-tree class
 /*!
@@ -28,17 +28,28 @@
  * // Read data
  * tree.load("filename.bin");
  * int *x = tree.seek(1);
- * if (x) f(*x); // Do something to x if found
+ * if (x) f(*x); // If found, do something to x
  * \endcode
  *
  * @tparam T Type of the data to be stored
  *
  * @tparam M Tree order. Each node will store up to 2M values and have up to
  * 2M + 1 children. A node can't be bigger than `BLOCK_SIZE` bytes.
+ *
+ * @tparam BlockSize Block size to use, in bytes
  */
-template<typename T, std::size_t M>
+template<typename T, std::size_t M, unsigned int BlockSize = BLOCK_SIZE>
 class BTree {
 public:
+	//! Type of the stored values
+	typedef T ValueType;
+
+	//! Tree order
+	static constexpr auto Order = M;
+
+	//! Block size in bytes
+	static constexpr auto BlockSizeInUse = BlockSize;
+
 	//! Default constructor
 	/*!
 	 * Initializes the statistics with 0 values and makes the file pointer
@@ -93,11 +104,19 @@ public:
 	/*!
 	 * If the value is not found, a null pointer will be returned.
 	 *
+	 * You can optionally provide a custom comparer. Useful in case you want to
+	 * store key-value pairs within the B-tree; in such a case, you'll want to
+	 * compare the provided parameter key with the pairs' keys.
+	 *
+	 * @tparam U Type of the key to seek. T and U must be less-than comparable.
+	 *
 	 * @param key The value to seek
+	 * @param less Comparer instance
 	 *
 	 * @return Pointer with the value if found, null otherwise
 	 */
-	std::unique_ptr<T> seek(const T& key);
+	template <typename U>
+	std::unique_ptr<T> seek(const U& key);
 	
 	//! Stored analytics of the BTree usage
 	struct Statistics {
@@ -127,7 +146,7 @@ public:
 	//! Updates the header with the total blocks in the file
 	/*!
 	 * Very important to be used once you've finished using a tree that was
-	 * initialized with BTree::create.
+	 * initialized with BTree::create
 	 */
 	void finishInsertions();
 	
@@ -137,6 +156,9 @@ private:
 		long rootAddress;
 		unsigned int blockCount;
 	};
+
+	//! File header block
+	typedef Block<FileHeader, BlockSize> FileHeaderBlock;
 	
 	//! B-tree node
 	struct BNode {
@@ -193,16 +215,22 @@ private:
 		/*!
 		 * Seeks the value throughout the file
 		 *
+		 * @tparam U See BTree::seek
+		 *
 		 * @param key Value to seek
 		 * @param tree BTree to access the file and statistics
 		 *
 		 * @return Pointer with the value if found, null pointer otherwise
 		 */
-		std::unique_ptr<T> seek(const T& key, BTree& tree) const;
+		template <typename U>
+		std::unique_ptr<T> seek(const U& key, BTree& tree) const;
 	};
-	
+
+	//! Node block
+	typedef Block<BNode, BlockSize> BNodeBlock;
+
 	std::FILE *m_file; //!< File pointer to the file where data will be stored
-	Block<BNode> m_root; //!< Root node of the B-tree
+	BNodeBlock m_root; //!< Root node of the B-tree
 	mutable Statistics m_stats; //!< Where BTree stores its read and write statistics
 	
 	//! Retorna um bloco com o nó lido no offset fornecido.
@@ -214,7 +242,7 @@ private:
 	 *
 	 * @return Block with the node found in the provided offset
 	 */
-	Block<BNode> readFromDisk(long offset);
+	BNodeBlock readFromDisk(long offset);
 	
 	//! Writes the node to disk
 	/*!
@@ -227,7 +255,7 @@ private:
 	 *
 	 * @param node Node to write
 	 */
-	void writeToDisk(Block<BNode>& node);
+	void writeToDisk(BNodeBlock& node);
 	
 	//! Reads the file header
 	/*!
@@ -238,13 +266,13 @@ private:
 	 *
 	 * @return Block with the file header
 	 */
-	Block<FileHeader> readHeader() const;
+	FileHeaderBlock readHeader() const;
 	
 	//! Updates the file header in disk
 	/*!
 	 * @param header Block with file header to write
 	 */
-	void writeHeader(const Block<FileHeader>& header);
+	void writeHeader(const FileHeaderBlock& header);
 	
 	//! Auxiliary struct with results from an insertion overflow
 	struct OverflowResult {
@@ -268,14 +296,14 @@ private:
 	 * which must be trying to insert the node.
 	 *
 	 * @param node Node in which to insert
-	 * @param key Value to insert
+	 * @param value Value to insert
 	 * @param rightNodeOffset Offset of the node to the right of the value to
 	 * insert; if -1, the node to the right doesn't exist yet
 	 *
 	 * @return A pointer with an OverflowResult instance in case of overflow,
 	 * null otherwise
 	 */
-	std::unique_ptr<OverflowResult> insert(Block<BNode>& node, T key, long rightNodeOffset = -1);
+	std::unique_ptr<OverflowResult> insert(BNodeBlock& node, T value, long rightNodeOffset = -1);
 };
 
 #include "BTree.inl"
