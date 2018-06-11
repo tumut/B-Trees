@@ -1,28 +1,37 @@
 #ifndef _COMMANDS_HPP_INCLUDED_
 #define _COMMANDS_HPP_INCLUDED_
 
-
-//! Recebe um arquivo CSV e cria uma base de dados baseado nele.
+//! Receives a CSV file and creates a database based on its contents
 /*!
-	Faz a carga inicial da massa de testes para seu banco de dados e cria um arquivo de dados organizado por hashing, um arquivo de índice primário
-	usando B-Tree e outro arquivo de índice de índice secundário usando B-Tree.
-	
-	A função upload faz várias verificações antes de começar a leitura do arquivo. Os detalhes são exibidos em tela. Ela precisa verificar se
-	é possível criar cada um dos arquivos necessários no local do executável, e apenas caso tudo esteja correto ela procede à leitura dos registros.
-	
-	No fim de uma execução bem sucedida o programa terá três arquivos gerados, todos com extensão `.bin`. Um deles será o arquivo de hashing, o
-	outro o arquivo de índices primários, e por último o de índices secundários.
-	
-	É esperado que essa função seja chamada antes de todas as demais.
-	
-	Apenas arquivos em formato CSV serão aceitos.
-	
-	\param filePath Caminho pro arquivo CSV a ser lido.
-	
-	\author Oscar Othon
-*/
+ * Will load the data in the provided CSV file and, one by one, upload them
+ * into a database while indexing each entry by id and title.
+ *
+ * Each entry should be represented as a line in the CSV file with the
+ * following fields, one in each column:
+ *
+ * | Field | Type | Description |
+ * | --- | --- | --- |
+ * | ID | Integer | Identifier of the article |
+ * | Title | Alpha 300 | Title of the article |
+ * | Year | Integer | Publication year |
+ * | Authors | Alpha 1024 | List of the authors |
+ * | Citations | Integer | Times the article has been cited |
+ * | Update | Date time | Time of the last time the article was updated (`YYYY-MM-DD HH:mm:SS`) |
+ * | Snippet | Alpha 1024 | Text summary of the article's contents |
+ *
+ * Details of the execution will be printed as the program executes.
+ *
+ * Creates tree files upon completion:
+ *
+ * - `db-hashfile.bin`: where the entries will be stored;
+ * - `db-idindex.bin`: primary index by id;
+ * - `db-titleindex.bin`: secondary index by title.
+ *
+ * The files will be overwritten if they already exist.
+ *
+ * @param filePath Path to the CSV file with entries
+ */
 void upload(const char* filePath);
-
 
 //! Busca no arquivo de hashing um registro a partir de seu ID.
 /*!
