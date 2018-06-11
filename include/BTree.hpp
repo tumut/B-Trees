@@ -177,7 +177,7 @@ private:
 		 */
 		T values[2 * M + 1];
 		
-		//! Os apontadores de nó.
+		//! Node pointers
 		/*!
 		 * Most of the time, the node will only use the first `2M+1` positions
 		 * of this array. The additional space for 1 value is used temporarily
@@ -228,7 +228,7 @@ private:
 	BNodeBlock m_root; //!< Root node of the B-tree
 	mutable Statistics m_stats; //!< Where BTree stores its read and write statistics
 	
-	//! Retorna um bloco com o nó lido no offset fornecido.
+	//! Read a node in the block at the provided offset
 	/*!
 	 * Assumes that the provided offset will always be valid. If an invalid
 	 * offset is provided, the result is undefined.
