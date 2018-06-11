@@ -18,7 +18,7 @@
  * Basic file entry
  */
 struct Entry {
-	bool valid; //!< False if the entry being used only for padding within the file, false if the data is valid
+	bool valid; //!< True if the data is legit, false if the entry is being used only for padding within the file
 	int id; //!< Article identifier
 	char title[TITLE_CHAR_MAX]; //!< Article title
 	int year; //!< Publication year of the article
