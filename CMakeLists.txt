@@ -12,4 +12,4 @@ add_executable(BTrees
         include/Commands.hpp
         include/Entry.hpp
         src/Commands.cpp
-        src/main.cpp)
+        src/main.cpp include/IdealBTree.hpp)
