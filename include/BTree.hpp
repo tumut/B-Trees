@@ -161,9 +161,9 @@ private:
 	struct BNode {
 		//! Disk address
 		/*!
-		 * Ideally, the node before being first written should have its offset
-		 * equal to -1. Only after its first writing should it store its true
-		 * disk offset.
+		 * Ideally, the node before written should have its offset set to -1.
+		 * Only after its first writing should BNode::offset be set to its disk
+		 * location.
 		 */
 		long offset;
 		bool isLeaf; //!< True if the node is a leaf, false if it's an internal node
@@ -190,14 +190,16 @@ private:
 		 * The value of BNode::offset is initialized as -1 so that we can know
 		 * whether the node has already been written to the file or not.
 		 *
-		 * This method must always be called upon declaring a BNode unless the
-		 * node will be read through BTree::readFromDisk.
+		 * This method must always be called upon declaring a BNode if it won't
+		 * be read through BTree::readFromDisk.
 		 *
 		 * BNode's initialization was implemented as a method rather than a
-		 * constructor because BNode must be a POD in order to be read and
-		 * written in the file.
+		 * constructor because BNode must be a POD in order to be serialized in
+		 * the binary file, and POD's can't have constructors.
 		 *
-		 * @param isLeaf True if the node will be a leaf, false if it will be an internal node
+		 * @param isLeaf True if the node will be a leaf, false if it will be an
+		 * internal node
+		 * 
 		 * @param size Initial node size
 		 */
 		void initialize(bool isLeaf = true, int size = 0);

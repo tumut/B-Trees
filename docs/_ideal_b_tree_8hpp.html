@@ -118,7 +118,7 @@ This graph shows which files directly or indirectly include this file:</div>
 Typedefs</h2></td></tr>
 <tr class="memitem:a72279196842ef7757d016d7ce393b0bc"><td class="memTemplParams" colspan="2">template&lt;typename T , unsigned int BlockSize = BLOCK_SIZE&gt; </td></tr>
 <tr class="memitem:a72279196842ef7757d016d7ce393b0bc"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_ideal_b_tree_8hpp.html#a72279196842ef7757d016d7ce393b0bc">IdealBTree</a> = <a class="el" href="class_b_tree.html">BTree</a>&lt; T, <a class="el" href="_ideal_b_tree_8hpp.html#a2908d05ef132c3b0bc242e8140a68691">maxBTreeOrder</a>&lt; T, BlockSize &gt;(), BlockSize &gt;</td></tr>
-<tr class="memdesc:a72279196842ef7757d016d7ce393b0bc"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_b_tree.html" title="B-tree class. ">BTree</a> with ideal pre-calculated M order and BlockSize based on <code>sizeof(T)</code>  <a href="#a72279196842ef7757d016d7ce393b0bc">More...</a><br /></td></tr>
+<tr class="memdesc:a72279196842ef7757d016d7ce393b0bc"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_b_tree.html" title="B-tree class. ">BTree</a> with ideal pre-calculated M order based on <code>sizeof(T)</code>  <a href="#a72279196842ef7757d016d7ce393b0bc">More...</a><br /></td></tr>
 <tr class="separator:a72279196842ef7757d016d7ce393b0bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
@@ -141,7 +141,8 @@ template&lt;typename T , unsigned int BlockSize = BLOCK_SIZE&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p><a class="el" href="class_b_tree.html" title="B-tree class. ">BTree</a> with ideal pre-calculated M order and BlockSize based on <code>sizeof(T)</code> </p>
+<p><a class="el" href="class_b_tree.html" title="B-tree class. ">BTree</a> with ideal pre-calculated M order based on <code>sizeof(T)</code> </p>
+<p>The nodes of such a <a class="el" href="class_b_tree.html" title="B-tree class. ">BTree</a> will be making the most out of their block space</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">T</td><td>Type to be stored </td></tr>

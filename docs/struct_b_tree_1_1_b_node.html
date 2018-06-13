@@ -163,11 +163,11 @@ template&lt;typename T , std::size_t M, unsigned int BlockSize&gt; </div>
 
 <p>Initializes the node. </p>
 <p>The value of <a class="el" href="struct_b_tree_1_1_b_node.html#af864d07c047391653ed752084e8f07ff" title="Disk address. ">BNode::offset</a> is initialized as -1 so that we can know whether the node has already been written to the file or not.</p>
-<p>This method must always be called upon declaring a <a class="el" href="struct_b_tree_1_1_b_node.html" title="B-tree node. ">BNode</a> unless the node will be read through <a class="el" href="class_b_tree.html#adbf28ad7c2633b4a1d6570d8ef7ab212" title="Read a node in the block at the provided offset. ">BTree::readFromDisk</a>.</p>
-<p><a class="el" href="struct_b_tree_1_1_b_node.html" title="B-tree node. ">BNode</a>'s initialization was implemented as a method rather than a constructor because <a class="el" href="struct_b_tree_1_1_b_node.html" title="B-tree node. ">BNode</a> must be a POD in order to be read and written in the file.</p>
+<p>This method must always be called upon declaring a <a class="el" href="struct_b_tree_1_1_b_node.html" title="B-tree node. ">BNode</a> if it won't be read through <a class="el" href="class_b_tree.html#adbf28ad7c2633b4a1d6570d8ef7ab212" title="Read a node in the block at the provided offset. ">BTree::readFromDisk</a>.</p>
+<p><a class="el" href="struct_b_tree_1_1_b_node.html" title="B-tree node. ">BNode</a>'s initialization was implemented as a method rather than a constructor because <a class="el" href="struct_b_tree_1_1_b_node.html" title="B-tree node. ">BNode</a> must be a POD in order to be serialized in the binary file, and POD's can't have constructors.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">isLeaf</td><td>True if the node will be a leaf, false if it will be an internal node </td></tr>
+    <tr><td class="paramname">isLeaf</td><td>True if the node will be a leaf, false if it will be an internal node</td></tr>
     <tr><td class="paramname">size</td><td>Initial node size </td></tr>
   </table>
   </dd>
@@ -288,7 +288,7 @@ template&lt;typename T, std::size_t M, unsigned int BlockSize = BLOCK_SIZE&gt; <
 </div><div class="memdoc">
 
 <p>Disk address. </p>
-<p>Ideally, the node before being first written should have its offset equal to -1. Only after its first writing should it store its true disk offset. </p>
+<p>Ideally, the node before written should have its offset set to -1. Only after its first writing should <a class="el" href="struct_b_tree_1_1_b_node.html#af864d07c047391653ed752084e8f07ff" title="Disk address. ">BNode::offset</a> be set to its disk location. </p>
 
 </div>
 </div>

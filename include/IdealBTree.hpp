@@ -31,8 +31,10 @@ constexpr auto maxBTreeOrder() {
 	return M;
 }
 
-//! BTree with ideal pre-calculated M order and BlockSize based on `sizeof(T)`
+//! BTree with ideal pre-calculated M order based on `sizeof(T)`
 /*!
+ * The nodes of such a BTree will be making the most out of their block space
+ * 
  * @tparam T Type to be stored
  * @tparam BlockSize %Block size in bytes
  */
